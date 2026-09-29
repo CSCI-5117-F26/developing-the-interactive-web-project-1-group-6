@@ -4,15 +4,17 @@ CSCI 5117, Fall 2026, [assignment description](https://canvas.umn.edu/courses/57
 
 ## App Info:
 
-* Team Name: TODO
-* App Name: TODO
+* Team Name: Team Rocket 🚀
+* App Name: AppyCampers
 * App Link: <https://TODO.com/>
 
 ### Students
 
-* First Last, x500@umn.edu
-* ...
-
+* Dean Catlin, catli045@umn.edu
+* Joyal Jijo, plach027@umn.edu
+* Srish Kattegummula, katte035@umn.edu
+* Ayman Siddiqui, siddi158@umn.edu
+* Michael VerBout, verbo032@umn.edu
 
 ## Key Features
 
