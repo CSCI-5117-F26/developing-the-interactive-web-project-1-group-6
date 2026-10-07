@@ -51,29 +51,39 @@ In this space please either provide images (around 4) showing your prototypes, O
 -->
 
 ### Home Page
-![Mockup of AppyCamper's desktop version of the homepage](/mockup/mockup_homepage.png)
+![Mockup of AppyCamper's desktop version of the homepage](/mockup/homepage.png)
 
 > This is the main landing page of the site. It provides a comfy and welcoming aesthetic, while containing information to help new users understand the purpose and general utility of the site.
 
+### Browse Campouts Page
+![Mockup of AppyCamper's desktop version of the explore campouts page](/mockup/browse_camps.png)
+
+> The "Browse Campouts" page allows both signed-in users and non-account holders to browse camps which have their visibility currently set to public (in the case of signed-in users, this would include their friend's non-private camps too). These card-based campout elements can be dynamically filtered and searched to find the best fit for each individual user. Clicking a campout card leads to that camp's planning page. Access to a public camp can also be requested by signed-in users.
+
+### My Camps Page
+![Mockup of AppyCamper's desktop version of the my camps page](/mockup/my_camps.png)
+
+> The "My Camps" page allows signed in users to view and manage their upcoming campouts, their pending join requests, see incoming invites, and browse their past camps. This acts as a central hub or dashboard for users to quickly access important information and manage their camping experience. They can also copy and re-use settings from past campouts here, which acts as an accelerator facilitating the frequent users usage of the site.
+
+
 ### Create Campout Page
-![Mockup of AppyCamper's desktop version of the create a campout page](/mockup/mockup_create_campout.png)
+![Mockup of AppyCamper's desktop version of the create a campout page where you fill in your camping trip details.](/mockup/create_campout_details.png)
+
+![Mockup of AppyCamper's desktop version of the create a campout page where you fill in your camping trip gear requirements.](/mockup/create_campout_gear.png)
+
+
+![Mockup of AppyCamper's desktop version of the create a campout page where you send invites for freinds to join your campout.](/mockup/create_campout_invite.png)
 
 > This page is used for the creation of a new campout. It has various forms where users can submit information. It is organized into 3 basic setup steps: camp details, gear requirements, and invitations. This page also includes accelerators on the right side menu to help advanced users quickly re-use past settings, and offers the ability for any user to copy settings from a friend's/public campout (helping newer users and novice campers get a feel for the process).
 
-### Explore Camps Page
-![Mockup of AppyCamper's desktop version of the explore campouts page](/mockup/mockup_explore.png)
-
-> The exploration page allows both signed-in users and non-account holders to browse camps which have their visibility currently set to public (in the case of signed-in users, this would include their friend's non-private camps too). These card-based campout elements can be dynamically filtered and searched to find the best fit for each individual user. Clicking a campout card leads to that camp's planning page. Access to a public camp can also be requested by signed-in users.
 
 ### Camp Controls Page
-![Mockup of AppyCamper's desktop version of the camp controls page](/mockup/mockup_camp_controls_1.png)
-
-![Mockup of AppyCamper's desktop version of the camp controls page with confirmation pop-up](/mockup/mockup_camp_controls_2.png)
+![Mockup of AppyCamper's desktop version of the camp controls page](/mockup/camp_controls.png)
 
 > The camp controls page allows the administrator(s) of a specific campout (tentatively called 'campmasters') to manage campout details, change gear requirements, add/remove users, accept/deny join requests, and promote other users to admin ('campmaster') to share the managerial workload.
 
 ### Collaborative Gear Planning Page
-![Mockup of AppyCamper's desktop version of the camping gear planning page](/mockup/mockup_planning_page.png)
+![Mockup of AppyCamper's desktop version of the camping gear planning page](/mockup/shared_camp_plan.png)
 
 > The collaborative gear planning page allows users/campmasters of a specific campout to work together to meet all the gear requirements needed for a campout. Users can signup for different requirements allowing members with extra camping supplies to help cover for novice or less-equiped members. Users can also add/edit/delete additional non-essential items. This helps everyone know what to expect and avoid every camper bringing a pack of cards. Finally for shared equipment which incurs a cost, there is an optional section to track expenses and see what monetary contribution would be required from each camper to keep things equitable.
 
