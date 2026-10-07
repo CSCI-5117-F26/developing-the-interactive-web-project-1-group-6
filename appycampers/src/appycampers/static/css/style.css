@@ -1,0 +1,126 @@
+* {
+    box-sizing: border-box;
+}
+
+.page {
+    max-width: 75rem;
+    margin: auto;
+    padding: 1rem;
+}
+
+.homepage-section {
+    padding: 3rem 0;
+}
+
+.l-box {
+    padding: 1rem;
+}
+
+.homepage-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.homepage-section+.homepage-section {
+    border-top: 1px dashed;
+}
+
+/* 
+Adapted from Pure's Responsive Horizontal-to-Vertical Menu example:
+https://pure-css.github.io/layouts/tucked-menu-vertical/ 
+*/
+.site-header {
+    padding: .5rem 0;
+    border-bottom: 1px solid;
+}
+
+.custom-wrapper {
+    position: relative;
+    height: 2.5em;
+    overflow: hidden;
+    transition: height .25s;
+}
+
+.custom-wrapper.open {
+    height: 14em;
+}
+
+.custom-toggle {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5.5em;
+    height: 2.5em;
+    padding: 0 0 0 30px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.custom-toggle .bar {
+    position: absolute;
+    top: 50%;
+    left: 6px;
+    width: 20px;
+    height: 2px;
+    background: currentColor;
+    transition: transform .25s;
+}
+
+.custom-toggle .bar:first-child {
+    transform: translateY(-6px);
+}
+
+.custom-toggle.x .bar {
+    transform: rotate(45deg);
+}
+
+.custom-toggle.x .bar:first-child {
+    transform: rotate(-45deg);
+}
+
+.site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid;
+}
+
+/* 
+64em = 1024px (with default font size)
+This should be a good breakpoint to include phones and tablets
+in the mobile category, while having laptops/desktops excluded.
+*/
+
+/* Adapted from https://pure-css.github.io/layouts/tucked-menu-vertical/ */
+@media screen and (max-width: 63.999em) {
+    .custom-toggle {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 64em) {
+    .custom-menu-3 {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .custom-menu-3 .nav-main {
+        text-align: center;
+    }
+
+    .custom-menu-3 .nav-account {
+        text-align: right;
+    }
+
+    .nav-main li+li {
+        border-left: 1px solid;
+    }
+}

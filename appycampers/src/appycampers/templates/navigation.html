@@ -1,0 +1,21 @@
+<!-- referenced https://pure-css.github.io/menus/ during the creation of this nav setup -->
+<ul class="pure-menu-list nav-main">
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ url_for('explore') }}">Explore camps</a>
+    </li>
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ url_for('home', _anchor='how-it-works') }}">How it works</a>
+    </li>
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ url_for('my_camps') }}">My camps</a>
+    </li>
+</ul>
+
+<ul class="pure-menu-list nav-account">
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ url_for('login') }}">Log in</a>
+    </li>
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ url_for('create_camp') }}">Create a camp</a>
+    </li>
+</ul>

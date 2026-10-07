@@ -7,3 +7,9 @@
 1. navigate to the project directory `developing-the-interactive-web-project-1-group-6/appycampers/src/appycampers`
 
 2. run the command `uv run flask --app server run --debug`
+
+## Sources Referenced
+
+### For NavBar
+* https://pure-css.github.io/layouts/tucked-menu-vertical/#
+* https://pure-css.github.io/menus/
