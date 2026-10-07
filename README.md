@@ -67,25 +67,29 @@ In this space please either provide images (around 4) showing your prototypes, O
 
 
 ### Create Campout Page
+
+#### Step 1 - Camp Details
 ![Mockup of AppyCamper's desktop version of the create a campout page where you fill in your camping trip details.](/mockup/create_campout_details.png)
+
+#### Step 2 - Gear Requirements
 
 ![Mockup of AppyCamper's desktop version of the create a campout page where you fill in your camping trip gear requirements.](/mockup/create_campout_gear.png)
 
+#### Step 3 - Invite Friends
 
 ![Mockup of AppyCamper's desktop version of the create a campout page where you send invites for freinds to join your campout.](/mockup/create_campout_invite.png)
 
 > This page is used for the creation of a new campout. It has various forms where users can submit information. It is organized into 3 basic setup steps: camp details, gear requirements, and invitations. This page also includes accelerators on the right side menu to help advanced users quickly re-use past settings, and offers the ability for any user to copy settings from a friend's/public campout (helping newer users and novice campers get a feel for the process).
 
+### Collaborative Gear Planning Page
+![Mockup of AppyCamper's desktop version of the camping gear planning page](/mockup/shared_camp_plan.png)
+
+> The collaborative gear planning page allows users/campmasters of a specific campout to work together to meet all the gear requirements needed for a campout. Users can signup for different requirements allowing members with extra camping supplies to help cover for novice or less-equiped members. Users can also add/edit/delete additional non-essential items. This helps everyone know what to expect and avoid every camper bringing a pack of cards. Finally for shared equipment which incurs a cost, there is an optional section to track expenses and see what monetary contribution would be required from each camper to keep things equitable. The calculations are handled on the backend and keeps track of each users contribution and amount owed. This is a good faith section where individuals can add/remove their own items and select who they are splitting the costs with. Admins ("campmasters") can moderate this section by removing any erroneous additions as needed.
 
 ### Camp Controls Page
 ![Mockup of AppyCamper's desktop version of the camp controls page](/mockup/camp_controls.png)
 
-> The camp controls page allows the administrator(s) of a specific campout (tentatively called 'campmasters') to manage campout details, change gear requirements, add/remove users, accept/deny join requests, and promote other users to admin ('campmaster') to share the managerial workload.
-
-### Collaborative Gear Planning Page
-![Mockup of AppyCamper's desktop version of the camping gear planning page](/mockup/shared_camp_plan.png)
-
-> The collaborative gear planning page allows users/campmasters of a specific campout to work together to meet all the gear requirements needed for a campout. Users can signup for different requirements allowing members with extra camping supplies to help cover for novice or less-equiped members. Users can also add/edit/delete additional non-essential items. This helps everyone know what to expect and avoid every camper bringing a pack of cards. Finally for shared equipment which incurs a cost, there is an optional section to track expenses and see what monetary contribution would be required from each camper to keep things equitable.
+> The camp controls page allows the administrator(s) of a specific campout (tentatively called 'campmasters') to manage campout details, change gear requirements, add/remove users, accept/deny join requests, and promote other users to admin ('campmaster') to share the managerial workload. They can also cancel the campout from this page.
 
 ## External Dependencies
 
