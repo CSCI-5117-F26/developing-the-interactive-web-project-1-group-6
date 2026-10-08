@@ -8,6 +8,16 @@
     padding: 1rem;
 }
 
+.page-banner {
+    padding: 2rem 0;
+    border-bottom: 1px solid;
+}
+
+.page-banner h1 {
+    margin: 0 0 1rem;
+    font-size: 3rem;
+}
+
 .homepage-section {
     padding: 3rem 0;
 }
@@ -24,6 +34,27 @@
 
 .homepage-section+.homepage-section {
     border-top: 1px dashed;
+}
+
+.explore-search {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.explore-search input {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.camp-card {
+    padding: 1rem;
+    border: 1px solid;
+}
+
+.camp-image {
+    min-height: 8rem;
 }
 
 /* 
