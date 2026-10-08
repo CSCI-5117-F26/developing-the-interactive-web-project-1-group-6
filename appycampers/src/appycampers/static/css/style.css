@@ -1,13 +1,26 @@
+/* General */
 * {
     box-sizing: border-box;
+}
+
+.l-box {
+    padding: 1rem;
 }
 
 .page {
     max-width: 75rem;
     margin: auto;
     padding: 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
+.page > main {
+    flex: 1;
+}
+
+/* Banner */
 .page-banner {
     padding: 2rem 0;
     border-bottom: 1px solid;
@@ -18,12 +31,9 @@
     font-size: 3rem;
 }
 
+/* Homepage */
 .homepage-section {
     padding: 3rem 0;
-}
-
-.l-box {
-    padding: 1rem;
 }
 
 .homepage-actions {
@@ -36,6 +46,7 @@
     border-top: 1px dashed;
 }
 
+/* Explore Camps */
 .explore-search {
     display: flex;
     align-items: center;
@@ -48,6 +59,7 @@
     margin: 0;
 }
 
+/* Cards */
 .camp-card {
     padding: 1rem;
     border: 1px solid;
@@ -57,6 +69,7 @@
     min-height: 8rem;
 }
 
+/* Navbar */
 /* 
 Adapted from Pure's Responsive Horizontal-to-Vertical Menu example:
 https://pure-css.github.io/layouts/tucked-menu-vertical/ 
