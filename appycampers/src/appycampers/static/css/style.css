@@ -168,3 +168,18 @@ in the mobile category, while having laptops/desktops excluded.
         border-left: 1px solid;
     }
 }
+
+/* Campfire animated SVG CSS - this was generated using ChatGPT 5.6-Sol with thinking effort set to high */
+#camp-scene {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 14px auto 0;
+    background: radial-gradient(
+        circle at 60% 49%,
+        #263a35 0,
+        #182a2a 36%,
+        #101e20 74%
+    );
+    border-radius: 18px;
+}

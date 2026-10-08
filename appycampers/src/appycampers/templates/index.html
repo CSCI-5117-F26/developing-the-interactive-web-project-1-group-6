@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
+<script src="{{ url_for('static', filename='js/campfire_animation.js') }}" defer></script>
+{% endblock %}
 {% block title %} AppyCampers {% endblock %}
 {% block content %}
 <section id="homepage-intro" class="homepage-section pure-g">
@@ -11,7 +16,9 @@
         </div>
     </div>
     <div class="pure-u-1 pure-u-md-1-2 l-box">
-        <div id="homepage-image" class="homepage-image">Animated campfire SVG HERE</div>
+        <div id="homepage-image" class="homepage-image">
+            {% include 'campfire_animation.html' %}
+        </div>
     </div>
 </section>
 
