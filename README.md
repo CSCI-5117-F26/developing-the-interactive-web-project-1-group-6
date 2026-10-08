@@ -65,6 +65,14 @@ In this space please either provide images (around 4) showing your prototypes, O
 
 > The "My Camps" page allows signed in users to view and manage their upcoming campouts, their pending join requests, see incoming invites, and browse their past camps. This acts as a central hub or dashboard for users to quickly access important information and manage their camping experience. They can also copy and re-use settings from past campouts here, which acts as an accelerator facilitating the frequent users usage of the site.
 
+### My Profile Page
+![Mockup of AppyCamper's desktop version of the my profile page](/mockup/my_profile.png)
+
+![Mockup of AppyCamper's desktop version of the my profile page friend management tab](/mockup/my_profile_friends.png)
+
+![Mockup of AppyCamper's desktop version of viewing a public profile](/mockup/public_profile.png)
+
+> The "Profile" page allows signed in users to view and update their display name and short description through the "My Profile" tab, while the "Friends" tab allows them to view and manage their friendships, accept or decline incoming friend requests, and cancel pending requests they have sent. Users can also filter their friends list, visit other users' profiles, and send friend requests by site username. The public profile displays a user's name, username, and description, with an option for signed in users to send a friend request. This acts as a central place for users to manage their personal information and connections.
 
 ### Create Campout Page
 
