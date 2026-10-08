@@ -8,6 +8,11 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
+# TODO REMOVE THIS AND IMPLEMENT AUTH0 FOR LOGIN MANAGEMENT
+@app.get("/login")
+def login():
+    return render_template("index.html")
+
 
 # Browse and search public camps
 @app.get("/explore")
