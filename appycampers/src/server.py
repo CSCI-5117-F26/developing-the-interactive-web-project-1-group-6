@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 
+from database import check_database_connection
+
 app = Flask(__name__)
 
 
@@ -72,3 +74,17 @@ def profile_friends():
 @app.get("/profile/u/<int:user_id>")
 def user_profile(user_id):
     return render_template("profile.html", user_id=user_id)
+
+
+@app.get("/health")
+def health_check():
+    if check_database_connection():
+        return{
+            "status": "ok",
+            "database": "connected",
+        }, 200 
+
+    return {
+        "status": "error", 
+        "database": "unavailable"
+    }
