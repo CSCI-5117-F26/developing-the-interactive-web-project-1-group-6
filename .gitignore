@@ -11,3 +11,4 @@ wheels/
 
 # Secret protection
 .env
+*.DS_Store
