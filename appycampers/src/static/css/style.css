@@ -1,0 +1,185 @@
+/* General */
+* {
+    box-sizing: border-box;
+}
+
+.l-box {
+    padding: 1rem;
+}
+
+.page {
+    max-width: 75rem;
+    margin: auto;
+    padding: 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.page > main {
+    flex: 1;
+}
+
+/* Banner */
+.page-banner {
+    padding: 2rem 0;
+    border-bottom: 1px solid;
+}
+
+.page-banner h1 {
+    margin: 0 0 1rem;
+    font-size: 3rem;
+}
+
+/* Homepage */
+.homepage-section {
+    padding: 3rem 0;
+}
+
+.homepage-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.homepage-section+.homepage-section {
+    border-top: 1px dashed;
+}
+
+/* Explore Camps */
+.explore-search {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.explore-search input {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+/* Cards */
+.camp-card {
+    padding: 1rem;
+    border: 1px solid;
+}
+
+.camp-image {
+    min-height: 8rem;
+}
+
+/* Navbar */
+/* 
+Adapted from Pure's Responsive Horizontal-to-Vertical Menu example:
+https://pure-css.github.io/layouts/tucked-menu-vertical/ 
+*/
+.site-header {
+    padding: .5rem 0;
+    border-bottom: 1px solid;
+}
+
+.custom-wrapper {
+    position: relative;
+    height: 2.5em;
+    overflow: hidden;
+    transition: height .25s;
+}
+
+.custom-wrapper.open {
+    height: 14em;
+}
+
+.custom-toggle {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5.5em;
+    height: 2.5em;
+    padding: 0 0 0 30px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.custom-toggle .bar {
+    position: absolute;
+    top: 50%;
+    left: 6px;
+    width: 20px;
+    height: 2px;
+    background: currentColor;
+    transition: transform .25s;
+}
+
+.custom-toggle .bar:first-child {
+    transform: translateY(-6px);
+}
+
+.custom-toggle.x .bar {
+    transform: rotate(45deg);
+}
+
+.custom-toggle.x .bar:first-child {
+    transform: rotate(-45deg);
+}
+
+.site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid;
+}
+
+/* 
+64em = 1024px (with default font size)
+This should be a good breakpoint to include phones and tablets
+in the mobile category, while having laptops/desktops excluded.
+*/
+
+/* Adapted from https://pure-css.github.io/layouts/tucked-menu-vertical/ */
+@media screen and (max-width: 63.999em) {
+    .custom-toggle {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 64em) {
+    .custom-menu-3 {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .custom-menu-3 .nav-main {
+        text-align: center;
+    }
+
+    .custom-menu-3 .nav-account {
+        text-align: right;
+    }
+
+    .nav-main li+li {
+        border-left: 1px solid;
+    }
+}
+
+/* Campfire animated SVG CSS - this was generated using ChatGPT 5.6-Sol with thinking effort set to high */
+#camp-scene {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 14px auto 0;
+    background: radial-gradient(
+        circle at 60% 49%,
+        #263a35 0,
+        #182a2a 36%,
+        #101e20 74%
+    );
+    border-radius: 18px;
+}
