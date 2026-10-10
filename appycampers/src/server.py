@@ -83,8 +83,9 @@ def health_check():
             "status": "ok",
             "database": "connected",
         }, 200 
-
-    return {
-        "status": "error", 
-        "database": "unavailable"
-    }
+    
+    else: 
+        return {
+            "status": "error", 
+            "database": "unavailable"
+        }
