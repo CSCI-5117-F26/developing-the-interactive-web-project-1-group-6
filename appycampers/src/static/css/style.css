@@ -7,10 +7,6 @@
     padding: 1rem;
 }
 
-body {
-    background-color: rgb(19, 30, 32);
-}
-
 .page {
     margin: 0;
     padding: 0;
@@ -37,6 +33,17 @@ body {
 /* Homepage */
 .homepage-section {
     padding: 3rem 0;
+}
+
+.homepage-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#homepage-intro {
+    background: radial-gradient(circle at 0% 50%, rgb(29, 46, 49), transparent 100%), rgb(19, 30, 32);
+    /* rgb(19, 29, 32); */
 }
 
 .homepage-actions {
@@ -78,9 +85,14 @@ Adapted from Pure's Responsive Horizontal-to-Vertical Menu example:
 https://pure-css.github.io/layouts/tucked-menu-vertical/ 
 */
 .site-header {
-    padding: .5rem 0;
+    height: 4rem;
+    padding: .5rem 0rem;
     border-bottom: 1px solid;
-    background-color: rgb(19, 30, 32);
+    /* background-color: rgb(209, 165, 108); */
+    min-height: 3rem;
+    background: radial-gradient(circle at 0% 50%, rgb(218, 165, 95), transparent 90%),
+        radial-gradient(circle at 100% 50%, rgb(218, 165, 95), transparent 90%), rgb(208, 118, 45);
+    /* background-color: rgb(208, 118, 45); */
 }
 
 .custom-wrapper {
@@ -88,6 +100,8 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
     height: 2.5em;
     overflow: hidden;
     transition: height .25s;
+    background: radial-gradient(circle at 0% 50%, rgb(218, 165, 95), transparent 90%),
+        radial-gradient(circle at 100% 50%, rgb(218, 165, 95), transparent 90%), rgb(208, 118, 45);
 }
 
 .custom-wrapper.open {
