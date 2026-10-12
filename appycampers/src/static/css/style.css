@@ -7,16 +7,19 @@
     padding: 1rem;
 }
 
+body {
+    background-color: rgb(19, 30, 32);
+}
+
 .page {
-    max-width: 75rem;
-    margin: auto;
-    padding: 1rem;
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-.page > main {
+.page>main {
     flex: 1;
 }
 
@@ -77,6 +80,7 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
 .site-header {
     padding: .5rem 0;
     border-bottom: 1px solid;
+    background-color: rgb(19, 30, 32);
 }
 
 .custom-wrapper {
@@ -175,11 +179,9 @@ in the mobile category, while having laptops/desktops excluded.
     width: 100%;
     height: auto;
     margin: 14px auto 0;
-    background: radial-gradient(
-        circle at 60% 49%,
-        #263a35 0,
-        #182a2a 36%,
-        #101e20 74%
-    );
+    background: radial-gradient(circle at 60% 49%,
+            #263a35 0,
+            #182a2a 36%,
+            #101e20 74%);
     border-radius: 18px;
 }
