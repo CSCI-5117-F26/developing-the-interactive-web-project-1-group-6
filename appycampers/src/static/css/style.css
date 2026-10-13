@@ -1,4 +1,14 @@
 /* General */
+body {
+    background-color: #f4ecdb;
+    color: #263531;
+}
+
+.pure-button {
+    background-color: #eab875;
+    color: #101e20;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -42,8 +52,14 @@
 }
 
 #homepage-intro {
-    background: radial-gradient(circle at 0% 50%, rgb(29, 46, 49), transparent 100%), rgb(19, 30, 32);
-    /* rgb(19, 29, 32); */
+    /* background: radial-gradient(circle at 0% 50%, rgb(29, 46, 49), transparent 100%), rgb(19, 30, 32); */
+    /* background: linear-gradient(to left, rgb(19, 30, 32), rgb(46, 64, 52)),
+        linear-gradient(rgb(19, 30, 32), rgb(46, 64, 52)); */
+    background-color: rgb(19, 30, 32);
+}
+
+.homepage-heading p {
+    color: #b7c5b8;
 }
 
 .homepage-actions {
