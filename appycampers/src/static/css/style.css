@@ -224,6 +224,21 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
     background: rgba(255, 255, 255, .08);
 } */
 
+.site-header .pure-menu-link {
+    transition: translate .15s ease-out;
+}
+
+.site-header .pure-menu-link:hover,
+.site-header .pure-menu-link:focus,
+.site-header .pure-menu-link:active {
+    background: none;
+}
+
+.site-header .pure-menu-link:hover,
+.site-header .pure-menu-link:focus {
+    translate: 0 -5px;
+}
+
 .custom-wrapper {
     position: relative;
     height: 2.5em;
