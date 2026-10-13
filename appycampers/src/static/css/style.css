@@ -9,6 +9,12 @@ body {
     color: #101e20;
 }
 
+h1, h2, h3 {
+    font-family: Georgia, serif;
+    font-weight: normal;
+    line-height: 1.15;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -41,6 +47,11 @@ body {
 }
 
 /* Homepage */
+#homepage-tagline {
+    margin: 0 0 1.5rem;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+}
+
 .homepage-section {
     padding: 3rem 0;
 }
@@ -60,6 +71,8 @@ body {
 
 .homepage-heading p {
     color: #b7c5b8;
+    max-width: 27rem;
+    line-height: 1.6;
 }
 
 .homepage-actions {
@@ -88,7 +101,9 @@ body {
 /* Cards */
 .camp-card {
     padding: 1rem;
-    border: 1px solid;
+    background-color: #fbf8ef;
+    border: 1px solid #d8d6c8;
+    border-radius: .5rem;
 }
 
 .camp-image {
@@ -101,14 +116,24 @@ Adapted from Pure's Responsive Horizontal-to-Vertical Menu example:
 https://pure-css.github.io/layouts/tucked-menu-vertical/ 
 */
 .site-header {
-    height: 4rem;
+    /* height: 4rem; */
     padding: .5rem 0rem;
     border-bottom: 1px solid;
     /* background-color: rgb(209, 165, 108); */
     min-height: 3rem;
-    background: radial-gradient(circle at 0% 50%, rgb(218, 165, 95), transparent 90%),
-        radial-gradient(circle at 100% 50%, rgb(218, 165, 95), transparent 90%), rgb(208, 118, 45);
+    /* background: radial-gradient(circle at 0% 50%, rgb(218, 165, 95), transparent 90%),
+        radial-gradient(circle at 100% 50%, rgb(218, 165, 95), transparent 90%), rgb(208, 118, 45); */
     /* background-color: rgb(208, 118, 45); */
+    background-color: #101e20;
+    color: #f4ecdb;
+}
+
+.pure-menu-heading, .pure-menu-link {
+    color: inherit;
+}
+
+.pure-menu-link:hover, .pure-menu-link:focus {
+    background-color: rgba(255, 255, 255, .08);
 }
 
 .custom-wrapper {
@@ -116,8 +141,9 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
     height: 2.5em;
     overflow: hidden;
     transition: height .25s;
-    background: radial-gradient(circle at 0% 50%, rgb(218, 165, 95), transparent 90%),
-        radial-gradient(circle at 100% 50%, rgb(218, 165, 95), transparent 90%), rgb(208, 118, 45);
+    /* background: radial-gradient(circle at 0% 50%, rgb(218, 165, 95), transparent 90%),
+        radial-gradient(circle at 100% 50%, rgb(218, 165, 95), transparent 90%), rgb(208, 118, 45); */
+    background-color: #101e20;
 }
 
 .custom-wrapper.open {
@@ -163,6 +189,8 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
 }
 
 .site-footer {
+    background-color: #101e20;
+    color: #f4ecdb;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
