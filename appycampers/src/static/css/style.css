@@ -328,10 +328,6 @@ in the mobile category, while having laptops/desktops excluded.
     .custom-menu-3 .nav-account {
         text-align: right;
     }
-
-    .nav-main li+li {
-        border-left: 1px solid;
-    }
 }
 
 /* Campfire animated SVG CSS - this was generated using ChatGPT 5.6-Sol with thinking effort set to high */
