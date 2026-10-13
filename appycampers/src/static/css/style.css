@@ -9,7 +9,9 @@ body {
     color: #101e20;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: Georgia, serif;
     font-weight: normal;
     line-height: 1.15;
@@ -70,7 +72,9 @@ h1, h2, h3 {
     /* background: radial-gradient(circle at 0% 50%, rgb(29, 46, 49), transparent 100%), rgb(19, 30, 32); */
     /* background: linear-gradient(to left, rgb(19, 30, 32), rgb(46, 64, 52)),
         linear-gradient(rgb(19, 30, 32), rgb(46, 64, 52)); */
-    background-color: rgb(19, 30, 32);
+    /* background-color: rgb(19, 30, 32); */
+    background: radial-gradient(circle at 73% 49%, #263a35, #182a2a 36%, #101e20 74%);
+    color: #f4ecdb;
 }
 
 .homepage-heading p {
@@ -132,11 +136,13 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
     color: #f4ecdb;
 }
 
-.pure-menu-heading, .pure-menu-link {
+.pure-menu-heading,
+.pure-menu-link {
     color: inherit;
 }
 
-.pure-menu-link:hover, .pure-menu-link:focus {
+.pure-menu-link:hover,
+.pure-menu-link:focus {
     background-color: rgba(255, 255, 255, .08);
 }
 
@@ -240,7 +246,7 @@ in the mobile category, while having laptops/desktops excluded.
     display: block;
     width: 100%;
     height: auto;
-    margin: 14px auto 0;
+    margin: auto;
     background: radial-gradient(circle at 60% 49%,
             #263a35 0,
             #182a2a 36%,
