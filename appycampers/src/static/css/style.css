@@ -122,6 +122,57 @@ h3 {
     margin: 0;
 }
 
+/* Create Camp */
+#create_camp_wizard .pure-form input:not([type="checkbox"]),
+#create_camp_wizard .pure-form select {
+    background: #fffdf7;
+    border-color: #d8d6c8;
+}
+
+.gear-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+#create_camp_wizard .pure-table {
+    width: 100%;
+}
+
+#create_camp_wizard .pure-table thead {
+    background: #101e20;
+    color: #f4ecdb;
+}
+
+.create-actions,
+.create-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .75rem;
+}
+
+.create-nav {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #d8d6c8;
+}
+
+#create_camp_wizard [data-step="1"] input,
+#create_camp_wizard [data-step="1"] select {
+    width: calc(100% - 1rem);
+}
+
+.pure-form .create-steps {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .75rem;
+}
+
+.create-steps span {
+    white-space: nowrap;
+}
+
 /* Cards */
 .camp-card {
     padding: 1rem;
