@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Camp Details {% endblock %}
 {% block content %}
+<script src="{{ url_for('static', filename='js/create_camp.js') }}" defer></script>
 <section class="page-banner">
   <div class="l-box">
     <h1>Create a Campout</h1>
@@ -8,8 +9,8 @@
   </div>
 </section>
 <div class="pure-g">
-  <div class="pure-u-2-3">
-    <div data-step="1">
+  <div class="pure-u-2-3" id="create_camp_wizard">
+    <div data-step="1" class="wizard-page">
       <form class="pure-form pure-form-stacked">
         <fieldset>
           <legend>1 Camp Details, 2 Gear Requirements, 3 Invite Others</legend>
@@ -63,7 +64,7 @@
         </fieldset>
       </form>
     </div>
-    <div data-step="2" hidden>
+    <div data-step="2" class="wizard-page" hidden>
       <table class="pure-table pure-table-horizontal" id="item-table">
         <thead>
           <tr>
@@ -72,13 +73,7 @@
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody id="item-body">
-          <tr>
-            <td>Water Bottles</td>
-            <td>1</td>
-            <td><button class="pure-button" type="button" id="edit-button">Edit</button> <button class="pure-button"
-                type="button" id="remove-button">Remove</button></td>
-          </tr>
+        <tbody id="gear-table">
         </tbody>
       </table>
       <div class="pure-form">
@@ -87,7 +82,7 @@
         <button type="button" class="pure-button" id="add-button">Add item</button>
       </div>
     </div>
-    <div data-step="3" hidden>
+    <div data-step="3" class="wizard-page" hidden>
       <form class="pure-form">
         <input type="search" placeholder="Search people">
         <button class="pure-button" type="button">Search</button>
@@ -101,7 +96,11 @@
         </fieldset>
       </form>
     </div>
+    <div class="create-nav">
+      <button type="button" class="pure-button" id="prev-button" hidden>Prev</button>
+      <button type="button" class="pure-button" id="next-button">Next</button>
+      <button type="button" class="pure-button pure-button-primary" id="submit-button" hidden>Create Campout</button>
+    </div>
   </div>
 </div>
-
 {% endblock %}
