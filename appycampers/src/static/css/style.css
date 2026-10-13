@@ -19,6 +19,12 @@ h1, h2, h3 {
     box-sizing: border-box;
 }
 
+.container {
+    max-width: 80rem;
+    margin: auto;
+    padding: 0 1rem;
+}
+
 .l-box {
     padding: 1rem;
 }
@@ -56,10 +62,8 @@ h1, h2, h3 {
     padding: 3rem 0;
 }
 
-.homepage-heading {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+#homepage-intro .pure-g {
+    align-items: center;
 }
 
 #homepage-intro {
