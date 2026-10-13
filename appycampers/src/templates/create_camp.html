@@ -1,4 +1,106 @@
 {% extends "base.html" %}
 {% block title %} Camp Details {% endblock %}
 {% block content %}
+<script src="{{ url_for('static', filename='js/create_camp.js') }}" defer></script>
+<section class="page-banner">
+  <div class="l-box">
+    <h1>Create a Campout</h1>
+    <p>Plan the details, decide the essentials, and start gathering campers</p>
+  </div>
+</section>
+<div class="pure-g">
+  <div class="pure-u-2-3" id="create_camp_wizard">
+    <div data-step="1" class="wizard-page">
+      <form class="pure-form pure-form-stacked">
+        <fieldset>
+          <legend>1 Camp Details, 2 Gear Requirements, 3 Invite Others</legend>
+          <div class="pure-g">
+            <div class="pure-u-1 pure-u-md-1-1">
+              <label for="camp-name">Campout Name</label>
+              <input id="camp-name" class="pure-u-23-24" type="text" />
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+              <label for="city">City</label>
+              <input id="city" class="pure-u-23-24" type="text" />
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+              <label for="state">State</label>
+              <select id="state" class="pure-input-1-2">
+                <option>MN</option>
+              </select>
+            </div>
+            <div class="pure-u-1 pure-u-md-1-1">
+              <label for="location">Location</label>
+              <input id="location" class="pure-u-23-24" type="text" />
+            </div>
+            <div class="pure-u-1 pure-u-md-1-1">
+              <label for="camp-number">Campsite Number</label>
+              <input id="camp-number" class="pure-u-23-24" type="text" />
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+              <label for="start-date">Start Date</label>
+              <input id="start-date" class="pure-u-23-24" type="date" />
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+              <label for="end-date">End Date</label>
+              <input id="end-date" class="pure-u-23-24" type="date" />
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+              <label for="expected-campers">Expected Campers</label>
+              <input id="expected-campers" class="pure-u-23-24" type="number" />
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+              <label for="visibility">Visibility</label>
+              <select id="visibility" class="pure-input-1-2">
+                <option>Public</option>
+                <option>Private</option>
+              </select>
+            </div>
+            <div class="pure-u-1 pure-u-md-1-1">
+              <label for="camp-description">Campout Description</label>
+              <input id="camp-description" class="pure-u-23-24" type="text" />
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div data-step="2" class="wizard-page" hidden>
+      <table class="pure-table pure-table-horizontal" id="item-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="gear-table">
+        </tbody>
+      </table>
+      <div class="pure-form">
+        <input type="text" id="add-name" placeholder="Item name">
+        <input type="number" id="add-quantity" value="1" min="1" step="1">
+        <button type="button" class="pure-button" id="add-button">Add item</button>
+      </div>
+    </div>
+    <div data-step="3" class="wizard-page" hidden>
+      <form class="pure-form">
+        <input type="search" placeholder="Search people">
+        <button class="pure-button" type="button">Search</button>
+      </form>
+      <form class="pure-form-stacked">
+        <fieldset>
+          <label class="pure-checkbox"><input type="checkbox"> John Johnson</label>
+          <label class="pure-checkbox"><input type="checkbox"> Jack Jackson</label>
+          <label class="pure-checkbox"><input type="checkbox"> Joe</label>
+          <label class="pure-checkbox"><input type="checkbox"> Dude</label>
+        </fieldset>
+      </form>
+    </div>
+    <div class="create-nav">
+      <button type="button" class="pure-button" id="prev-button" hidden>Prev</button>
+      <button type="button" class="pure-button" id="next-button">Next</button>
+      <button type="button" class="pure-button pure-button-primary" id="submit-button" hidden>Create Campout</button>
+    </div>
+  </div>
+</div>
 {% endblock %}

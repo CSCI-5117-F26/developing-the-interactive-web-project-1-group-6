@@ -267,7 +267,7 @@ in the mobile category, while having laptops/desktops excluded.
     display: block;
     width: 100%;
     height: auto;
-    margin: auto;
+    margin: 14px auto 0;
     background: radial-gradient(circle at 60% 49%,
             #263a35 0,
             #182a2a 36%,
