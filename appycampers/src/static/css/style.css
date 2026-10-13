@@ -203,6 +203,12 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
     color: #f4ecdb;
 }
 
+.pure-menu-heading.site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+}
+
 .pure-menu-heading {
     font-weight: bold;
     text-transform: none;
