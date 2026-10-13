@@ -1,6 +1,44 @@
 /* General */
+body {
+    margin: 0;
+    background: #f4ecdb;
+    color: #263531;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+}
+
+.pure-button  {
+    border-radius: .25rem;
+    padding: .75em 1.2em;
+}
+
+.pure-button.pure-button-primary {
+    background-color: #eab875;
+    color: #101e20;
+}
+
+.button-outline {
+    background: transparent;
+    color: inherit;
+    border: 1px solid #b7c5b8;
+}
+
+h1,
+h2,
+h3 {
+    font-family: Georgia, serif;
+    font-weight: normal;
+    line-height: 1.15;
+}
+
 * {
     box-sizing: border-box;
+}
+
+.container {
+    max-width: 80rem;
+    margin: auto;
+    padding: 0 1rem;
 }
 
 .l-box {
@@ -8,9 +46,6 @@
 }
 
 .page {
-    max-width: 75rem;
-    margin: auto;
-    padding: 1rem;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -23,7 +58,7 @@
 /* Banner */
 .page-banner {
     padding: 2rem 0;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid #d8d6c8;
 }
 
 .page-banner h1 {
@@ -32,8 +67,36 @@
 }
 
 /* Homepage */
+#homepage-tagline {
+    margin: 0 0 1.5rem;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+}
+
+#homepage-tagline em {
+    color: #eab875;
+}
+
 .homepage-section {
     padding: 3rem 0;
+}
+
+#homepage-intro .pure-g {
+    align-items: center;
+}
+
+#homepage-intro {
+    /* background: radial-gradient(circle at 0% 50%, rgb(29, 46, 49), transparent 100%), rgb(19, 30, 32); */
+    /* background: linear-gradient(to left, rgb(19, 30, 32), rgb(46, 64, 52)),
+        linear-gradient(rgb(19, 30, 32), rgb(46, 64, 52)); */
+    /* background-color: rgb(19, 30, 32); */
+    background: radial-gradient(circle at 73% 49%, #263a35, #182a2a 36%, #101e20 74%);
+    color: #f4ecdb;
+}
+
+.homepage-heading p {
+    color: #b7c5b8;
+    max-width: 27rem;
+    line-height: 1.6;
 }
 
 .homepage-actions {
@@ -62,7 +125,9 @@
 /* Cards */
 .camp-card {
     padding: 1rem;
-    border: 1px solid;
+    background: #fbf8ef;
+    border: 1px solid #d8d6c8;
+    border-radius: .5rem;
 }
 
 .camp-image {
@@ -75,19 +140,45 @@ Adapted from Pure's Responsive Horizontal-to-Vertical Menu example:
 https://pure-css.github.io/layouts/tucked-menu-vertical/ 
 */
 .site-header {
-    padding: .5rem 0;
+    /* height: 4rem; */
+    padding: .5rem 0rem;
     border-bottom: 1px solid;
+    /* background-color: rgb(209, 165, 108); */
+    min-height: 3rem;
+    /* background: radial-gradient(circle at 0% 50%, rgb(218, 165, 95), transparent 90%),
+        radial-gradient(circle at 100% 50%, rgb(218, 165, 95), transparent 90%), rgb(208, 118, 45); */
+    /* background-color: rgb(208, 118, 45); */
+    background-color: #101e20;
+    color: #f4ecdb;
 }
+
+.pure-menu-heading {
+    font-weight: bold;
+    text-transform: none;
+}
+
+.pure-menu-heading,
+.pure-menu-link {
+    color: inherit;
+}
+/* 
+.pure-menu-link:hover,
+.pure-menu-link:focus {
+    background: rgba(255, 255, 255, .08);
+} */
 
 .custom-wrapper {
     position: relative;
     height: 2.5em;
     overflow: hidden;
     transition: height .25s;
+    /* background: radial-gradient(circle at 0% 50%, rgb(218, 165, 95), transparent 90%),
+        radial-gradient(circle at 100% 50%, rgb(218, 165, 95), transparent 90%), rgb(208, 118, 45); */
+    background-color: #101e20;
 }
 
 .custom-wrapper.open {
-    height: 14em;
+    height: 16em;
 }
 
 .custom-toggle {
@@ -129,6 +220,8 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
 }
 
 .site-footer {
+    background-color: #101e20;
+    color: #f4ecdb;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
