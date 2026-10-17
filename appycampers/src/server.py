@@ -1,8 +1,15 @@
-from flask import Flask, render_template
+import os
 
-from database import check_database_connection
+from flask import Flask, render_template
+from database import check_database_connection, db
 
 app = Flask(__name__)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 
 # Show the homepage and introduce the site and its functionality
