@@ -1,7 +1,9 @@
 import os
 
-from flask import Flask, render_template
-from database import check_database_connection, db
+from flask import Flask, render_template, redirect, url_for, session, jsonify
+from database import check_database_connection, db, User
+from authlib.integrations.flask_client import OAuth
+from urllib.parse import quote_plus, urlencode
 
 app = Flask(__name__)
 
@@ -11,17 +13,74 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+oauth = OAuth(app)
+
+app.secret_key = os.environ.get("SECRET_KEY")
+
+oauth.register(
+    "auth0",
+    client_id = os.environ["AUTH0_CLIENT_ID"],
+    client_secret = os.environ["AUTH0_CLIENT_SECRET"],
+    client_kwargs = {"scope": "openid profile email offline_access"},
+    server_metadata_url=f'https://{os.environ["AUTH0_DOMAIN"]}/.well-known/openid-configuration'
+)
+
 
 # Show the homepage and introduce the site and its functionality
 @app.get("/")
 def home():
     return render_template("index.html")
 
-# TODO REMOVE THIS AND IMPLEMENT AUTH0 FOR LOGIN MANAGEMENT
+@app.route("/callback", methods = ["GET", "POST"])
+def callback():
+    token = oauth.auth0.authorize_access_token()
+    session["user"] = token
+
+    userinfo = token.get("userinfo")
+
+    user = User.query.filter_by(email = userinfo["email"]).first()
+    if not user: 
+        user = User(
+            username = userinfo.get("nickname", userinfo["email"]),
+            email = userinfo["email"],
+            fullname = userinfo.get("name"),
+            avatar = userinfo.get("picture"),
+            accessToken = token.get("access_token"),
+            refreshToken = token.get("refresh_token"),
+        )
+        db.session.add(user)
+
+    else: 
+        user.accessToken = token.get("access_token")
+        user.refreshToken = token.get("refresh_token")
+
+    db.session.commit()
+
+    return jsonify({"message": "Logged in!", "user_id": user.id})
+
+
 @app.get("/login")
 def login():
-    return render_template("index.html")
+    return oauth.auth0.authorize_redirect(
+        redirect_uri = url_for('callback', _external = True)
+    )
 
+
+@app.get("/logout")
+def logout():
+    session.clear()
+    return redirect(
+        "https://"
+        + os.getenv("AUTH0_DOMAIN")
+        + "/v2/logout?"
+        + urlencode(
+            {
+                "returnTo": url_for("home", _external=True),
+                "client_id": os.getenv("AUTH0_CLIENT_ID"),
+            },
+            quote_via=quote_plus,
+        )
+    )
 
 # Browse and search public camps
 @app.get("/explore")

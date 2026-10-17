@@ -27,7 +27,7 @@ class User(db.Model):
     fullname = db.Column(db.String(255), nullable = True)
     avatar = db.Column(db.String(500), nullable = True)
     password = db.Column(db.String(500), nullable = True)
-    accessToken = db.Column(db.String(500), nullable = True)
-    refreshToken = db.Column(db.String(500), nullable = True)
+    accessToken = db.Column(db.Text, nullable = True)
+    refreshToken = db.Column(db.Text, nullable = True)
 
     
