@@ -31,3 +31,4 @@ class User(db.Model):
     )
 
     created_camps = db.relationship("Camps", back_populates = "creator", cascade = "all, delete-orphan")
+    camp_memberships = db.relationship("CampMember", back_populates="user", cascade="all, delete-orphan")

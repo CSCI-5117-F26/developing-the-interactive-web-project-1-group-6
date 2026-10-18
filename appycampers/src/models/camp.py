@@ -25,3 +25,4 @@ class Camps(db.Model):
     allowJoinRequets = db.Column(db.Boolean, nullable=False, default=True) 
 
     creator = db.relationship("User", back_populates="created_camps")
+    members = db.relationship("CampMember", back_populates="camp", cascade="all, delete-orphan")
