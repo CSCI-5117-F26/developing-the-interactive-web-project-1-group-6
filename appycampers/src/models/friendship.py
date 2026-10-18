@@ -6,7 +6,7 @@ class Friendship(db.Model):
 
     id = db.Column(db.String(36), primary_key = True, default = generate_uuid)
     senderId = db.Column(db.String(36), db.ForeignKey("users.id", ondelete = "CASCADE"), nullable = False)
-    receiverId = db.Column(db.String(36), db.ForeignKey("userrs.id", ondelete = "CASCADE"), nullable = False)
+    receiverId = db.Column(db.String(36), db.ForeignKey("users.id", ondelete = "CASCADE"), nullable = False)
     status = db.Column(db.String(50), nullable = False, default = "pending")
 
     sender = db.relationship("User", foreign_keys = [senderId], back_populates = "sent_friendships")

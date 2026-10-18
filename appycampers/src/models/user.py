@@ -16,7 +16,7 @@ class User(db.Model):
     accessToken = db.Column(db.Text, nullable = True)
     refreshToken = db.Column(db.Text, nullable = True)
 
-    sent_friendships = db.relationship("Friendship", foreign_keys = "Friendship.sender_id", back_populates = "sender", passive_delete = True)
+    sent_friendships = db.relationship("Friendship", foreign_keys = "Friendship.sender_id", back_populates = "sender", passive_deletes = True)
     received_friendships = db.relationship("Friendship", foreign_keys = "Friendship.receiver_id", back_populates = "receiver", passive_deletes = True)
     created_camps = db.relationship("Camp", back_populates = "creator", cascade = "all, delete-orphan")
     camp_memberships = db.relationship("CampMember", back_populates = "user", cascade = "all, delete-orphan")
