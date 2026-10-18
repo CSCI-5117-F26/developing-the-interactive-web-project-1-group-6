@@ -12,3 +12,4 @@ class CampExpense(db.Model):
 
     camp = db.relationship("Camp", back_populates = "expenses")
     paid_by_user = db.relationship("User", back_populates = "expenses_paid")
+    splits = db.relationship("ExpenseSplit", back_populates = "expense", cascade = "all, delete-orphan")

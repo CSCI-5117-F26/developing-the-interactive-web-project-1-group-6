@@ -24,5 +24,7 @@ class User(db.Model):
     camp_memberships = db.relationship("CampMember", back_populates = "user", cascade = "all, delete-orphan")
     gear_claims = db.relationship("GearClaim", back_populates = "claimed_by_user", cascade = "all, delete-orphan")
     expenses_paid = db.relationship("CampExpense", back_populates = "paid_by_user", cascade = "all, delete-orphan")
+    expense_splits = db.relationship("ExpenseSplit", back_populates = "user", cascade = "all, delete-orphan")
+
 
 
