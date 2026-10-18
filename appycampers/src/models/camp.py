@@ -27,4 +27,6 @@ class Camp(db.Model):
     creator = db.relationship("User", back_populates="created_camps")
     members = db.relationship("CampMember", back_populates="camp", cascade="all, delete-orphan")
     gear_requirements = db.relationship("GearRequirement", back_populates="camp", cascade="all, delete-orphan")
+    expenses = db.relationship("CampExpense", back_populates = "camp", cascade = "all, delete-orphan")
+
 

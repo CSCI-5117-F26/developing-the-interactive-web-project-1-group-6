@@ -23,4 +23,6 @@ class User(db.Model):
     created_camps = db.relationship("Camp", back_populates = "creator", cascade = "all, delete-orphan")
     camp_memberships = db.relationship("CampMember", back_populates = "user", cascade = "all, delete-orphan")
     gear_claims = db.relationship("GearClaim", back_populates = "claimed_by_user", cascade = "all, delete-orphan")
+    expenses_paid = db.relationship("CampExpense", back_populates = "paid_by_user", cascade = "all, delete-orphan")
+
 
