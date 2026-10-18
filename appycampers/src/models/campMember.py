@@ -15,11 +15,11 @@ class RequestStatus(enum.Enum):
 class CampMember(db.Model):
     __tablename__ = "camp_members"
 
-    id = db.Column(db.String(36), primary_key=True, default=generate_uuid)
-    campId = db.Column(db.String(36), db.ForeignKey("camps.id", ondelete="CASCADE"), nullable=False)
-    userId = db.Column(db.String(36), db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
-    role = db.Column(db.Enum(MemberRole), nullable=False, default=MemberRole.CAMPER)
-    status = db.Column(db.Enum(RequestStatus), nullable=False, default=RequestStatus.PENDING)
+    id = db.Column(db.String(36), primary_key = True, default = generate_uuid)
+    campId = db.Column(db.String(36), db.ForeignKey("camps.id", ondelete="CASCADE"), nullable = False)
+    userId = db.Column(db.String(36), db.ForeignKey("users.id", ondelete="CASCADE"), nullable = False)
+    role = db.Column(db.Enum(MemberRole), nullable = False, default = MemberRole.CAMP_MEMBER)
+    status = db.Column(db.Enum(RequestStatus), nullable = False, default = RequestStatus.PENDING)
 
-    camp = db.relationship("Camp", back_populates="members")
-    user = db.relationship("User", back_populates="camp_memberships")
+    camp = db.relationship("Camp", back_populates = "members")
+    user = db.relationship("User", back_populates = "camp_memberships")
