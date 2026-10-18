@@ -7,7 +7,7 @@ class VisibilityType(enum.Enum):
     PRIVATE = "private"
     FRIENDS_ONLY = "friends_only"
 
-class Camps(db.Model): 
+class Camp(db.Model): 
     __tablename__ = "camps"
     id = db.Column(db.String(36), primary_key = True, default = generate_uuid)
     creatorId = db.Column(db.String(36), db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
