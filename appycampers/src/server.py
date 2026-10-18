@@ -1,5 +1,5 @@
 import os
-
+import models
 from flask import Flask, render_template
 from extensions import db, oauth
 from controllers import auth_controller, health_controller

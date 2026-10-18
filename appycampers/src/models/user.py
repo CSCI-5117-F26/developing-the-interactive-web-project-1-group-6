@@ -1,10 +1,7 @@
 import uuid 
 
 from extensions import db
-
-def generate_uuid():
-    return str(uuid.uuid4())
-
+from utils import generate_uuid
 
 class User(db.Model): 
     __tablename__ = "users"
@@ -18,3 +15,17 @@ class User(db.Model):
     password = db.Column(db.String(500), nullable = True)
     accessToken = db.Column(db.Text, nullable = True)
     refreshToken = db.Column(db.Text, nullable = True)
+
+    sent_friendships = db.relationship(
+        "Friendship", 
+        foreign_keys = "Friendship.sender_id", 
+        back_populates = "sender",
+        passive_delete = True
+    )
+
+    received_friendships = db.relationship(
+        "Friendship", 
+        foreign_keys = "Friendship.receiver_id",
+        back_populates = "receiver",
+        passive_deletes = True
+    )
