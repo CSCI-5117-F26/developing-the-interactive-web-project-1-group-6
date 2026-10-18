@@ -29,3 +29,5 @@ class User(db.Model):
         back_populates = "receiver",
         passive_deletes = True
     )
+
+    created_camps = db.relationship("Camps", back_populates = "creator", cascade = "all, delete-orphan")
