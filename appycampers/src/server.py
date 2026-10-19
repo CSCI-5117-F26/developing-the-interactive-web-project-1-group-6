@@ -1,18 +1,32 @@
+import os
+import models
 from flask import Flask, render_template
-
-from database import check_database_connection
+from extensions import db, oauth
+from controllers import auth_controller, health_controller
 
 app = Flask(__name__)
 
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
+app.secret_key = os.environ.get("SECRET_KEY")
+
+db.init_app(app)
+oauth.init_app(app)
+
+
+oauth.register(
+    "auth0",
+    client_id = os.environ["AUTH0_CLIENT_ID"],
+    client_secret = os.environ["AUTH0_CLIENT_SECRET"],
+    client_kwargs = {"scope": "openid profile email offline_access"},
+    server_metadata_url=f'https://{os.environ["AUTH0_DOMAIN"]}/.well-known/openid-configuration'
+)
+
+app.register_blueprint(auth_controller)
+app.register_blueprint(health_controller)
 
 # Show the homepage and introduce the site and its functionality
 @app.get("/")
 def home():
-    return render_template("index.html")
-
-# TODO REMOVE THIS AND IMPLEMENT AUTH0 FOR LOGIN MANAGEMENT
-@app.get("/login")
-def login():
     return render_template("index.html")
 
 
@@ -76,16 +90,3 @@ def user_profile(user_id):
     return render_template("profile.html", user_id=user_id)
 
 
-@app.get("/health")
-def health_check():
-    if check_database_connection():
-        return{
-            "status": "ok",
-            "database": "connected",
-        }, 200 
-    
-    else: 
-        return {
-            "status": "error", 
-            "database": "unavailable"
-        }
