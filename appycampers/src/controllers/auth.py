@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, redirect, session, url_for 
+from flask import Blueprint, redirect, session, url_for
 from extensions import oauth, db
 from models import User
 from urllib.parse import quote_plus, urlencode
@@ -38,7 +38,7 @@ def callback():
 
     db.session.commit()
 
-    return jsonify({"message": "Logged in!", "user_id": user.id})
+    return redirect(url_for("home.home"))
 
 
 @auth_controller.get("/logout")
