@@ -2,7 +2,7 @@ import os
 import models
 from flask import Flask, render_template
 from extensions import db, oauth
-from controllers import auth_controller, explore_controller, health_controller
+from controllers import auth_controller, explore_controller, health_controller, home_controller
 
 app = Flask(__name__)
 
@@ -24,11 +24,7 @@ oauth.register(
 app.register_blueprint(auth_controller)
 app.register_blueprint(explore_controller)
 app.register_blueprint(health_controller)
-
-# Show the homepage and introduce the site and its functionality
-@app.get("/")
-def home():
-    return render_template("index.html")
+app.register_blueprint(home_controller)
 
 
 # Show the user's active/past camps and pending camp requests/invitations
@@ -83,4 +79,3 @@ def profile_friends():
 @app.get("/profile/u/<int:user_id>")
 def user_profile(user_id):
     return render_template("profile.html", user_id=user_id)
-
