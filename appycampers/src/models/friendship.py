@@ -10,4 +10,4 @@ class Friendship(db.Model):
     status = db.Column(db.String(50), nullable = False, default = "pending")
 
     sender = db.relationship("User", foreign_keys = [senderId], back_populates = "sent_friendships")
-    receiver = db.relationship("User", foreign_keys = [receiverId], back_populates = "reciever_friendships")
+    receiver = db.relationship("User", foreign_keys = [receiverId], back_populates = "received_friendships")
