@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, abort
 from sqlalchemy import func, literal_column
+from datetime import date
 
 from models import Camp
 from models.camp import VisibilityType
@@ -11,21 +12,38 @@ explore_controller = Blueprint("explore", __name__)
 @explore_controller.get("/explore")
 def explore():
 
+    today = date.today()
+
+    # strip whitespace and limit search to first 200 characters
+    search = request.args.get("search", "").strip()
+    search = search[:200] 
+
+    # retrieve filters
+    timing = request.args.get("timing", "upcoming")
+    if timing not in ("upcoming", "ongoing", "past", "all"):
+        abort(400)
+
+    # implement the standard filters
+    ## visibility
+    query = Camp.query.filter_by(Visibility=VisibilityType.PUBLIC)
+
+    ## timing
+    if timing == "upcoming":
+        query = query.filter(Camp.startDate > today)
+    elif timing == "ongoing":
+        query = query.filter(Camp.startDate <= today, Camp.endDate >= today)
+    elif timing == "past":
+        query = query.filter(Camp.endDate < today)
+
     # I referenced the following sources while implementing the searching approach:
     # https://www.postgresql.org/docs/current/textsearch-tables.html
     # https://www.postgresql.org/docs/current/textsearch-controls.html
     # https://docs.sqlalchemy.org/en/20/dialects/postgresql.html#full-text-search
-    search = request.args.get("search", "").strip()
-    search = search[:200] # Limit search to first 200 characters
-    query = Camp.query.filter_by(Visibility=VisibilityType.PUBLIC)
-
-    
     if search:
 
         # combine the name and description (empty string if no description)
         description = func.coalesce(Camp.campoutDescription, literal_column("''"))
         search_text = Camp.name + literal_column("' '") + description
-
 
         # prepare the camp text and user search then filter for matching camps
         search_vector = func.to_tsvector(literal_column("'english'"), search_text)
@@ -37,5 +55,13 @@ def explore():
         query = query.order_by(relevance.desc())
 
     # sort by date & id (if search then this will order by relevance -> date -> id)
-    camps = query.order_by(Camp.startDate.asc(), Camp.id.asc()).all()
-    return render_template("explore.html", camps=camps, search=search)
+    if timing == "past":
+        # for past reverse date order so more recently finished trips show up first
+        query = query.order_by(Camp.startDate.desc())
+    else:
+        query = query.order_by(Camp.startDate.asc())
+
+    camps = query.order_by(Camp.id.asc()).all()
+    filters = {"search": search, "timing": timing}
+
+    return render_template("explore.html",camps=camps,filters=filters)

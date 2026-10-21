@@ -116,10 +116,39 @@ h3 {
     gap: .5rem;
 }
 
-.explore-search input {
+.pure-form .explore-search input[type="search"] {
     flex: 1;
     min-width: 0;
     margin: 0;
+}
+
+#search {
+    border-radius: .25rem;
+    padding: .75em 1.2em;
+}
+
+.pure-form .explore-search button,
+.pure-form .explore-filter-actions button {
+    margin: 0;
+}
+
+.explore-filters .l-box {
+    padding: 0rem 1rem;
+}
+
+.explore-filters input,
+.explore-filters select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.explore-filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding: 1rem;
 }
 
 /* Create Camp */
