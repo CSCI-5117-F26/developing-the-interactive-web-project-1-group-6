@@ -349,7 +349,6 @@ in the mobile category, while having laptops/desktops excluded.
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 75rem;
     margin-bottom: 1.5rem;
 }
 
