@@ -1,4 +1,40 @@
 {% extends "base.html" %}
 {% block title %} Friends & Requests {% endblock %}
 {% block content %}
+<section class="page-banner">
+    <div class="container l-box">
+        <h1>My Profile</h1>
+        <p>username</p>
+    </div>
+</section>
+
+<div class="container l-box">
+    <div class="profile-toolbar">
+        <nav class="profile-tabs">
+            <a href="{{ url_for('profile')}}">Profile</a>
+            <a href="{{ url_for('profile_friends')}}">Friends</a>
+        </nav>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+</div>
+
+<h2>Add a Friend</h2>
+<div>
+    Search for users goes here
+</div>
+
+<h2>Incoming Friend Requests</h2>
+<div>
+    Incoming table goes here
+</div>
+
+<h2>Friends</h2>
+<div>
+    Friends table goes here
+</div>
+
+<h2>Outgoing Friend Requests</h2>
+<div>
+    Outgoing table goes here
+</div>
 {% endblock %}
