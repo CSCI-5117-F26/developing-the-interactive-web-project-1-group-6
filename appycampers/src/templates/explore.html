@@ -9,10 +9,9 @@
 </section>
 
 <section class="container l-box">
-    <form class="pure-form explore-search l-box">
-        <input type="search" placeholder="Search camps">
-        <button class="pure-button" type="button">Filters</button>
-        <button class="pure-button" type="button">Search</button>
+    <form method="GET" action="{{ url_for('explore.explore') }}" class="pure-form explore-search l-box">
+        <input type="search" name="search" placeholder="Search camps" value="{{ search }}">
+        <button class="pure-button pure-button-primary" type="submit">Search</button>
     </form>
 </section>
 
@@ -28,7 +27,8 @@
                 {% endif %}
                 <h3>{{ camp.name }}</h3>
                 <p>{{ camp.city }}, {{ camp.state }}</p>
-                <p>{{ camp.startDate.strftime("%b %-d, %Y") }} - {{ camp.endDate.strftime("%b %-d, %Y") }} · {{ camp.expectedCampers }} campers</p>
+                <p>{{ camp.startDate.strftime("%b %-d, %Y") }} - {{ camp.endDate.strftime("%b %-d, %Y") }} · {{
+                    camp.expectedCampers }} campers</p>
                 <p>{{ camp.campoutDescription or "No description provided." }}</p>
                 <a class="pure-button" href="{{ url_for('camp_plan', camp_id=camp.id) }}">
                     View camp
