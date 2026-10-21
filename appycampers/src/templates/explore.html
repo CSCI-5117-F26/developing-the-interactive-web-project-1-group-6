@@ -9,9 +9,12 @@
 </section>
 
 <section class="container l-box">
-    <form method="GET" action="{{ url_for('explore.explore') }}" class="pure-form explore-search l-box">
-        <input type="search" name="search" placeholder="Search camps" value="{{ search }}">
-        <button class="pure-button pure-button-primary" type="submit">Search</button>
+    <form method="GET" action="{{ url_for('explore.explore') }}" class="pure-form">
+        <div class="explore-search l-box">
+            <input type="search" id="search" name="search" maxlength="200"
+                placeholder="Search camps by name or description" value="{{ search }}">
+            <button class="pure-button pure-button-primary" type="submit">Search</button>
+        </div>
     </form>
 </section>
 
@@ -27,9 +30,11 @@
                 {% endif %}
                 <h3>{{ camp.name }}</h3>
                 <p>{{ camp.city }}, {{ camp.state }}</p>
-                <p>{{ camp.startDate.strftime("%b %-d, %Y") }} - {{ camp.endDate.strftime("%b %-d, %Y") }} · {{
-                    camp.expectedCampers }} campers</p>
-                <p>{{ camp.campoutDescription or "No description provided." }}</p>
+                <p>
+                    {{ camp.startDate.strftime("%b %-d, %Y") }} - {{ camp.endDate.strftime("%b %-d, %Y") }} ·
+                    {{ camp.expectedCampers }} campers
+                </p>
+                <p>{{ camp.campoutDescription or "No description provided." | truncate(140) }}</p>
                 <a class="pure-button" href="{{ url_for('camp_plan', camp_id=camp.id) }}">
                     View camp
                 </a>
@@ -37,9 +42,14 @@
         </div>
         {% else %}
         <div class="pure-u-1 l-box">
+            {% if search %}
+            <p>No camps found matching your search.</p>
+            {% else %}
             <p>No public camps are available right now.</p>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
+
 </section>
 {% endblock %}
