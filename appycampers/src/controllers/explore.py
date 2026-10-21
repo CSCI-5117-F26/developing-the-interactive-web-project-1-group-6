@@ -26,6 +26,25 @@ def explore():
     if timing not in ("upcoming", "ongoing", "past", "all"):
         abort(400)
 
+    start_date = request.args.get("start_date", "")
+    end_date = request.args.get("end_date", "")
+
+    # convert the date inputs
+    from_date = None
+    to_date = None
+
+    try:
+        if start_date:
+            from_date = date.fromisoformat(start_date)
+        if end_date:
+            to_date = date.fromisoformat(end_date)
+    except ValueError:
+        abort(400)
+
+    if from_date and to_date:
+        if from_date > to_date:
+            abort(400)
+
     # implement the standard filters
     ## visibility
     query = Camp.query.filter_by(Visibility=VisibilityType.PUBLIC)
@@ -37,6 +56,12 @@ def explore():
         query = query.filter(Camp.startDate <= today, Camp.endDate >= today)
     elif timing == "past":
         query = query.filter(Camp.endDate < today)
+
+    ## date range
+    if from_date:
+        query = query.filter(Camp.startDate >= from_date)
+    if to_date:
+        query = query.filter(Camp.endDate <= to_date)
 
     # I referenced the following sources while implementing the searching approach:
     # https://www.postgresql.org/docs/current/textsearch-tables.html
@@ -77,6 +102,24 @@ def explore():
         query = query.order_by(Camp.startDate.asc())
 
     camps = query.order_by(Camp.id.asc()).all()
-    filters = {"search": search, "timing": timing, "location": location}
+    filters = {
+        "search": search, 
+        "timing": timing, 
+        "location": location,
+        "start_date": start_date,
+        "end_date": end_date
+    }
+    default_filters = {
+        "search": "",
+        "location": "",
+        "timing": "upcoming",
+        "start_date": "",
+        "end_date": ""
+    }
 
-    return render_template("explore.html",camps=camps,filters=filters)
+    return render_template(
+        "explore.html",
+        camps=camps,
+        filters=filters,
+        has_filters= filters != default_filters
+    )

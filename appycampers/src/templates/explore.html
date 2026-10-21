@@ -44,6 +44,14 @@
                     <input type="search" id="location" name="location" maxlength="200" placeholder="City and/or state"
                         value="{{ filters.location }}">
                 </div>
+                <div class="pure-u-1 pure-u-md-1-2 l-box">
+                    <label for="start_date">Earliest starting date</label>
+                    <input type="date" id="start_date" name="start_date" value="{{ filters.start_date }}">
+                </div>
+                <div class="pure-u-1 pure-u-md-1-2 l-box">
+                    <label for="end_date">Latest ending date</label>
+                    <input type="date" id="end_date" name="end_date" value="{{ filters.end_date }}">
+                </div>
             </div>
             <div class="explore-filter-actions">
                 <a class="pure-button button-outline" href="{{ url_for('explore.explore') }}">Clear filters</a>
@@ -77,10 +85,10 @@
         </div>
         {% else %}
         <div class="pure-u-1 l-box">
-            {% if filters.search or filters.location or filters.timing != "upcoming" %}
-            <p>No camps found matching your search.</p>
+            {% if has_filters %}
+            <p>No camps were found matching your search criteria.</p>
             {% else %}
-            <p>No public camps are available right now.</p>
+            <p>No upcomming public camps are available right now.</p>
             {% endif %}
         </div>
         {% endfor %}
