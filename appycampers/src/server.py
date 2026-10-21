@@ -2,7 +2,7 @@ import os
 import models
 from flask import Flask, render_template
 from extensions import db, oauth
-from controllers import auth_controller, health_controller
+from controllers import (auth_controller, explore_controller, health_controller, home_controller, my_camps_controller,)
 
 app = Flask(__name__)
 
@@ -22,24 +22,10 @@ oauth.register(
 )
 
 app.register_blueprint(auth_controller)
+app.register_blueprint(explore_controller)
 app.register_blueprint(health_controller)
-
-# Show the homepage and introduce the site and its functionality
-@app.get("/")
-def home():
-    return render_template("index.html")
-
-
-# Browse and search public camps
-@app.get("/explore")
-def explore():
-    return render_template("explore.html")
-
-
-# Show the user's active/past camps and pending camp requests/invitations
-@app.get("/my-camps")
-def my_camps():
-    return render_template("my_camps.html")
+app.register_blueprint(home_controller)
+app.register_blueprint(my_camps_controller)
 
 
 # Section to enter the camp details when creating a new camp
@@ -61,13 +47,13 @@ def create_camp_invite():
 
 
 # Show a camp's details, participants, and shared gear plan
-@app.get("/camps/<int:camp_id>")
+@app.get("/camps/<camp_id>")
 def camp_plan(camp_id):
     return render_template("camp_plan.html", camp_id=camp_id)
 
 
 # Shows the campmaster controls for managing a camp
-@app.get("/camps/<int:camp_id>/manage")
+@app.get("/camps/<camp_id>/manage")
 def camp_manage(camp_id):
     return render_template("camp_manage.html", camp_id=camp_id)
 
@@ -88,5 +74,3 @@ def profile_friends():
 @app.get("/profile/u/<int:user_id>")
 def user_profile(user_id):
     return render_template("profile.html", user_id=user_id)
-
-
