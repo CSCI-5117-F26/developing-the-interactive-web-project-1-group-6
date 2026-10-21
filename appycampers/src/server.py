@@ -2,7 +2,7 @@ import os
 import models
 from flask import Flask, render_template
 from extensions import db, oauth
-from controllers import auth_controller, explore_controller, health_controller, home_controller
+from controllers import (auth_controller, explore_controller, health_controller, home_controller, my_camps_controller,)
 
 app = Flask(__name__)
 
@@ -25,12 +25,7 @@ app.register_blueprint(auth_controller)
 app.register_blueprint(explore_controller)
 app.register_blueprint(health_controller)
 app.register_blueprint(home_controller)
-
-
-# Show the user's active/past camps and pending camp requests/invitations
-@app.get("/my-camps")
-def my_camps():
-    return render_template("my_camps.html")
+app.register_blueprint(my_camps_controller)
 
 
 # Section to enter the camp details when creating a new camp
@@ -58,7 +53,7 @@ def camp_plan(camp_id):
 
 
 # Shows the campmaster controls for managing a camp
-@app.get("/camps/<int:camp_id>/manage")
+@app.get("/camps/<camp_id>/manage")
 def camp_manage(camp_id):
     return render_template("camp_manage.html", camp_id=camp_id)
 

@@ -37,6 +37,7 @@ def callback():
         user.refreshToken = token.get("refresh_token")
 
     db.session.commit()
+    session["user_id"] = user.id
 
     return redirect(url_for("home.home"))
 
