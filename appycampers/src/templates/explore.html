@@ -39,6 +39,11 @@
                         </option>
                     </select>
                 </div>
+                <div class="pure-u-1 pure-u-md-1-2 l-box">
+                    <label for="location">Location</label>
+                    <input type="search" id="location" name="location" maxlength="200" placeholder="City and/or state"
+                        value="{{ filters.location }}">
+                </div>
             </div>
             <div class="explore-filter-actions">
                 <a class="pure-button button-outline" href="{{ url_for('explore.explore') }}">Clear filters</a>
@@ -72,7 +77,7 @@
         </div>
         {% else %}
         <div class="pure-u-1 l-box">
-            {% if filters.search %}
+            {% if filters.search or filters.location or filters.timing != "upcoming" %}
             <p>No camps found matching your search.</p>
             {% else %}
             <p>No public camps are available right now.</p>

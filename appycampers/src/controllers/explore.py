@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, abort
-from sqlalchemy import func, literal_column
+from sqlalchemy import func, literal_column, or_
 from datetime import date
 
 from models import Camp
@@ -14,9 +14,12 @@ def explore():
 
     today = date.today()
 
-    # strip whitespace and limit search to first 200 characters
+    # strip whitespace and limit inputs to first 200 characters
     search = request.args.get("search", "").strip()
     search = search[:200] 
+
+    location = request.args.get("location", "").strip()
+    location = location[:200]
 
     # retrieve filters
     timing = request.args.get("timing", "upcoming")
@@ -54,6 +57,18 @@ def explore():
         relevance = func.ts_rank(search_vector, search_query)
         query = query.order_by(relevance.desc())
 
+    # filter by city and/or state
+    if location:
+        location_words = location.replace(",", " ").split()
+
+        for word in location_words:
+            location_pattern = f"%{word}%"
+
+            city_matches = Camp.city.ilike(location_pattern)
+            state_matches = Camp.state.ilike(location_pattern)
+
+            query = query.filter(or_(city_matches, state_matches))
+
     # sort by date & id (if search then this will order by relevance -> date -> id)
     if timing == "past":
         # for past reverse date order so more recently finished trips show up first
@@ -62,6 +77,6 @@ def explore():
         query = query.order_by(Camp.startDate.asc())
 
     camps = query.order_by(Camp.id.asc()).all()
-    filters = {"search": search, "timing": timing}
+    filters = {"search": search, "timing": timing, "location": location}
 
     return render_template("explore.html",camps=camps,filters=filters)
