@@ -11,9 +11,10 @@
 <div class="container l-box">
     <div class="profile-toolbar">
         <nav class="profile-tabs">
-            Buttons will go here
+            <a href="{{ url_for('profile')}}">Profile</a>
+            <a href="{{ url_for('profile_friends')}}">Friends</a>
         </nav>
-        Logout button goes here
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
     </div>
 </div>
 

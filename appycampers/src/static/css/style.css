@@ -342,3 +342,18 @@ in the mobile category, while having laptops/desktops excluded.
             #101e20 74%);
     border-radius: 18px;
 }
+
+/* Profile */
+.profile-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 75rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-tabs {
+    display: flex;
+    gap: .5rem;
+}
