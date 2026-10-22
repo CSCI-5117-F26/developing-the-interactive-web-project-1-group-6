@@ -7,7 +7,7 @@ body {
     line-height: 1.6;
 }
 
-.pure-button  {
+.pure-button {
     border-radius: .25rem;
     padding: .75em 1.2em;
 }
@@ -151,6 +151,30 @@ h3 {
     padding: 1rem;
 }
 
+.explore-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding: 2rem 0rem;
+}
+
+.explore-pagination .current-page {
+    background: #263531;
+    color: #f4ecdb;
+}
+
+.pagination-desktop {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.pagination-mobile {
+    display: none;
+}
+
 /* Create Camp */
 #create_camp_wizard .pure-form input:not([type="checkbox"]),
 #create_camp_wizard .pure-form select {
@@ -247,6 +271,7 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
 .pure-menu-link {
     color: inherit;
 }
+
 /* 
 .pure-menu-link:hover,
 .pure-menu-link:focus {
@@ -341,6 +366,26 @@ in the mobile category, while having laptops/desktops excluded.
 @media screen and (max-width: 63.999em) {
     .custom-toggle {
         display: block;
+    }
+
+    .pagination-desktop {
+        display: none;
+    }
+
+    .pagination-mobile {
+        display: flex;
+        align-items: center;
+        gap: .25rem;
+    }
+
+    .explore-pagination {
+        flex-wrap: nowrap;
+        gap: .25rem;
+        padding: 1rem 2rem;
+    }
+
+    .explore-pagination .pure-button {
+        font-size: .875rem;
     }
 }
 

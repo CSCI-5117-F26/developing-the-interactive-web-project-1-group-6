@@ -14,6 +14,7 @@ explore_controller = Blueprint("explore", __name__)
 def explore():
 
     today = date.today()
+    page = request.args.get("page", 1, type=int)
 
     # strip whitespace and limit inputs to first 200 characters
     search = request.args.get("search", "").strip()
@@ -131,7 +132,13 @@ def explore():
     else:
         query = query.order_by(Camp.startDate.asc())
 
-    camps = query.order_by(Camp.id.asc()).all()
+    # I referenced the following source while implementing pagination:
+    # https://flask-sqlalchemy.palletsprojects.com/en/stable/pagination/
+    # add pagination and clamp values outside valid range to closest valid value
+    camps = query.paginate(page=max(1, page), per_page=6, error_out=False)
+    if camps.pages > 0 and page > camps.pages:
+        camps = query.paginate(page=camps.pages, per_page=6, error_out=False)
+
     filters = {
         "search": search, 
         "timing": timing, 
@@ -151,8 +158,8 @@ def explore():
 
     return render_template(
         "explore.html",
-        camps = camps,
-        filters = filters,
-        has_filters = filters != default_filters,
-        logged_in = user is not None
+        camps=camps,
+        filters=filters,
+        has_filters=filters != default_filters,
+        logged_in=user is not None
     )

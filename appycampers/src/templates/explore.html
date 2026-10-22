@@ -103,9 +103,63 @@
             {% else %}
             <p>No upcoming public camps are available right now.</p>
             {% endif %}
+            <a class="pure-button button-outline" href="{{ url_for('explore.explore') }}">
+                Clear filters
+            </a>
+            <a class="pure-button pure-button-primary" href="{{ url_for('create_camp') }}">
+                Create Your Own
+            </a>
         </div>
         {% endfor %}
     </div>
 
 </section>
+
+<!--     
+I referenced the following source while implementing pagination:
+https://flask-sqlalchemy.palletsprojects.com/en/stable/pagination/ 
+-->
+{% if camps.pages > 1 %}
+<nav class="container explore-pagination">
+    {% if camps.has_prev %}
+    <a class="pure-button pure-button-primary"
+        href="{{ url_for('explore.explore', page=camps.prev_num, **filters) }}">Prev</a>
+    {% endif %}
+
+    <!-- desktop version -->
+    <span class="pagination-desktop">
+        {% for page in camps.iter_pages() %}
+        {% if page %}
+        {% if page != camps.page %}
+        <a class="pure-button" href="{{ url_for('explore.explore', page=page, **filters) }}">{{ page }}</a>
+        {% else %}
+        <span class="pure-button current-page">{{ page }}</span>
+        {% endif %}
+        {% else %}
+        <span class="ellipsis">…</span>
+        {% endif %}
+        {% endfor %}
+    </span>
+
+    <!-- mobile version -->
+    <span class="pagination-mobile">
+        {% for page in camps.iter_pages(left_edge=1, left_current=0, right_current=0, right_edge=1) %}
+        {% if page %}
+        {% if page != camps.page %}
+        <a class="pure-button" href="{{ url_for('explore.explore', page=page, **filters) }}">{{ page }}</a>
+        {% else %}
+        <span class="pure-button current-page">{{ page }}</span>
+        {% endif %}
+        {% else %}
+        <span class="ellipsis">…</span>
+        {% endif %}
+        {% endfor %}
+    </span>
+
+    {% if camps.has_next %}
+    <a class="pure-button pure-button-primary"
+        href="{{ url_for('explore.explore', page=camps.next_num, **filters) }}">Next</a>
+    {% endif %}
+</nav>
+{% endif %}
 {% endblock %}
