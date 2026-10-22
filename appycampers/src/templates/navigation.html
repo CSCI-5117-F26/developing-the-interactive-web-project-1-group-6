@@ -18,7 +18,11 @@
         {% set picture = userinfo.get('picture') %}
         <a class="pure-menu-link" href="{{ url_for('profile') }}">
             <span class="profile-avatar">
-                Logic goes here
+                {% if picture %}
+                <img src="{{ picture }}">
+                {% else %}
+                {{ (userinfo.get('name'))}}
+                {% endif %}
             </span>
         </a>
         {% else %}
