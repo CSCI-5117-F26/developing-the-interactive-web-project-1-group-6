@@ -15,13 +15,13 @@
     <li class="pure-menu-item">
         {% if session.get('user_id') %}
         {% set userinfo = (session.get('user')) %}
-        {% set picture = userinfo.get('picture') %}
+        {% set avatar = userinfo.get('picture') %}
         <a class="pure-menu-link nav-profile" href="{{ url_for('profile') }}">
             <span class="profile-avatar">
-                {% if picture %}
-                <img src="{{ picture }}">
+                {% if user.avatar %}
+                <img src="{{ user.avatar }}">
                 {% else %}
-                <img arc="https://static.thenounproject.com/png/4154905-200.png">
+                {{ (user.fullname or user.username or 'U')[0]|upper }}
                 {% endif %}
             </span>
             <span class="profile-label">My Profile</span>

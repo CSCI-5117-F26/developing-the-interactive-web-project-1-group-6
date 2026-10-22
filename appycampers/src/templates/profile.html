@@ -25,7 +25,7 @@
             {% if user.avatar %}
             <img src="{{ user.avatar }}">
             {% else %}
-            {{ (user.fullname or usernusername or 'U')[0]|upper }}
+            {{ (user.fullname or user.username or 'U')[0]|upper }}
             {% endif %}
         </div>
         <div class="profile-identity">
