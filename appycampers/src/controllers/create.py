@@ -10,6 +10,7 @@ from utils.auth import get_current_user
 from extensions import db
 from models import Camp, CampMember, Friendship, GearRequirement, User
 from models.camp import VisibilityType
+from models.campMember import MemberRole, RequestStatus
 
 create_controller = Blueprint("create", __name__)
 
@@ -19,6 +20,11 @@ class GearItemIn(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
     itemName: Annotated[str, StringConstraints(min_length=1, max_length=255)] = Field(validation_alias="name")
     quantity: int = Field(ge=1, validation_alias="qty")
+
+class MemberIn(BaseModel):
+    userId: str
+    role: MemberRole = MemberRole.CAMP_MEMBER
+    status: RequestStatus = RequestStatus.APPROVED
 
 class CampCreate(BaseModel):
     """Validated payload for POST /camps/create"""
@@ -77,6 +83,12 @@ class CampCreate(BaseModel):
         for item in self.items:
           rows.append(item.model_dump())
         return rows
+
+    def member_rows(self, user_id, invitees):
+        rows = [MemberIn(userId=user_id, role=MemberRole.CAMP_MASTER, status=RequestStatus.APPROVED)] # Add camp master to members
+        for friend_id in invitees:
+            rows.append(MemberIn(userId=friend_id)) # Add everyone invited
+        return [r.model_dump() for r in rows]
 
 FIELD_LABELS = {
     "name": "Campout name",
@@ -147,18 +159,17 @@ def get_friends(user_id):
 
 
 def build_camp(user_id, camp_in, invitees):
-    """Returns data model for SQLAcademy camp row from form data."""
+    """Returns data model for SQLAlchemy camp row from form data."""
     camp = Camp(creatorId=user_id, **camp_in.camp_columns())
-    CampMember(camp=camp, userId=user_id, role="organizer", status="accepted")
-    for friend_id in invitees:
-        CampMember(camp=camp, userId=friend_id, role="camper", status="invited")
+    for row in camp_in.member_rows(user_id, invitees):
+        CampMember(camp=camp, **row)
     for row in camp_in.gear_rows():
         GearRequirement(camp=camp, **row)
     return camp
 
 # Routes
 
-@create_controller.get("camps/create")
+@create_controller.get("/camps/create")
 def create_camp():
     user = get_current_user()
     if user is None:
@@ -169,7 +180,7 @@ def create_camp():
     return render_template("create_camp.html", friends=friends)
 
 
-@create_controller.post("camps/create")
+@create_controller.post("/camps/create")
 def process_create_camp():
     user = get_current_user()
     if user is None:
