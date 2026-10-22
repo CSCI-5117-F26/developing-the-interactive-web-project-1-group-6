@@ -18,12 +18,13 @@
     </div>
 </div>
 
+<div class="container l-box">
 <h2>Profile Details</h2>
-<form class="pure-form pure-form-stacked" method="post" action="{{ url_for('profile') }}">
+<form class="pure-form pure-form-stacked profile-form" method="post" action="{{ url_for('profile') }}">
     <div>
         <label for="display_name">Display name</label>
         <input type="text" id="display_name" name="display_name"
-        value="{{ user.fullname}}">
+        class="profile-field" value="{{ user.fullname}}">
     </div>
 
     <div>
@@ -35,5 +36,5 @@
         <button type="submit" class="pure-button pure-button-primary">Save profile changes</button>
     </div>
 </form>
-
+</div>
 {% endblock %}

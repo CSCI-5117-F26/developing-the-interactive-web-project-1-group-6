@@ -469,3 +469,17 @@ in the mobile category, while having laptops/desktops excluded.
     display: flex;
     gap: .5rem;
 }
+
+.profile-form {
+    max-width: 40rem;
+}
+
+.profile-form > div {
+    margin-bottom: 1.25rem;
+}
+
+.profile-form label {
+    margin-bottom: .35rem;
+    color: #5f6f66;
+    font-size: .9rem;
+}
