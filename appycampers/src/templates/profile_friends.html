@@ -40,7 +40,12 @@
                 <td>User</td>
                 <td class="profile-handle">@username</td>
                 <td class="table-actions">
-                    Buttons and such
+                    <form method="post" action="/profile/friends/decline/{{ req.id }}">
+                        <button type="submit" class="pure-button button-outline">Decline</button>
+                    </form>
+                    <form method="post" action="/profile/friends/accept/{{ req.id }}">
+                        <button type="submit" class="pure-button button-outline">Accept</button>
+                    </form>
                 </td>
             </tr>
         </tbody>
