@@ -12,6 +12,7 @@ class User(db.Model):
     camps = db.Column(db.String(255), nullable = True)
     fullname = db.Column(db.String(255), nullable = True)
     avatar = db.Column(db.String(500), nullable = True)
+    about_me = db.Column(db.Text, nullable = True)
     password = db.Column(db.String(500), nullable = True)
     accessToken = db.Column(db.Text, nullable = True)
     refreshToken = db.Column(db.Text, nullable = True)
@@ -24,7 +25,6 @@ class User(db.Model):
     expenses_paid = db.relationship("CampExpense", back_populates = "paid_by_user", cascade = "all, delete-orphan")
     expense_splits = db.relationship("ExpenseSplit", back_populates = "user", cascade = "all, delete-orphan")
     discussions = db.relationship("CampDiscussion", back_populates = "user", cascade = "all, delete-orphan")
-
 
 
 

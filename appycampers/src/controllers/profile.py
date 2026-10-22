@@ -15,6 +15,7 @@ def profile():
 
     if request.method == "POST":
         user.fullname = request.form.get("display_name", "").strip()
+        user.about_me = request.form.get("about_me", "").strip()
         db.session.commit()
         return redirect(url_for("profile.profile"))
 
