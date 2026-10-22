@@ -19,16 +19,18 @@
 </div>
 
 <h2>Profile Details</h2>
-<div>
-    Display name
-</div>
+<form class="pure-form pure-form-stacked" method="post" action="{{ url_for('profile') }}">
+    <div>
+        Display name
+    </div>
+    
+    <div>
+        About me
+    </div>
 
-<div>
-    About me
-</div>
-
-<div>
-    Save profile changes button
-</div>
+    <div>
+        Save profile changes button
+    </div>
+</form>
 
 {% endblock %}
