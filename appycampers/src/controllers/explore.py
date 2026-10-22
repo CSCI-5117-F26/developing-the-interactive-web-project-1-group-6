@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, request, abort
+from flask import Blueprint, render_template, request, abort, redirect, url_for
 from sqlalchemy import func, literal_column, or_
 from datetime import date
 
-from models import Camp
+from models import Camp, Friendship
 from models.camp import VisibilityType
+from utils.auth import get_current_user
 
 
 explore_controller = Blueprint("explore", __name__)
@@ -21,7 +22,11 @@ def explore():
     location = request.args.get("location", "").strip()
     location = location[:200]
 
-    # retrieve filters
+    # retrieve filters and validate incoming values
+    visibility = request.args.get("visibility", "public")
+    if visibility not in ("public", "friends"):
+        abort(400)
+
     timing = request.args.get("timing", "upcoming")
     if timing not in ("upcoming", "ongoing", "past", "all"):
         abort(400)
@@ -29,7 +34,7 @@ def explore():
     start_date = request.args.get("start_date", "")
     end_date = request.args.get("end_date", "")
 
-    # convert the date inputs
+    ## convert the date inputs
     from_date = None
     to_date = None
 
@@ -47,7 +52,32 @@ def explore():
 
     # implement the standard filters
     ## visibility
-    query = Camp.query.filter_by(Visibility=VisibilityType.PUBLIC)
+    user = get_current_user()
+    query = Camp.query
+
+    if visibility == "friends":
+        if user is None:
+            return redirect(url_for("auth.login"))
+
+        # get all accepted friendships involving the current user
+        friendships = Friendship.query.filter(
+            Friendship.status == "accepted",
+            or_(Friendship.senderId == user.id, Friendship.receiverId == user.id)
+        ).all()
+
+        # the other user in each friendship is the friend
+        friend_ids = []
+        for friendship in friendships:
+            if friendship.senderId == user.id:
+                friend_ids.append(friendship.receiverId)
+            else:
+                friend_ids.append(friendship.senderId)
+
+        # filter to include only public and friends-only camps created by friends
+        query = query.filter(Camp.Visibility.in_([VisibilityType.PUBLIC, VisibilityType.FRIENDS_ONLY]))
+        query = query.filter(Camp.creatorId.in_(friend_ids))
+    else:
+        query = query.filter_by(Visibility=VisibilityType.PUBLIC)
 
     ## timing
     if timing == "upcoming":
@@ -97,7 +127,7 @@ def explore():
     # sort by date & id (if search then this will order by relevance -> date -> id)
     if timing == "past":
         # for past reverse date order so more recently finished trips show up first
-        query = query.order_by(Camp.startDate.desc())
+        query = query.order_by(Camp.endDate.desc())
     else:
         query = query.order_by(Camp.startDate.asc())
 
@@ -107,19 +137,22 @@ def explore():
         "timing": timing, 
         "location": location,
         "start_date": start_date,
-        "end_date": end_date
+        "end_date": end_date,
+        "visibility": visibility
     }
     default_filters = {
         "search": "",
         "location": "",
         "timing": "upcoming",
         "start_date": "",
-        "end_date": ""
+        "end_date": "",
+        "visibility": "public"
     }
 
     return render_template(
         "explore.html",
-        camps=camps,
-        filters=filters,
-        has_filters= filters != default_filters
+        camps = camps,
+        filters = filters,
+        has_filters = filters != default_filters,
+        logged_in = user is not None
     )
