@@ -14,7 +14,13 @@
 <ul class="pure-menu-list nav-account">
     <li class="pure-menu-item">
         {% if session.get('user_id') %}
-        <a class="pure-menu-link" href="{{ url_for('profile') }}">My Profile</a>
+        {% set userinfo = (session.get('user'))}
+        {% set picture = userinfo.get('picture') %}
+        <a class="pure-menu-link" href="{{ url_for('profile') }}">
+            <span class="profile-avatar">
+                Logic goes here
+            </span>
+        </a>
         {% else %}
         <a class="pure-menu-link" href="{{ url_for('auth.login') }}">Log in</a>
         {% endif %}
