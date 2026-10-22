@@ -218,6 +218,11 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
 .pure-menu-link {
     color: inherit;
 }
+
+.nav-profile, 
+.profile-avatar {
+    display: none;
+}
 /* 
 .pure-menu-link:hover,
 .pure-menu-link:focus {
@@ -327,6 +332,17 @@ in the mobile category, while having laptops/desktops excluded.
 
     .custom-menu-3 .nav-account {
         text-align: right;
+    }
+
+    .nav-profile {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .nav-profile,
+    .profile-avatar {
+        display: inline-flex;
+        align-items: center;
     }
 }
 
