@@ -69,24 +69,24 @@
         </div>
 
         <div class="table-wrap">
-            <table class="friends-table">
+            <table class="friends-table" id="friends_table">
                 <thead>
                     <tr><th>Friend</th><th>Username</th><th class="col-actions">Actions</th></tr>
                 </thead>
                 <tbody>
-                    {% for req in incoming_requests %}
-                    <tr>
-                        <td>User</td>
+                    {% for friend in friends %}
+                    <tr data-search="{{ (friend.fullname)}}">
+                        <td>Friend</td>
                         <td class="profile-handle">@username</td>
                         <td class="table-actions">
                             <a href="{{ url_for('user_profile', user_id=friend.id) }}" class="pure-button button-outline">View</a>
-                            <form method="post" action="/profile/friends/remove/{{ req.id }}">
+                            <form method="post" action="/profile/friends/remove/{{ friend.id }}">
                                 <button type="submit" class="pure-button button-outline">Remove</button>
                             </form>
                         </td>
                     </tr>
                     {% else %}
-                    <tr><td colspan="3" class="empty-row">No incoming requests</td></tr>
+                    <tr><td colspan="3" class="empty-row">You have no friends yet</td></tr>
                     {% endfor %}
                 </tbody>
             </table>
