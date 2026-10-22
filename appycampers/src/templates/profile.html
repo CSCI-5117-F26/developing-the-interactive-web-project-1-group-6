@@ -28,6 +28,10 @@
             {{ (user.fullname or usernusername or 'U')[0]|upper }}
             {% endif %}
         </div>
+        <div>
+            <strong class="profile-name">{{ user.fullname }}</strong>
+            <span class="profile-handle">@{{ user.username }}</span>
+        </div>
     </div>
 </div>
 
