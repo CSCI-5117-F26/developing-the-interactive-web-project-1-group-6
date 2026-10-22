@@ -483,3 +483,21 @@ in the mobile category, while having laptops/desktops excluded.
     color: #5f6f66;
     font-size: .9rem;
 }
+
+.profile-form .profile-field {
+    width: 100%;
+    margin: 0;
+    padding: .65em .85em;
+    background: #fffdf7;
+    border: 1px solid #d8d6c8;
+    border-radius: .25rem;
+    color: #263531;
+    font: inherit;
+    box-shadow: none;
+}
+
+.profile-form .profile-field:focus {
+    outline: none;
+    border-color: #eab875;
+    box-shadow: 0 0 0 3px rgba(234, 184, 117, .35);
+}
