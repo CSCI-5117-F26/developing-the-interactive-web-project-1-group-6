@@ -20,3 +20,10 @@ def profile():
         return redirect(url_for("profile.profile"))
 
     return render_template("profile.html", user=user)
+
+@profile_controller.get("/profile/friends")
+def friends():
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for("auth.login"))
+    
