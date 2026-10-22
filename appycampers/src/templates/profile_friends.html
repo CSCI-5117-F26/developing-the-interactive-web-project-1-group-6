@@ -99,25 +99,19 @@
     <h2>Outgoing Friend Requests</h2>
     <div class="table-wrap">
         <table class="friends-table">
-            <thead>
-                <tr><th>User</th><th>Username</th><th class="col-actions">Actions</th></tr>
-            </thead>
             <tbody>
-                {% for req in incoming_requests %}
+                {% for req in outgoing_requests %}
                 <tr>
                     <td>User</td>
                     <td class="profile-handle">@username</td>
                     <td class="table-actions">
-                        <form method="post" action="/profile/friends/decline/{{ req.id }}">
-                            <button type="submit" class="pure-button button-outline">Decline</button>
-                        </form>
-                        <form method="post" action="/profile/friends/accept/{{ req.id }}">
-                            <button type="submit" class="pure-button button-outline">Accept</button>
+                        <form method="post" action="/profile/friends/cancel/{{ req.id }}">
+                            <button type="submit" class="pure-button button-outline">Cancel Request</button>
                         </form>
                     </td>
                 </tr>
                 {% else %}
-                <tr><td colspan="3" class="empty-row">No incoming requests</td></tr>
+                <tr><td colspan="3" class="empty-row">No outgoing requests</td></tr>
                 {% endfor %}
             </tbody>
         </table>
