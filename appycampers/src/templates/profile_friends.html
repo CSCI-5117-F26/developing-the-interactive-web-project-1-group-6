@@ -18,9 +18,14 @@
     </div>
 </div>
 
-<h2>Add a Friend</h2>
-<div>
-    Search for users goes here
+<div class="container l-box">
+    <section class="friends-section">
+    <h2>Add a Friend</h2>
+    <form class="pure-form friends-search">
+        <input type="text" id="friend_username" placeholder="Search by username">
+        <button type="submit" class="pure-button pure-button-primary">Send Friend Request</button>
+    </form>
+    </section>
 </div>
 
 <h2>Incoming Friend Requests</h2>
@@ -37,4 +42,5 @@
 <div>
     Outgoing table goes here
 </div>
+
 {% endblock %}

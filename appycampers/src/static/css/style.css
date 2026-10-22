@@ -547,3 +547,20 @@ in the mobile category, while having laptops/desktops excluded.
     object-fit: cover;
     display: block;
 }
+
+/*Friends*/
+.friends-section {
+    padding-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.friends-search {
+    display: flex;
+    gap: .75rem;
+}
+
+.friends-search input {
+    margin: 0;
+    background: #fffdf7;
+    border-color: #d8d6c8;
+}
