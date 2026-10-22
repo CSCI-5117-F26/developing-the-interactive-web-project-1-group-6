@@ -339,11 +339,22 @@ in the mobile category, while having laptops/desktops excluded.
         align-items: center;
     }
 
-    .nav-profile,
+    .nav-profile
     .profile-avatar {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #fbf8ef;
+        color: #101e20;
+        border: 2px solid #d8d6c8;
+        font-size: .9rem;
+        font-weight: bold;
     }
+
 }
 
 /* Campfire animated SVG CSS - this was generated using ChatGPT 5.6-Sol with thinking effort set to high */
