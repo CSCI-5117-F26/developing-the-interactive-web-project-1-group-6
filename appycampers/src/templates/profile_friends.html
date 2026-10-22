@@ -32,27 +32,29 @@
     <section class="friends-section">
     <h2>Incoming Friend Requests</h2>
     <div class="table-wrap">
-        <thead>
-            <tr><th>User</th><th>Username</th><th class="col-actions">Actions</th></tr>
-        </thead>
-        <tbody>
-            {% for req in incoming_requests %}
-            <tr>
-                <td>User</td>
-                <td class="profile-handle">@username</td>
-                <td class="table-actions">
-                    <form method="post" action="/profile/friends/decline/{{ req.id }}">
-                        <button type="submit" class="pure-button button-outline">Decline</button>
-                    </form>
-                    <form method="post" action="/profile/friends/accept/{{ req.id }}">
-                        <button type="submit" class="pure-button button-outline">Accept</button>
-                    </form>
-                </td>
-            </tr>
-            {% else %}
-            <tr><td colspan="3" class="empty-row">No incoming requests</td></tr>
-            {% endfor %}
-        </tbody>
+        <table class="friends-table">
+            <thead>
+                <tr><th>User</th><th>Username</th><th class="col-actions">Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for req in incoming_requests %}
+                <tr>
+                    <td>User</td>
+                    <td class="profile-handle">@username</td>
+                    <td class="table-actions">
+                        <form method="post" action="/profile/friends/decline/{{ req.id }}">
+                            <button type="submit" class="pure-button button-outline">Decline</button>
+                        </form>
+                        <form method="post" action="/profile/friends/accept/{{ req.id }}">
+                            <button type="submit" class="pure-button button-outline">Accept</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="3" class="empty-row">No incoming requests</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
     </section>
 </div>
