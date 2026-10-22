@@ -30,6 +30,7 @@
 
 <div class="container l-box">
     <section class="friends-section">
+    <h2>Incoming Friend Requests</h2>
     <div class="table-wrap">
         <thead>
             <tr><th>User</th><th>Username</th><th class="col-actions">Actions</th></tr>
@@ -48,11 +49,10 @@
                     </form>
                 </td>
             </tr>
+            {% else %}
+            <tr><td colspan="3" class="empty-row">No incoming requests</td></tr>
+            {% endfor %}
         </tbody>
-    </div>
-    <h2>Incoming Friend Requests</h2>
-    <div>
-        Incoming table goes here
     </div>
     </section>
 </div>
