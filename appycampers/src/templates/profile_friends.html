@@ -34,6 +34,16 @@
         <thead>
             <tr><th>User</th><th>Username</th><th class="col-actions">Actions</th></tr>
         </thead>
+        <tbody>
+            {% for req in incoming_requests %}
+            <tr>
+                <td>User</td>
+                <td class="profile-handle">@username</td>
+                <td class="table-actions">
+                    Buttons and such
+                </td>
+            </tr>
+        </tbody>
     </div>
     <h2>Incoming Friend Requests</h2>
     <div>
