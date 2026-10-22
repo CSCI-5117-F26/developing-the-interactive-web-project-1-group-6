@@ -359,6 +359,15 @@ in the mobile category, while having laptops/desktops excluded.
         object-fit: cover;
         display: block;
     }
+
+    .nav-profile .profile-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
 }
 
 /* Campfire animated SVG CSS - this was generated using ChatGPT 5.6-Sol with thinking effort set to high */

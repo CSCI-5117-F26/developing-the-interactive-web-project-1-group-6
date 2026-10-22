@@ -14,16 +14,17 @@
 <ul class="pure-menu-list nav-account">
     <li class="pure-menu-item">
         {% if session.get('user_id') %}
-        {% set userinfo = (session.get('user'))}
+        {% set userinfo = (session.get('user')) %}
         {% set picture = userinfo.get('picture') %}
         <a class="pure-menu-link nav-profile" href="{{ url_for('profile') }}">
             <span class="profile-avatar">
                 {% if picture %}
                 <img src="{{ picture }}">
                 {% else %}
-                {{ (userinfo.get('name'))}}
+                <img arc="https://static.thenounproject.com/png/4154905-200.png">
                 {% endif %}
             </span>
+            <span class="profile-label">My Profile</span>
         </a>
         {% else %}
         <a class="pure-menu-link" href="{{ url_for('auth.login') }}">Log in</a>
