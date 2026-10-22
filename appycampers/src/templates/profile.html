@@ -19,6 +19,19 @@
 </div>
 
 <div class="container l-box">
+    <h2>Profile Details</h2>
+    <div class="profile-summary">
+        <div class="profile-avatar">
+            {% if user.avatar %}
+            <img src="{{ user.avatar }}">
+            {% else %}
+            {{ (user.fullname or usernusername or 'U')[0]|upper }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container l-box">
 <h2>Profile Details</h2>
 <form class="pure-form pure-form-stacked profile-form" method="post" action="{{ url_for('profile') }}">
     <div>

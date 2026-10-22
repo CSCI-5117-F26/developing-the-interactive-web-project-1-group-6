@@ -501,3 +501,18 @@ in the mobile category, while having laptops/desktops excluded.
     border-color: #eab875;
     box-shadow: 0 0 0 3px rgba(234, 184, 117, .35);
 }
+
+.profile-avatar {
+    flex: none;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fbf8ef;
+    border: 2px solid #d8d6c8;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
