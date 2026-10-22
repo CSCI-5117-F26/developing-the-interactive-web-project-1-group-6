@@ -286,6 +286,65 @@ h3 {
     resize: vertical;
 }
 
+.site-camp_plan .inline-form {
+    display: inline;
+    margin: 0;
+}
+
+.site-camp_plan .row-actions,
+.site-camp_plan .edit-item-form:not([hidden]) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.site-camp_plan td .pure-button {
+    padding: .4em .8em;
+}
+
+.site-camp_plan .plan-error {
+    background: #f8e1dc;
+    border: 1px solid #c9806f;
+    border-radius: .5rem;
+    color: #6b2417;
+}
+
+.site-camp_plan .message-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    align-items: baseline;
+}
+
+.site-camp_plan .message-meta time {
+    font-size: .875rem;
+}
+
+.site-camp_plan .camp-messages p {
+    margin: .25rem 0 0;
+}
+
+.site-camp_plan .camper-initial {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: #263531;
+    color: #f4ecdb;
+    font-weight: bold;
+}
+
+.site-camp_plan .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
 @media screen and (max-width: 35.999em) {
     .site-camp_plan .page-banner h1 {
         font-size: 2.25rem;
