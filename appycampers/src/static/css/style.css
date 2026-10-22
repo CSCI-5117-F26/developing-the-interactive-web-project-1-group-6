@@ -7,7 +7,7 @@ body {
     line-height: 1.6;
 }
 
-.pure-button  {
+.pure-button {
     border-radius: .25rem;
     padding: .75em 1.2em;
 }
@@ -116,10 +116,63 @@ h3 {
     gap: .5rem;
 }
 
-.explore-search input {
+.pure-form .explore-search input[type="search"] {
     flex: 1;
     min-width: 0;
     margin: 0;
+}
+
+#search {
+    border-radius: .25rem;
+    padding: .75em 1.2em;
+}
+
+.pure-form .explore-search button,
+.pure-form .explore-filter-actions button {
+    margin: 0;
+}
+
+.explore-filters .l-box {
+    padding: 0rem 1rem;
+}
+
+.explore-filters input,
+.explore-filters select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.explore-filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding: 1rem;
+}
+
+.explore-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding: 2rem 0rem;
+}
+
+.explore-pagination .current-page {
+    background: #263531;
+    color: #f4ecdb;
+}
+
+.pagination-desktop {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.pagination-mobile {
+    display: none;
 }
 
 /* Create Camp */
@@ -316,6 +369,26 @@ in the mobile category, while having laptops/desktops excluded.
 @media screen and (max-width: 63.999em) {
     .custom-toggle {
         display: block;
+    }
+
+    .pagination-desktop {
+        display: none;
+    }
+
+    .pagination-mobile {
+        display: flex;
+        align-items: center;
+        gap: .25rem;
+    }
+
+    .explore-pagination {
+        flex-wrap: nowrap;
+        gap: .25rem;
+        padding: 1rem 2rem;
+    }
+
+    .explore-pagination .pure-button {
+        font-size: .875rem;
     }
 }
 
