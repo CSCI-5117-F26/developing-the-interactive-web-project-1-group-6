@@ -40,19 +40,6 @@ def camp_plan(camp_id):
 def camp_manage(camp_id):
     return render_template("camp_manage.html", camp_id=camp_id)
 
-
-# Show and edit the user's own profile details
-@app.get("/profile")
-def profile():
-    return render_template("profile.html")
-
-
-# Show friends and manage incoming and outgoing friend requests
-@app.get("/profile/friends")
-def profile_friends():
-    return render_template("profile_friends.html")
-
-
 # Show another user's public profile
 @app.get("/profile/u/<int:user_id>")
 def user_profile(user_id):
