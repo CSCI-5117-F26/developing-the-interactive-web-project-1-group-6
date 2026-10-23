@@ -40,13 +40,13 @@
     <div>
         <label for="display_name">Display name</label>
         <input type="text" id="display_name" name="display_name"
-        class="profile-field" value="{{ user.fullname }}">
+        class="profile-field" value="{{ user.fullname or '' }}">
     </div>
 
     <div>
         <label for="about_me">About me</label>
         <textarea id="about_me" name="about_me" rows="5"
-        class="profile-field">{{ user.about_me }}</textarea>
+        class="profile-field">{{ user.about_me or '' }}</textarea>
     </div>
 
     <div>
