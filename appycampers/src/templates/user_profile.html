@@ -24,7 +24,12 @@
                 
             </form>
             {% elif relationship == "received" %}
-            
+            <form method="post" action="{{ url_for('profile.decline_request', friendship_id=friendship.id) }}">
+                
+            </form>
+            <form method="post" action="{{ url_for('profile.accept_request', friendship_id=friendship.id) }}">
+                
+            </form>
             {% elif relationship == "friends" %}
             
             {% endif %}
