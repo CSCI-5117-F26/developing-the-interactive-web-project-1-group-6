@@ -506,6 +506,12 @@ in the mobile category, while having laptops/desktops excluded.
 .profile-identity {
     display: flex;
     flex-direction: column;
+    line-height: 1.3;
+}
+
+.profile-form textarea.profile-field {
+    min-height: 8rem;
+    resize: vertical;
 }
 
 .profile-name {
@@ -552,8 +558,13 @@ in the mobile category, while having laptops/desktops excluded.
 
 /*Friends*/
 .friends-section {
+    padding-top: 0;
+    margin-bottom: 0;
+}
+
+.friends-block + .friends-block .friends-section {
     padding-top: 1rem;
-    margin-bottom: 1.5rem;
+    border-top: 1px solid #d8d6c8;
 }
 
 .friends-search {
@@ -566,6 +577,7 @@ in the mobile category, while having laptops/desktops excluded.
     min-width: 0;
 }
 
+.friends-search input,
 #friend_filter {
     margin: 0;
     background: #fffdf7;
@@ -663,4 +675,19 @@ in the mobile category, while having laptops/desktops excluded.
     width: 2.25rem;
     height: 2.25rem;
     font-size: 1rem;
+}
+
+/* Divider line between friends sections */
+.friends-block + .friends-block .friends-section {
+    border-top: 1px solid #d8d6c8;
+}
+
+/* Shared helper (used by labels in the friends and profile forms) */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
 }

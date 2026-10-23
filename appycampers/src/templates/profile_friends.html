@@ -45,17 +45,18 @@
     {% endwith %}
 </div>
 
-<div class="container l-box">
+<div class="container l-box friends-block">
     <section class="friends-section">
     <h2>Add a Friend</h2>
     <form class="pure-form friends-search" method="post" action="{{ url_for('profile.send_request') }}">
+        <label class="visually-hidden" for="friend_username">Search by username</label>
         <input type="text" id="friend_username" name="username" placeholder="Search by username">
         <button type="submit" class="pure-button pure-button-primary">Send Friend Request</button>
     </form>
     </section>
 </div>
 
-<div class="container l-box">
+<div class="container l-box friends-block">
     <section class="friends-section">
     <h2>Incoming Friend Requests ({{ incoming_requests|length }})</h2>
     <div class="table-wrap">
@@ -73,7 +74,7 @@
                             <button type="submit" class="pure-button button-outline">Decline</button>
                         </form>
                         <form method="post" action="{{ url_for('profile.accept_request', friendship_id=req.id) }}">
-                            <button type="submit" class="pure-button button-outline">Accept</button>
+                            <button type="submit" class="pure-button pure-button-primary">Accept</button>
                         </form>
                     </td>
                 </tr>
@@ -86,7 +87,7 @@
     </section>
 </div>
 
-<div class="container l-box">
+<div class="container l-box friends-block">
     <section>
         <div class="section-heading">
             <h2>Friends ({{ friends|length }})</h2>
@@ -146,4 +147,12 @@
     </section>
 </div>
 
+<script>
+    document.getElementById("friend_filter").addEventListener("input", function () {
+        const q = this.value.trim().toLowerCase();
+        document.querySelectorAll("#friends_table tbody tr[data-search]").forEach(function (row) {
+            row.hidden = q !== "" && !row.dataset.search.includes(q);
+        });
+    });
+</script>
 {% endblock %}
