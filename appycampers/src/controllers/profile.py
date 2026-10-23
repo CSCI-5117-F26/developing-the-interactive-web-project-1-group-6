@@ -88,18 +88,14 @@ def send_request():
         )
     ).first()
 
-    friends_list = []
-
-    for f in accepted:
-        if f.senderId == user_id:
-            friends_list.append(f.receiver)
+    if existing:
+        if existing.status == "accepted":
+            flash(f"You are already friends with @{target.username}.")
+        elif existing.senderId == user_id:
+            flash(f"You already sent a request to @{target.username}.")
         else:
-            friends_list.append(f.sender)
-
-    def friend_name(friend):
-        return (friend.fullname or friend.username).lower()
-
-    friends_list.sort(key = friend_name)
+            flash(f"@{target.username} already sent you a request. Accept it below.")
+        return redirect(url_for("profile.friends"))
     
     return render_template (
         "profile_friends.html",
