@@ -31,7 +31,9 @@
                 
             </form>
             {% elif relationship == "friends" %}
-            
+            <form method="post" action="{{ url_for('profile.remove_friend', friend_id=profile_user.id) }}">
+                
+            </form>
             {% endif %}
         </div>
     </div>
