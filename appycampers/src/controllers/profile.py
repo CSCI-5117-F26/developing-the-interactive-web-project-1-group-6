@@ -66,8 +66,6 @@ def send_request():
     if not user_id:
         return redirect(url_for("auth.login"))
 
-    user = User.query.get_or_404(user_id)
-
     username = request.form.get("username", "").strip().lstrip("@")
     target = User.query.filter_by(username = username).first()
 
@@ -101,15 +99,13 @@ def send_request():
     db.session.commit()
     flash(f"Friend request sent to @{target.username}!")
     
-    return render_template("profile_friends.html", user=user)
+    return redirect(url_for("profile.friends"))
 
 @profile_controller.post("/profile/friends/accept/<friendship_id>")
 def accept_request(friendship_id):
     user_id = session.get("user_id")
     if not user_id:
         return redirect(url_for("auth.login"))
-
-    user = User.query.get_or_404(user_id)
 
     friendship = Friendship.query.filter_by(
         id = friendship_id, receiverId = user_id, status = "pending"
@@ -118,7 +114,7 @@ def accept_request(friendship_id):
     friendship.status = "accepted"
     db.session.commit()
 
-    return render_template("profile_friends.html", user=user)
+    return redirect(url_for("profile.friends"))
 
 @profile_controller.post("/profile/friends/decline/<friendship_id>")
 def decline_request(friendship_id):
@@ -126,8 +122,6 @@ def decline_request(friendship_id):
     if not user_id:
         return redirect(url_for("auth.login"))
 
-    user = User.query.get_or_404(user_id)
-
     friendship = Friendship.query.filter_by(
         id = friendship_id, receiverId = user_id, status = "pending"
     ).first_or_404()
@@ -135,7 +129,7 @@ def decline_request(friendship_id):
     db.session.delete(friendship)
     db.session.commit()
     
-    return render_template("profile_friends.html", user=user)
+    return redirect(url_for("profile.friends"))
 
 @profile_controller.post("/profile/friends/cancel/<friendship_id>")
 def cancel_request(friendship_id):
@@ -143,8 +137,6 @@ def cancel_request(friendship_id):
     if not user_id:
         return redirect(url_for("auth.login"))
 
-    user = User.query.get_or_404(user_id)
-
     friendship = Friendship.query.filter_by(
         id = friendship_id, receiverId = user_id, status = "pending"
     ).first_or_404()
@@ -152,15 +144,13 @@ def cancel_request(friendship_id):
     db.session.delete(friendship)
     db.session.commit()
     
-    return render_template("profile_friends.html", user=user)
+    return redirect(url_for("profile.friends"))
 
-@profile_controller.post("/profile/friends/remove/<friendship_id>")
+@profile_controller.post("/profile/friends/remove/<friend_id>")
 def remove_friend(friend_id):
     user_id = session.get("user_id")
     if not user_id:
         return redirect(url_for("auth.login"))
-
-    user = User.query.get_or_404(user_id)
 
     friendship = Friendship.query.filter(
         Friendship.status == "accepted",
@@ -173,4 +163,4 @@ def remove_friend(friend_id):
     db.session.delete(friendship)
     db.session.commit()
     
-    return render_template("profile_friends.html", user=user)
+    return redirect(url_for("profile.friends"))

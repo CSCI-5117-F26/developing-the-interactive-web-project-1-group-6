@@ -11,8 +11,8 @@
 <div class="container l-box">
     <div class="profile-toolbar">
         <nav class="profile-tabs">
-            <a href="{{ url_for('profile')}}" class="pure-button pure-button-primary">Profile</a>
-            <a href="{{ url_for('profile_friends')}}" class="pure-button button-outline">Friends</a>
+            <a href="{{ url_for('profile.profile')}}" class="pure-button pure-button-primary">Profile</a>
+            <a href="{{ url_for('profile.friends')}}" class="pure-button button-outline">Friends</a>
         </nav>
         <a href="{{ url_for('auth.logout') }}" class="pure-button button-outline">Logout</a>
     </div>
@@ -36,7 +36,7 @@
 </div>
 
 <div class="container l-box">
-<form class="pure-form pure-form-stacked profile-form" method="post" action="{{ url_for('profile') }}">
+<form class="pure-form pure-form-stacked profile-form" method="post" action="{{ url_for('profile.profile') }}">
     <div>
         <label for="display_name">Display name</label>
         <input type="text" id="display_name" name="display_name"
