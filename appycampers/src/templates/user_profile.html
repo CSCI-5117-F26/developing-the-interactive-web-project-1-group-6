@@ -53,3 +53,15 @@
         </div>
     </div>
 </div>
+
+<div class="container l-box">
+    <section class="profile-about-section">
+        <h3>About {{ first_name }}</h3>
+        {% if profile_user.about_me %}
+        <p class="profile-about">{{ profile_user.about_me }}</p>
+        {% else %}
+        <p class="profile-handle">{{ first_name }} hasn't written an About me yet.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
