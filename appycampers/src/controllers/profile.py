@@ -45,10 +45,14 @@ def friends():
         else:
             friends_list.append(f.sender)
 
-    
+    def friend_name(friend):
+        return (friend.fullname or friend.username).lower()
 
+    friends_list.sort(key = friend_name)
+    
     return render_template (
         "profile_friends.html",
         incoming_requests = incoming_requests,
         outgoing_requests = outgoing_requests,
+        friends = friends_list,
     )
