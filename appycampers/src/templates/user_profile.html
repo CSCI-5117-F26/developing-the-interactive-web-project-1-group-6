@@ -38,4 +38,18 @@
             {% endif %}
         </div>
     </div>
+
+    <div class="profile-summary">
+        <div class="profile-avatar">
+            {% if profile_user.avatar %}
+            <img src="{{ profile_user.avatar }}">
+            {% else %}
+            {{ display_name[0]|upper }}
+            {% endif %}
+        </div>
+        <div class="profile-identity">
+            <strong class="profile-name">{{ display_name }}</strong>
+            <span class="profile-handle">@{{ profile_user.username }}</span>
+        </div>
+    </div>
 </div>
