@@ -22,7 +22,7 @@
             </form>
             {% elif relationship == "sent" %}
             <form method="post" action="{{ url_for('profile.cancel_request', friendship_id=friendship.id) }}">
-                
+                <button type="submit" class="pure-button button-outline">Cancel Request</button>
             </form>
             {% elif relationship == "received" %}
             <form method="post" action="{{ url_for('profile.decline_request', friendship_id=friendship.id) }}">
