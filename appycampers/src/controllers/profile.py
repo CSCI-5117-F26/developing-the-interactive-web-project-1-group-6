@@ -176,3 +176,10 @@ def user_profile(user_id):
         return redirect(url_for("profile.profile"))
 
     profile_user = User.query.get_or_404(user_id)
+
+    friendship = Friendship.query.filter(
+        or_(
+            and_(Friendship.senderId == current_id, Friendship.receiverId == user_id),
+            and_(Friendship.senderId == user_id, Friendship.receiverId == current_id),
+        )
+    ).first()
