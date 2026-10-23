@@ -54,13 +54,13 @@ def friends():
     
     return render_template (
         "profile_friends.html",
-        user=user,
+        user = user,
         incoming_requests = incoming_requests,
         outgoing_requests = outgoing_requests,
         friends = friends_list,
     )
 
-@profile_controller.get("/profile/friends/request")
+@profile_controller.post("/profile/friends/request")
 def send_request():
     user_id = session.get("user_id")
     if not user_id:

@@ -8,7 +8,7 @@
         {% if person_user.avatar %}
         <img src="{{ person_user.avatar }}">
         {% else %}
-        {{ (person_user.fullname or person_user.username or 'U')[0]upper }}
+        {{ (person_user.fullname or person_user.username or 'U')[0]|upper }}
         {% endif %}
     </span>
     <span class="person-text">
@@ -48,7 +48,7 @@
 <div class="container l-box">
     <section class="friends-section">
     <h2>Add a Friend</h2>
-    <form class="pure-form friends-search">
+    <form class="pure-form friends-search" method="post" action="{{ url_for('profile.send_request') }}">
         <input type="text" id="friend_username" placeholder="Search by username">
         <button type="submit" class="pure-button pure-button-primary">Send Friend Request</button>
     </form>
