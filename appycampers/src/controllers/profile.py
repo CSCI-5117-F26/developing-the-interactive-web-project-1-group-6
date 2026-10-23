@@ -80,11 +80,13 @@ def send_request():
         return redirect(url_for("profile.friends"))
         
 
-    # get all accepted friendships involving the current user
-    accepted = Friendship.query.filter(
-        Friendship.status == "accepted",
-        or_(Friendship.senderId == user_id, Friendship.receiverId == user_id)
-    ).all()
+    # search for matches 
+    existing = Friendship.query.filter(
+        or_(
+            and_(Friendship.senderId == user_id, Friendship.receiverId == target.id),
+            and_(Friendship.senderId == target.id, Friendship.receiverId == user_id),
+        )
+    ).first()
 
     friends_list = []
 
