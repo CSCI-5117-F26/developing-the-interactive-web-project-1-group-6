@@ -12,10 +12,14 @@
         {% endif %}
     </span>
     <span class="person-text">
-        <span>{{}}</span>
+        <span>{{ person_user.fullname or person_user.username }}</span>
+        {% if show_handle %}
+        <span class="profile-handle">@{{ person_user.username }}</span>
+        {% endif %}
     </span>
 </div>
 {% endmacro %}
+
 <section class="page-banner">
     <div class="container l-box">
         <h1>My Profile</h1>
