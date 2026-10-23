@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, url_for, session, request
+from flask import Blueprint, redirect, render_template, url_for, session, request, flash
 from extensions import db
 from sqlalchemy import and_, or_
 
@@ -68,8 +68,17 @@ def send_request():
 
     user = User.query.get_or_404(user_id)
 
-    incoming_requests = Friendship.query.filter_by(receiverId = user_id, status = "pending").all()
-    outgoing_requests = Friendship.query.filter_by(senderId = user_id, status = "pending").all()
+    username = request.form.get("username", "").strip().lstrip("@")
+    target = User.query.filter_by(username = username).first()
+
+    if not target:
+        flash("No user found with that username.")
+        return redirect(url_for("profile.friends"))
+    
+    if target.id == user_id:
+        flash("You can't send a friend request to yourself.")
+        return redirect(url_for("profile.friends"))
+        
 
     # get all accepted friendships involving the current user
     accepted = Friendship.query.filter(
