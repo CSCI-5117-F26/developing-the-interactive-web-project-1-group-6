@@ -192,4 +192,11 @@ def user_profile(user_id):
         relationship = "sent"
     else:
         relationship = "received"
+
+    return render_template(
+        "user_profile.html",
+        profile_user = profile_user,
+        friendship = friendship,
+        relationship = relationship,
+    )
     
