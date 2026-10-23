@@ -1,3 +1,21 @@
 {% extends "base.html" %}
+{% set display_name = profile_user.fullname or profile_user.username %}
+{% set first_name = display_name.split(' ')[0] %}
 {% block title %} {{ profile_user.fullname or profile_user.username }} {% endblock %}
 {% block content %}
+<section class="page-banner">
+    <div class="container l-box">
+        <h1>{{ first_name }}'s Profile</h1>
+        <p class="profile-handle">@{{ profile_user.username }}</p>
+    </div>
+</section>
+
+<div class="container l-box">
+    <div class="section-heading">
+        <h2>Profile Details</h2>
+
+        <div class="profile-actions">
+            
+        </div>
+    </div>
+</div>
