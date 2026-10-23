@@ -165,3 +165,14 @@ def remove_friend(friend_id):
     db.session.commit()
     
     return redirect(url_for("profile.friends"))
+
+@profile_controller.get("/profile/u/<user_id>")
+def user_profile(user_id):
+    current_id = session.get("user_id")
+    if not current_id:
+        return redirect(url_for("auth.login"))
+
+    if user_id == current_id:
+        return redirect(url_for("profile.profile"))
+
+    profile_user = User.query.get_or_404(user_id)
