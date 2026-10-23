@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, url_for, session, request
 from extensions import db
 
-from models import User
+from models import User, Friendship
 
 profile_controller = Blueprint("profile", __name__)
 
@@ -26,4 +26,12 @@ def friends():
     user_id = session.get("user_id")
     if not user_id:
         return redirect(url_for("auth.login"))
-    
+
+    incoming_requests = Friendship.query.filter_by(recieverId = user_id, status = "pending").all()
+    outgoing_requests = Friendship.query.filter_by(senderId = user_id, status = "pending").all()
+
+    return render_template (
+        "profile_friends.html",
+        incoming_requests = incoming_requests,
+        outgoing_requests = outgoing_requests,
+    )
