@@ -20,7 +20,9 @@
                 
             </form>
             {% elif relationship == "sent" %}
-            
+            <form method="post" action="{{ url_for('profile.cancel_request', friendship_id=friendship.id) }}">
+                
+            </form>
             {% elif relationship == "received" %}
             
             {% elif relationship == "friends" %}
