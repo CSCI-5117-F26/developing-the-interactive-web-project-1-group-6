@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, url_for, session, request
 from extensions import db
+from sqlalchemy import and_, or_
 
 from models import User, Friendship
 
@@ -29,6 +30,22 @@ def friends():
 
     incoming_requests = Friendship.query.filter_by(recieverId = user_id, status = "pending").all()
     outgoing_requests = Friendship.query.filter_by(senderId = user_id, status = "pending").all()
+
+    # get all accepted friendships involving the current user
+    accepted = Friendship.query.filter(
+        Friendship.status == "accepted",
+        or_(Friendship.senderId == user_id, Friendship.receiverId == user_id)
+    ).all()
+
+    friends_list = []
+
+    for f in accepted:
+        if f.senderId == user_id:
+            friends_list.append(f.receiver)
+        else:
+            friends_list.append(f.sender)
+
+    
 
     return render_template (
         "profile_friends.html",
