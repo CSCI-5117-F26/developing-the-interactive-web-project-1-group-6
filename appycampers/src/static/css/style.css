@@ -691,3 +691,29 @@ in the mobile category, while having laptops/desktops excluded.
     clip-path: inset(50%);
     white-space: nowrap;
 }
+
+/*Public profile*/
+.profile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.profile-actions form {
+    margin: 0;
+}
+
+.profile-about-section {
+    padding-top: 1rem;
+    border-top: 1px solid #d8d6c8;
+}
+
+.profile-about-section h3 {
+    margin: 0 0 .5rem;
+}
+
+.profile-about {
+    max-width: 40rem;
+    margin: 0;
+    white-space: pre-line;
+}
