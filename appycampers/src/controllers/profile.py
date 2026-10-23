@@ -153,3 +153,24 @@ def cancel_request(friendship_id):
     db.session.commit()
     
     return render_template("profile_friends.html", user=user)
+
+@profile_controller.post("/profile/friends/remove/<friendship_id>")
+def remove_friend(friend_id):
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for("auth.login"))
+
+    user = User.query.get_or_404(user_id)
+
+    friendship = Friendship.query.filter(
+        Friendship.status == "accepted",
+        or_(
+            and_(Friendship.senderId == user_id, Friendship.receiverId == friend_id),
+            and_(Friendship.senderId == friend_id, Friendship.receiverId == user_id),
+        ),
+    ).first_or_404()
+
+    db.session.delete(friendship)
+    db.session.commit()
+    
+    return render_template("profile_friends.html", user=user)
