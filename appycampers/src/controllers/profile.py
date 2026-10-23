@@ -183,3 +183,13 @@ def user_profile(user_id):
             and_(Friendship.senderId == user_id, Friendship.receiverId == current_id),
         )
     ).first()
+
+    if not friendship:
+        relationship = "none"
+    elif friendship.status == "accepted":
+        relationship = "friends"
+    elif friendship.senderId == current_id:
+        relationship = "sent"
+    else:
+        relationship = "received"
+    
