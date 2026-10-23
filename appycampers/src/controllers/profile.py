@@ -96,11 +96,9 @@ def send_request():
         else:
             flash(f"@{target.username} already sent you a request. Accept it below.")
         return redirect(url_for("profile.friends"))
+
+    db.session.add(Friendship(senderId = user_id, receiver_id = target.id, status = "pending"))
+    db.session.commit()
+    flash(f"Friend request sent to @{target.username}!")
     
-    return render_template (
-        "profile_friends.html",
-        user=user,
-        incoming_requests = incoming_requests,
-        outgoing_requests = outgoing_requests,
-        friends = friends_list,
-    )
+    return render_template("profile_friends.html", user=user)
