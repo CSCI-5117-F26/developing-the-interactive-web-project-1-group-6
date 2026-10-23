@@ -22,14 +22,14 @@
             </form>
             {% elif relationship == "sent" %}
             <form method="post" action="{{ url_for('profile.cancel_request', friendship_id=friendship.id) }}">
-                <button type="submit" class="pure-button button-outline">Cancel Request</button>
+                <button type="submit" class="pure-button button-outline">Cancel Friend Request</button>
             </form>
             {% elif relationship == "received" %}
             <form method="post" action="{{ url_for('profile.decline_request', friendship_id=friendship.id) }}">
-                <button type="submit" class="pure-button button-outline">Decline</button>
+                <button type="submit" class="pure-button button-outline">Decline Friend Request</button>
             </form>
             <form method="post" action="{{ url_for('profile.accept_request', friendship_id=friendship.id) }}">
-                <button type="submit" class="pure-button pure-button-primary">Accept</button>
+                <button type="submit" class="pure-button pure-button-primary">Accept Friend Request</button>
             </form>
             {% elif relationship == "friends" %}
             <form method="post" action="{{ url_for('profile.remove_friend', friend_id=profile_user.id) }}">
