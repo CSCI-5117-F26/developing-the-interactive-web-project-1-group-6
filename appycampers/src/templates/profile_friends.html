@@ -66,13 +66,13 @@
             <tbody>
                 {% for req in incoming_requests %}
                 <tr>
-                    <td>User</td>
-                    <td class="profile-handle">@username</td>
+                    <td>{{ person(req.sender) }}</td>
+                    <td class="profile-handle">@{{ req.sender.username }}</td>
                     <td class="table-actions">
-                        <form method="post" action="/profile/friends/decline/{{ req.id }}">
+                        <form method="post" action="{{ url_for('profile.decline_request', friendship_id=req.id) }}">
                             <button type="submit" class="pure-button button-outline">Decline</button>
                         </form>
-                        <form method="post" action="/profile/friends/accept/{{ req.id }}">
+                        <form method="post" action="{{ url_for('profile.accept_request', friendship_id=req.id) }}">
                             <button type="submit" class="pure-button button-outline">Accept</button>
                         </form>
                     </td>
