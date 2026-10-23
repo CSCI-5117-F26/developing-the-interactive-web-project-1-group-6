@@ -1,6 +1,21 @@
 {% extends "base.html" %}
 {% block title %} Friends & Requests {% endblock %}
 {% block content %}
+
+{% macro person(person_user, show_handle=False) %}
+<div class="person">
+    <span class="profile-avatar profile-avatar-sm">
+        {% if person_user.avatar %}
+        <img src="{{ person_user.avatar }}">
+        {% else %}
+        {{ (person_user.fullname or person_user.username or 'U')[0]upper }}
+        {% endif %}
+    </span>
+    <span class="person-text">
+        <span>{{}}</span>
+    </span>
+</div>
+{% endmacro %}
 <section class="page-banner">
     <div class="container l-box">
         <h1>My Profile</h1>
