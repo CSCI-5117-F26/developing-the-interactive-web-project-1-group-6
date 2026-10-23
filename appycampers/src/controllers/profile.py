@@ -143,7 +143,8 @@ def cancel_request(friendship_id):
 
     db.session.delete(friendship)
     db.session.commit()
-    
+
+    flash(f"Friend request cancelled")
     return redirect(url_for("profile.friends"))
 
 @profile_controller.post("/profile/friends/remove/<friend_id>")
