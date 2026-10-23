@@ -39,7 +39,7 @@
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for messages in messages %}
-    <p class="flash-message">{{ message }}</p>
+    <p class="flash-message" role="status">{{ message }}</p>
     {% endfor %}
     {% endif %}
     {% endwith %}
@@ -49,7 +49,7 @@
     <section class="friends-section">
     <h2>Add a Friend</h2>
     <form class="pure-form friends-search" method="post" action="{{ url_for('profile.send_request') }}">
-        <input type="text" id="friend_username" placeholder="Search by username">
+        <input type="text" id="friend_username" name="username" placeholder="Search by username">
         <button type="submit" class="pure-button pure-button-primary">Send Friend Request</button>
     </form>
     </section>
@@ -102,12 +102,12 @@
                 </thead>
                 <tbody>
                     {% for friend in friends %}
-                    <tr data-search="{{ (friend.fullname)}}">
-                        <td>Friend</td>
-                        <td class="profile-handle">@username</td>
+                    <tr data-search="{{ (friend.fullname or '')|lower }} {{ friend.username|lower }}">
+                        <td>{{ person(friend) }}</td>
+                        <td class="profile-handle">@{{ friend.username }}</td>
                         <td class="table-actions">
                             <a href="{{ url_for('user_profile', user_id=friend.id) }}" class="pure-button button-outline">View</a>
-                            <form method="post" action="/profile/friends/remove/{{ friend.id }}">
+                            <form method="post" action="{{ url_for('profile.remove_friend', friend_id=friend.id) }}">
                                 <button type="submit" class="pure-button button-outline">Remove</button>
                             </form>
                         </td>
@@ -129,10 +129,10 @@
             <tbody>
                 {% for req in outgoing_requests %}
                 <tr>
-                    <td>User</td>
-                    <td class="profile-handle">@username</td>
+                    <td>{{ person(req.receiver, show_handle=True) }}</td>
+                    <td class="profile-handle">Pending</td>
                     <td class="table-actions">
-                        <form method="post" action="/profile/friends/cancel/{{ req.id }}">
+                        <form method="post" action="{{ url_for('profile.cancel_request', friendship_id=req.id) }}">
                             <button type="submit" class="pure-button button-outline">Cancel Request</button>
                         </form>
                     </td>

@@ -16,7 +16,7 @@
         {% if session.get('user_id') %}
         {% set userinfo = (session.get('user')) %}
         {% set avatar = userinfo.get('avatar') %}
-        <a class="pure-menu-link nav-profile" href="{{ url_for('profile') }}">
+        <a class="pure-menu-link nav-profile" href="{{ url_for('profile.profile') }}">
             <span class="profile-avatar">
                 {% if avatar %}
                 <img src="{{ avatar }}">

@@ -95,7 +95,7 @@ def send_request():
             flash(f"@{target.username} already sent you a request. Accept it below.")
         return redirect(url_for("profile.friends"))
 
-    db.session.add(Friendship(senderId = user_id, receiver_id = target.id, status = "pending"))
+    db.session.add(Friendship(senderId = user_id, receiverId = target.id, status = "pending"))
     db.session.commit()
     flash(f"Friend request sent to @{target.username}!")
     
@@ -138,7 +138,7 @@ def cancel_request(friendship_id):
         return redirect(url_for("auth.login"))
 
     friendship = Friendship.query.filter_by(
-        id = friendship_id, receiverId = user_id, status = "pending"
+        id = friendship_id, senderId = user_id, status = "pending"
     ).first_or_404()
 
     db.session.delete(friendship)
