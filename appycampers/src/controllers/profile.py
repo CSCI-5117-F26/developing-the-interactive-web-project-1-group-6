@@ -59,3 +59,41 @@ def friends():
         outgoing_requests = outgoing_requests,
         friends = friends_list,
     )
+
+@profile_controller.get("/profile/friends/request")
+def send_request():
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for("auth.login"))
+
+    user = User.query.get_or_404(user_id)
+
+    incoming_requests = Friendship.query.filter_by(receiverId = user_id, status = "pending").all()
+    outgoing_requests = Friendship.query.filter_by(senderId = user_id, status = "pending").all()
+
+    # get all accepted friendships involving the current user
+    accepted = Friendship.query.filter(
+        Friendship.status == "accepted",
+        or_(Friendship.senderId == user_id, Friendship.receiverId == user_id)
+    ).all()
+
+    friends_list = []
+
+    for f in accepted:
+        if f.senderId == user_id:
+            friends_list.append(f.receiver)
+        else:
+            friends_list.append(f.sender)
+
+    def friend_name(friend):
+        return (friend.fullname or friend.username).lower()
+
+    friends_list.sort(key = friend_name)
+    
+    return render_template (
+        "profile_friends.html",
+        user=user,
+        incoming_requests = incoming_requests,
+        outgoing_requests = outgoing_requests,
+        friends = friends_list,
+    )
