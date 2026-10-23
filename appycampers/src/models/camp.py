@@ -20,6 +20,9 @@ class Camp(db.Model):
     endDate = db.Column(db.Date, nullable = False)
     expectedCampers = db.Column(db.Integer, nullable = False, default = 1)
     campoutDescription = db.Column(db.Text, nullable = True)
+    longitude = db.Column(db.String(100), nullable = True)
+    latitude = db.Column(db.String(100), nullable = True)
+    campoutType = db.Column(db.String(100), nullable = True)
     campImage = db.Column(db.String(500), nullable = True)
     Visibility = db.Column(db.Enum(VisibilityType), nullable = False, default = VisibilityType.PUBLIC)
     allowJoinRequets = db.Column(db.Boolean, nullable = False, default = True) 
@@ -29,4 +32,3 @@ class Camp(db.Model):
     discussions = db.relationship("CampDiscussion", back_populates = "camp", cascade = "all, delete-orphan")
     gear_requirements = db.relationship("GearRequirement", back_populates = "camp", cascade = "all, delete-orphan")
     expenses = db.relationship("CampExpense", back_populates = "camp", cascade = "all, delete-orphan")
-
