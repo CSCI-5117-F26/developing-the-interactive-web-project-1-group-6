@@ -40,7 +40,3 @@ def camp_plan(camp_id):
 def camp_manage(camp_id):
     return render_template("camp_manage.html", camp_id=camp_id)
 
-# Show another user's public profile
-@app.get("/profile/u/<int:user_id>")
-def user_profile(user_id):
-    return render_template("profile.html", user_id=user_id)
