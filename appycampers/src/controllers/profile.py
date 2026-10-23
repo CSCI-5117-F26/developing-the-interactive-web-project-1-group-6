@@ -28,7 +28,9 @@ def friends():
     if not user_id:
         return redirect(url_for("auth.login"))
 
-    incoming_requests = Friendship.query.filter_by(recieverId = user_id, status = "pending").all()
+    user = User.query.get_or_404(user_id)
+
+    incoming_requests = Friendship.query.filter_by(receiverId = user_id, status = "pending").all()
     outgoing_requests = Friendship.query.filter_by(senderId = user_id, status = "pending").all()
 
     # get all accepted friendships involving the current user
@@ -52,6 +54,7 @@ def friends():
     
     return render_template (
         "profile_friends.html",
+        user=user,
         incoming_requests = incoming_requests,
         outgoing_requests = outgoing_requests,
         friends = friends_list,
