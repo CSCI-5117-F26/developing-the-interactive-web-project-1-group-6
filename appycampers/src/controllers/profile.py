@@ -117,5 +117,22 @@ def accept_request(friendship_id):
 
     friendship.status = "accepted"
     db.session.commit()
+
+    return render_template("profile_friends.html", user=user)
+
+@profile_controller.post("/profile/friends/decline/<friendship_id>")
+def accept_request(friendship_id):
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for("auth.login"))
+
+    user = User.query.get_or_404(user_id)
+
+    friendship = Friendship.query.filter_by(
+        id = friendship_id, receiverId = user_id, status = "pending"
+    ).first_or_404()
+
+    db.session.delete(friendship)
+    db.session.commit()
     
     return render_template("profile_friends.html", user=user)
