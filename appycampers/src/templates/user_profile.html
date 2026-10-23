@@ -16,7 +16,9 @@
 
         <div class="profile-actions">
             {% if relationship == "none" %}
-            
+            <form method="post" action="{{ url_for('profile.send_request') }}">
+                
+            </form>
             {% elif relationship == "sent" %}
             
             {% elif relationship == "received" %}
