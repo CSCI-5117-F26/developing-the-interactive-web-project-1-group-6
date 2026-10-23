@@ -17,7 +17,8 @@
         <div class="profile-actions">
             {% if relationship == "none" %}
             <form method="post" action="{{ url_for('profile.send_request') }}">
-                
+                <input type="hidden" name="username" value="{{ profile_user.username }}">
+                <button type="submit" class="pure-button button-outline">Send Friend Request</button>
             </form>
             {% elif relationship == "sent" %}
             <form method="post" action="{{ url_for('profile.cancel_request', friendship_id=friendship.id) }}">
