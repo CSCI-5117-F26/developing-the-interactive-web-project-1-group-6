@@ -2,7 +2,7 @@ import os
 import models
 from flask import Flask, render_template
 from extensions import db, oauth
-from controllers import (auth_controller, explore_controller, health_controller, home_controller, my_camps_controller, create_controller)
+from controllers import (auth_controller, explore_controller, health_controller, home_controller, my_camps_controller, create_controller, profile_controller,)
 
 app = Flask(__name__)
 
@@ -27,6 +27,7 @@ app.register_blueprint(health_controller)
 app.register_blueprint(home_controller)
 app.register_blueprint(my_camps_controller)
 app.register_blueprint(create_controller)
+app.register_blueprint(profile_controller)
 
 # Show a camp's details, participants, and shared gear plan
 @app.get("/camps/<camp_id>")
@@ -39,20 +40,3 @@ def camp_plan(camp_id):
 def camp_manage(camp_id):
     return render_template("camp_manage.html", camp_id=camp_id)
 
-
-# Show and edit the user's own profile details
-@app.get("/profile")
-def profile():
-    return render_template("profile.html")
-
-
-# Show friends and manage incoming and outgoing friend requests
-@app.get("/profile/friends")
-def profile_friends():
-    return render_template("profile_friends.html")
-
-
-# Show another user's public profile
-@app.get("/profile/u/<int:user_id>")
-def user_profile(user_id):
-    return render_template("profile.html", user_id=user_id)
