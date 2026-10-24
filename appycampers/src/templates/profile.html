@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %} My Profile {% endblock %}
+{% block content %}
+<section class="page-banner">
+    <div class="container l-box">
+        <h1>My Profile</h1>
+        <p>@{{ user.username }}</p>
+    </div>
+</section>
+
+<div class="container l-box">
+    <div class="profile-toolbar">
+        <nav class="profile-tabs">
+            <a href="{{ url_for('profile.profile') }}" class="pure-button pure-button-primary">Profile</a>
+            <a href="{{ url_for('profile.friends') }}" class="pure-button button-outline">Friends</a>
+        </nav>
+        <a href="{{ url_for('auth.logout') }}" class="pure-button button-outline">Logout</a>
+    </div>
+</div>
+
+<div class="container l-box">
+    <h2>Profile Details</h2>
+    <div class="profile-summary">
+        <div class="profile-avatar">
+            {% if user.avatar %}
+            <img src="{{ user.avatar }}">
+            {% else %}
+            {{ (user.fullname or user.username or 'U')[0]|upper }}
+            {% endif %}
+        </div>
+        <div class="profile-identity">
+            <strong class="profile-name">{{ user.fullname }}</strong>
+            <span class="profile-handle">@{{ user.username }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="container l-box">
+<form class="pure-form pure-form-stacked profile-form" method="post" action="{{ url_for('profile.profile') }}">
+    <div>
+        <label for="display_name">Display name</label>
+        <input type="text" id="display_name" name="display_name"
+        class="profile-field" value="{{ user.fullname or '' }}">
+    </div>
+
+    <div>
+        <label for="about_me">About me</label>
+        <textarea id="about_me" name="about_me" rows="5"
+        class="profile-field">{{ user.about_me or '' }}</textarea>
+    </div>
+
+    <div>
+        <button type="submit" class="pure-button pure-button-primary">Save profile changes</button>
+    </div>
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!-- referenced https://pure-css.github.io/menus/ during the creation of this nav setup -->
+<ul class="pure-menu-list nav-main">
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ url_for('explore.explore') }}">Explore camps</a>
+    </li>
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ url_for('home.home', _anchor='how-it-works') }}">How it works</a>
+    </li>
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ url_for('my_camps.my_camps') }}">My camps</a>
+    </li>
+</ul>
+
+<ul class="pure-menu-list nav-account">
+    <li class="pure-menu-item">
+        {% if session.get('user_id') %}
+        {% set userinfo = (session.get('user')) %}
+        {% set avatar = userinfo.get('avatar') %}
+        <a class="pure-menu-link nav-profile" href="{{ url_for('profile.profile') }}">
+            <span class="profile-avatar">
+                {% if avatar %}
+                <img src="{{ avatar }}">
+                {% else %}
+                {{ (userinfo.get('name') or userinfo.get('nickname') or 'U')[0]|upper }}
+                {% endif %}
+            </span>
+            <span class="profile-label">My Profile</span>
+        </a>
+        {% else %}
+        <a class="pure-menu-link" href="{{ url_for('auth.login') }}">Log in</a>
+        {% endif %}
+    </li>
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ url_for('create.create_camp') }}">Create a camp</a>
+    </li>
+</ul>
