@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template, url_for, session, request, flash
 from extensions import db
-from sqlalchemy import and_, or_
+from sqlalchemy import and_, or_, func
 
 from models import User, Friendship
 
@@ -67,7 +67,7 @@ def send_request():
         return redirect(url_for("auth.login"))
 
     username = request.form.get("username", "").strip().lstrip("@")
-    target = User.query.filter_by(username = username).first()
+    target = User.query.filter(func.lower(User.username) == username.lower()).first()
 
     if not target:
         flash("No user found with that username.")

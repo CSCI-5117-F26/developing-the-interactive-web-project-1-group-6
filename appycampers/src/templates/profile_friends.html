@@ -50,7 +50,7 @@
     <h2>Add a Friend</h2>
     <form class="pure-form friends-search" method="post" action="{{ url_for('profile.send_request') }}">
         <label class="visually-hidden" for="friend_username">Search by username</label>
-        <input type="text" id="friend_username" name="username" placeholder="Search by username">
+        <input type="text" id="friend_username" name="username" placeholder="Search by username" required>
         <button type="submit" class="pure-button pure-button-primary">Send Friend Request</button>
     </form>
     </section>
