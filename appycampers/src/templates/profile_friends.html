@@ -107,7 +107,7 @@
                         <td>{{ person(friend) }}</td>
                         <td class="profile-handle">@{{ friend.username }}</td>
                         <td class="table-actions">
-                            <a href="{{ url_for('user_profile', user_id=friend.id) }}" class="pure-button button-outline">View</a>
+                            <a href="{{ url_for('profile.user_profile', user_id=friend.id) }}" class="pure-button button-outline">View</a>
                             <form method="post" action="{{ url_for('profile.remove_friend', friend_id=friend.id) }}">
                                 <button type="submit" class="pure-button button-outline">Remove</button>
                             </form>
