@@ -36,11 +36,11 @@ class CampCreate(BaseModel):
     state: Annotated[str, StringConstraints(min_length=1, max_length=100)]
     city: Annotated[str, StringConstraints(min_length=1, max_length=100)]
     addres: Annotated[str, StringConstraints(min_length=1, max_length=255)] = Field(validation_alias="location")
-    campoutType: Annotated[str, StringConstraints(min_length=1, max_length=100)] | None = Field(default=None, validation_alias="type")
-    campSiteNumber: Annotated[str, StringConstraints(strip_whitespace=True, max_length=50)] | None = Field(default=None, validation_alias="site")
+    campoutType: Annotated[str, StringConstraints(min_length=1, max_length=100)] | None = Field(default=None, validation_alias="camp-type")
+    campSiteNumber: Annotated[str, StringConstraints(strip_whitespace=True, max_length=50)] | None = Field(default=None, validation_alias="camp-number")
     startDate: date = Field(validation_alias="start")
     endDate: date = Field(validation_alias="end")
-    expectedCampers: int = Field(ge=1, validation_alias="campers")
+    expectedCampers: int = Field(min=1, ge=1, validation_alias="campers")
     campoutDescription: Annotated[str, StringConstraints(strip_whitespace=True, max_length=5000)] | None = Field(default=None, validation_alias="description")
     Visibility: VisibilityType = Field(validation_alias="visibility")
 
@@ -86,7 +86,7 @@ class CampCreate(BaseModel):
         return rows
 
     def member_rows(self, user_id, invitees):
-        rows = [MemberIn(userId=user_id, role=MemberRole.CAMP_MASTER, status=RequestStatus.APPROVED)] # Add camp master to members
+        rows = [MemberIn(userId=user_id, role=MemberRole.CAMP_MASTER, status=RequestStatus.PENDING)] # Add camp master to members
         for friend_id in invitees:
             rows.append(MemberIn(userId=friend_id)) # Add everyone invited
         return [r.model_dump() for r in rows]
