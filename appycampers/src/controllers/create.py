@@ -36,7 +36,7 @@ class CampCreate(BaseModel):
     state: Annotated[str, StringConstraints(min_length=1, max_length=100)]
     city: Annotated[str, StringConstraints(min_length=1, max_length=100)]
     addres: Annotated[str, StringConstraints(min_length=1, max_length=255)] = Field(validation_alias="location")
-    campoutType: Annotated[str, StringConstraints(min_length=1, max_length=100)] | None = None
+    campoutType: Annotated[str, StringConstraints(min_length=1, max_length=100)] | None = Field(default=None, validation_alias="type")
     campSiteNumber: Annotated[str, StringConstraints(strip_whitespace=True, max_length=50)] | None = Field(default=None, validation_alias="site")
     startDate: date = Field(validation_alias="start")
     endDate: date = Field(validation_alias="end")
