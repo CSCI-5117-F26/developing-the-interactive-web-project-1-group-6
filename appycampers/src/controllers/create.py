@@ -36,11 +36,12 @@ class CampCreate(BaseModel):
     state: Annotated[str, StringConstraints(min_length=1, max_length=100)]
     city: Annotated[str, StringConstraints(min_length=1, max_length=100)]
     addres: Annotated[str, StringConstraints(min_length=1, max_length=255)] = Field(validation_alias="location")
-    campSiteNumber: Annotated[str, StringConstraints(strip_whitespace=True, max_length=50)] = Field(default=None, validation_alias="site")
+    campoutType: Annotated[str, StringConstraints(min_length=1, max_length=100)] | None = None
+    campSiteNumber: Annotated[str, StringConstraints(strip_whitespace=True, max_length=50)] | None = Field(default=None, validation_alias="site")
     startDate: date = Field(validation_alias="start")
     endDate: date = Field(validation_alias="end")
     expectedCampers: int = Field(ge=1, validation_alias="campers")
-    campoutDescription: Annotated[str, StringConstraints(strip_whitespace=True, max_length=5000)] = Field(default=None, validation_alias="description")
+    campoutDescription: Annotated[str, StringConstraints(strip_whitespace=True, max_length=5000)] | None = Field(default=None, validation_alias="description")
     Visibility: VisibilityType = Field(validation_alias="visibility")
 
     # Gear Requirement Data (Items, Part 2 of wizard)
