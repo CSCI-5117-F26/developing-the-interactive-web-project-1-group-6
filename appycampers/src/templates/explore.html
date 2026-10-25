@@ -16,7 +16,7 @@
     <form method="GET" action="{{ url_for('explore.explore') }}" class="pure-form">
         <div class="explore-search l-box">
             <input type="search" id="search" name="search" maxlength="200"
-                placeholder="Search camps by name or description" value="{{ filters.search }}">
+                placeholder="Name or description" value="{{ filters.search }}">
             <button class="pure-button button-outline" type="button" id="filter-button">Filters</button>
             <button class="pure-button pure-button-primary" type="submit">Search</button>
         </div>
