@@ -39,6 +39,7 @@
     city: 'city',
     location: 'location',
     site: 'camp-number',
+    type: 'camp-type',
     start: 'start-date',
     end: 'end-date',
     campers: 'expected-campers',
@@ -64,7 +65,7 @@
   function makeActionButton(label, onClick) {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'link-button';
+    btn.className = 'pure-button';
     btn.textContent = label;
     btn.addEventListener('click', onClick);
     return btn;
@@ -93,12 +94,6 @@
     render();
   }
 
-  function makeDivider() {
-    const divider = document.createElement('span');
-    divider.textContent = '|';
-    return divider;
-  }
-
   function makeRow(item) {
     const row = document.createElement('tr');
 
@@ -109,7 +104,6 @@
     actions.className = 'row-actions';
     actions.append(
       makeActionButton('Edit', () => startEdit(item)),
-      makeDivider(),
       makeActionButton('Remove', () => removeItem(item))
     );
 
@@ -164,7 +158,6 @@
     actions.className = 'row-actions';
     actions.append(
       makeActionButton('Save', save),
-      makeDivider(),
       makeActionButton('Cancel', cancelEdit)
     );
 
@@ -191,18 +184,15 @@
   });
 
   // Friends list
-  const friendList = document.getElementById('friend-list');
-  const friendSearch = document.getElementById('friend-search');
-
-  friendSearch.addEventListener('input', () => {
-    const q = friendSearch.value.trim().toLowerCase();
-    friendList.querySelectorAll('.friend-row').forEach((row) => {
-      row.hidden = q !== '' && !row.dataset.name.includes(q);
+  document.getElementById("friend_filter").addEventListener("input", function () {
+    const q = this.value.trim().toLowerCase();
+    document.querySelectorAll("#friends_table tbody tr[data-search]").forEach(function (row) {
+      row.hidden = q !== "" && !row.dataset.search.includes(q);
     });
   });
 
   function selectedFriendIds() {
-    return Array.from(friendList.querySelectorAll('input[name="invitees"]:checked'))
+    return Array.from(document.querySelectorAll('#friends_table input[name="invitees"]:checked'))
       .map((box) => box.value);
   }
 

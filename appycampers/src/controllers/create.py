@@ -37,8 +37,8 @@ class CampCreate(BaseModel):
     state: Annotated[str, StringConstraints(min_length=1, max_length=100)]
     city: Annotated[str, StringConstraints(min_length=1, max_length=100)]
     addres: Annotated[str, StringConstraints(min_length=1, max_length=255)] = Field(validation_alias="location")
-    campoutType: Annotated[str, StringConstraints(min_length=1, max_length=100)] | None = Field(default=None, validation_alias="camp-type")
-    campSiteNumber: Annotated[str, StringConstraints(strip_whitespace=True, max_length=50)] | None = Field(default=None, validation_alias="camp-number")
+    campoutType: Annotated[str, StringConstraints(min_length=1, max_length=100)] | None = Field(default=None, validation_alias="type")
+    campSiteNumber: Annotated[str, StringConstraints(strip_whitespace=True, max_length=50)] | None = Field(default=None, validation_alias="site")
     startDate: date = Field(validation_alias="start")
     endDate: date = Field(validation_alias="end")
     expectedCampers: int = Field(min=1, ge=1, validation_alias="campers")
@@ -50,7 +50,7 @@ class CampCreate(BaseModel):
     # Invite Data (Part 3 of wizard)
     invitees: list[str] = Field(default_factory=list, max_length=MAX_INVITEES)
 
-    @field_validator("campSiteNumber", "campoutDescription", mode="before")
+    @field_validator("campSiteNumber", "campoutDescription", "campoutType", mode="before")
     @classmethod
     def blank_to_none(cls, value):
         if isinstance(value, str) and not value.strip():
@@ -98,6 +98,7 @@ FIELD_LABELS = {
     "city": "City",
     "location": "Location",
     "site": "Campsite number",
+    "type": "Camp type",
     "start": "Start date",
     "end": "End date",
     "campers": "Expected campers",
@@ -178,7 +179,7 @@ def create_camp():
         return redirect(url_for("auth.login")) # not sure if this works
     friends = []
     for u in get_friends(user.id):
-      friends.append({"id": u.id, "name": u.fullname or u.username})
+      friends.append(u)
     return render_template("create_camp.html", friends=friends, states=STATES, campout_types=CAMPOUT_TYPES)
 
 
@@ -213,5 +214,4 @@ def process_create_camp():
         current_app.logger.exception("Failed to create campout")
         return jsonify(errors={"_form": "Something went wrong saving your campout. Please try again."}), 500
 
-    # NOTE: CHANGE TO NEW CAMPSITE PAGE WHEN DONE
     return jsonify(id=camp.id, redirect=url_for("home.home")), 201
