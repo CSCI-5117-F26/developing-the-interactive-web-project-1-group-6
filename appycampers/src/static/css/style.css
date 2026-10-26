@@ -333,7 +333,7 @@ h3 {
     margin-left: .25rem;
 }
 
-#item-table tfoot input {
+#item-table input {
     width: 100%;
     margin: 0;
     height: 2.75rem;
@@ -598,12 +598,6 @@ in the mobile category, while having laptops/desktops excluded.
         padding-right: 3rem;
         padding-bottom: 2rem;
     }
-
-    /* #item-table th,
-    #item-table td {
-        padding-left: 2rem;
-        padding-right: 2rem;
-    } */
 
     #item-table .gear-qty {
         width: 6rem;
