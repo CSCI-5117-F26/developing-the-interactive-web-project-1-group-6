@@ -5,3 +5,6 @@ from .home import home_controller
 from .my_camps import my_camps_controller
 from .expenseSplit import ExpenseSplit
 from .campItem import CampItem
+from .create import create_controller
+from .profile import profile_controller
+
