@@ -109,6 +109,14 @@ h3 {
     border-top: 1px dashed;
 }
 
+.homepage-step-image {
+    display: block;
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
 /* Explore Camps */
 .explore-search {
     display: flex;
