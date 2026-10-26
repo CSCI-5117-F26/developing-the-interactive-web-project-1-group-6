@@ -215,11 +215,17 @@ h3 {
     width: calc(100% - 1rem);
 }
 
-.pure-form .create-steps {
+.create-steps {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: .75rem;
+    list-style: none;
+}
+
+.create-steps li.is-current {
+    color: #04a2b6;
+    font-weight: 600;
 }
 
 .create-steps span {
@@ -275,6 +281,7 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
 .nav-profile .profile-avatar {
     display: none;
 }
+
 /* 
 .pure-menu-link:hover,
 .pure-menu-link:focus {
@@ -475,7 +482,7 @@ in the mobile category, while having laptops/desktops excluded.
     max-width: 40rem;
 }
 
-.profile-form > div {
+.profile-form>div {
     margin-bottom: 1.25rem;
 }
 
@@ -562,7 +569,7 @@ in the mobile category, while having laptops/desktops excluded.
     margin-bottom: 0;
 }
 
-.friends-block + .friends-block .friends-section {
+.friends-block+.friends-block .friends-section {
     padding-top: 1rem;
     border-top: 1px solid #d8d6c8;
 }
@@ -624,8 +631,8 @@ in the mobile category, while having laptops/desktops excluded.
     margin: 0;
 }
 
-.table-actions .pure-button + form,
-.table-actions form + form {
+.table-actions .pure-button+form,
+.table-actions form+form {
     margin-left: .5rem;
 }
 
@@ -678,7 +685,7 @@ in the mobile category, while having laptops/desktops excluded.
 }
 
 /* Divider line between friends sections */
-.friends-block + .friends-block .friends-section {
+.friends-block+.friends-block .friends-section {
     border-top: 1px solid #d8d6c8;
 }
 
