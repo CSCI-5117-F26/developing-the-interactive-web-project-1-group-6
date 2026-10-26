@@ -25,7 +25,7 @@ class GearItemIn(BaseModel):
 class MemberIn(BaseModel):
     userId: str
     role: MemberRole = MemberRole.CAMP_MEMBER
-    status: RequestStatus = RequestStatus.APPROVED
+    status: RequestStatus = RequestStatus.PENDING
 
 class CampCreate(BaseModel):
     """Validated payload for POST /camps/create"""
@@ -87,7 +87,7 @@ class CampCreate(BaseModel):
         return rows
 
     def member_rows(self, user_id, invitees):
-        rows = [MemberIn(userId=user_id, role=MemberRole.CAMP_MASTER, status=RequestStatus.PENDING)] # Add camp master to members
+        rows = [MemberIn(userId=user_id, role=MemberRole.CAMP_MASTER, status=RequestStatus.APPROVED)] # Add camp master to members
         for friend_id in invitees:
             rows.append(MemberIn(userId=friend_id)) # Add everyone invited
         return [r.model_dump() for r in rows]
