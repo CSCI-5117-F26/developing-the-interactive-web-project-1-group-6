@@ -325,6 +325,8 @@ h3 {
     white-space: nowrap;
 }
 
+
+
 /* Shared Camp Plan */
 .site-camp_plan #page-content {
     padding-bottom: 2rem;
@@ -505,6 +507,8 @@ h3 {
         padding-left: 0;
         padding-right: 0;
     }
+}
+
 #item-table .row-actions .pure-button {
     padding: .5rem .35rem;
 }
