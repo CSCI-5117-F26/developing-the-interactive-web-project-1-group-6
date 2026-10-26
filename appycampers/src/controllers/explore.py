@@ -5,7 +5,7 @@ from datetime import date
 from models import Camp, Friendship
 from models.camp import VisibilityType
 from utils.auth import get_current_user
-from utils.constants import STATES
+from utils.constants import STATES, CAMPOUT_TYPES
 
 
 explore_controller = Blueprint("explore", __name__)
@@ -163,5 +163,6 @@ def explore():
         filters=filters,
         has_filters=filters != default_filters,
         logged_in=user is not None,
-        states=STATES
+        states=STATES,
+        campout_types=CAMPOUT_TYPES
     )

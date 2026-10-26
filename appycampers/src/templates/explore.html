@@ -79,15 +79,19 @@
         {% for camp in camps %}
         <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3 l-box">
             <article class="camp-card">
-                {% if camp.campoutType %}
-                {% set image_path = 'images/camp_types/' ~ camp.campoutType ~ '.svg' %}
-                {% elif camp.state in states %}
-                {% set state_filename = states[camp.state] | lower | replace(' ', '_') %}
+                {% set camp_type = (camp.campoutType or '') | trim | lower %}
+                {% set state_input = (camp.state or '') | trim %}
+                {% set state_name = states.get(state_input | upper, state_input | title) %}
+
+                {% if camp_type in campout_types %}
+                {% set image_path = 'images/camp_types/' ~ camp_type ~ '.svg' %}
+                {% elif state_name in states.values() %}
+                {% set state_filename = state_name | lower | replace(' ', '_') %}
                 {% set image_path = 'images/states/' ~ state_filename ~ '.svg' %}
                 {% else %}
                 {% set image_path = 'images/camp_types/default.svg' %}
                 {% endif %}
-                <img class="camp-image" src="{{ url_for('static', filename=image_path) }}" alt="">
+                <img src="{{ url_for('static', filename=image_path) }}" alt="{{ camp.name }}">
                 <div class="camp-card-content">
                     <h3>{{ camp.name }}</h3>
                     <p>{{ camp.city }}, {{ camp.state }}</p>
