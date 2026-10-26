@@ -149,6 +149,14 @@ h3 {
     overflow-wrap: anywhere;
 }
 
+.camp-card-actions {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .5rem;
+}
+
 .camp-card-content h3,
 .camp-card-content p {
     margin: 0;
