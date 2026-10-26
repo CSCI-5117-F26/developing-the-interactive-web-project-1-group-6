@@ -9,7 +9,28 @@ from utils.auth import get_current_user
 
 def save_action(camp, members):
     action = request.form.get("action")
-    if action == "edit_settings":
+    if action == "edit_details":
+        start_date = date.fromisoformat(request.form.get("start_date", ""))
+        end_date = date.fromisoformat(request.form.get("end_date", ""))
+        capacity = int(request.form.get("expected_campers", ""))
+        if end_date < start_date:
+            raise ValueError("The end date must be on or after the start date.")
+        if capacity < 1 or capacity < len(members) or capacity > 10000:
+            raise ValueError("Capacity must be between 1 and 10000, with room for all current members.")
+        campsite = request.form.get("campsite_number", "").strip()
+        if len(campsite) > 50:
+            raise ValueError("Campsite number must be at most 50 characters.")
+        
+        camp.name = text_field("name", 255)
+        camp.state = text_field("state", 100)
+        camp.city = text_field("city", 100)
+        camp.addres = text_field("address", 255)
+        camp.campSiteNumber = campsite or None
+        camp.campoutDescription = request.form.get("description", "").strip()
+        camp.startDate = start_date
+        camp.endDate = end_date
+        camp.expectedCampers = capacity
+    elif action == "edit_settings":
         camp.Visibility = VisibilityType(request.form.get("visibility", ""))
         join_requests = request.form.get("allow_join_requests")
         if join_requests not in ("true", "false"):
@@ -93,8 +114,7 @@ def show_controls(camp_id):
     pending_requests = CampMember.query.filter_by(
         campId=camp.id,
         status=RequestStatus.PENDING,
-    ).all()
-            
+    ).all()     
     return render_template(
         "camp_manage.html",
         camp_id=camp.id,

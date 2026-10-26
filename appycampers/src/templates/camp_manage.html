@@ -91,6 +91,35 @@
                     <dt>Description</dt><dd>{{ camp.campoutDescription or 'No description provided.' }}</dd>
                 </dl>
                 
+                <details{% if form.get("action") == "edit_details" %} open{% endif %}>
+                    <summary>Edit campout details</summary>
+                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                        <input type="hidden" name="action" value="edit_details">
+                        <fieldset>
+                            <legend>Campout details</legend>
+                            <label for="name">Camp name</label>
+                            <input id="name" name="name" type="text" class="pure-input-1" maxlength="255" value="{{ form.get('name', camp.name) }}" required>
+                            <label for="startDate">Start date</label>
+                            <input id="startDate" name="start_date" type="date" class="pure-input-1" value="{{ form.get('start_date', camp.startDate.isoformat()) }}" required>
+                            <label for="endDate">End date</label>
+                            <input id="endDate" name="end_date" type="date" class="pure-input-1" value="{{ form.get('end_date', camp.endDate.isoformat()) }}" required>
+                            <label for="address">Location / address</label>
+                            <input id="address" name="address" type="text" class="pure-input-1" maxlength="255" value="{{ form.get('address', camp.address) }}" required>
+                            <label for="city">City</label>
+                            <input id="city" name="city" type="text" class="pure-input-1" maxlength="100" value="{{ form.get('city', camp.city) }}" required>
+                            <label for="state">State</label>
+                            <input id="state" name="state" type="text" class="pure-input-1" maxlength="100" value="{{ form.get('state', camp.state) }}" required>
+                            <label for="campSiteNumber">Campsite number</label>
+                            <input id="campSiteNumber" name="campsite_number" type="text" class="pure-input-1" maxlength="50" value="{{ form.get('campsite_number', camp.campSiteNumber or '') }}">
+                            <label for="expectedCampers">Expected campers</label>
+                            <input id="expectedCampers" name="expected_campers" type="number" class="pure-input-1" min="1" max="10000" step="1" value="{{ form.get('expected_campers', camp.expectedCampers) }}" required>
+                            <label for="campoutDescription">Description</label>
+                            <textarea id="campoutDescription" name="description" class="pure-input-1" rows="4">{{ form.get('description', camp.campoutDescription or '') }}</textarea>
+                            <button class="pure-button pure-button-primary">Save details</button>
+                        </fieldset>
+                    </form>
+                </details>
+                
                 <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
                         <input type="hidden" name="action" value="edit_settings">
                     <fieldset>
