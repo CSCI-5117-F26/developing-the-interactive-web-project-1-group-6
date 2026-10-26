@@ -109,11 +109,74 @@ h3 {
     border-top: 1px dashed;
 }
 
+.homepage-step-image {
+    display: block;
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
 /* Explore Camps */
 .explore-search {
     display: flex;
     align-items: center;
     gap: .5rem;
+}
+
+.explore-cards > .pure-u-lg-1-3 {
+    display: flex;
+}
+
+.explore-cards .camp-card {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background: #fbf8ef;
+    border: 1px solid #d8d6c8;
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.explore-cards .camp-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 800 / 520;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.camp-card-content {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    overflow-wrap: anywhere;
+}
+
+.camp-card-actions {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .5rem;
+}
+
+.camp-card-content h3,
+.camp-card-content p {
+    margin: 0;
+}
+
+.camp-card-content h3 {
+    font-size: 1.25rem;
+}
+
+.camp-card-content > .pure-button {
+    margin-top: auto;
+    align-self: flex-start;
 }
 
 .pure-form .explore-search input[type="search"] {

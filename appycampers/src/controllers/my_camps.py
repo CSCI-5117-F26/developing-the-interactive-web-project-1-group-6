@@ -5,7 +5,7 @@ from flask import Blueprint, redirect, render_template, url_for
 from models import CampMember
 from models.campMember import RequestStatus
 from utils.auth import get_current_user
-
+from utils.constants import CAMPOUT_TYPES, STATES
 
 my_camps_controller = Blueprint("my_camps", __name__)
 
@@ -25,10 +25,19 @@ def my_camps():
         .order_by(CampMember.campId)
         .all()
     )
-    pending_memberships = CampMember.query.filter_by(
+    pending_memberships = (
+    CampMember.query.filter_by(
         userId=user.id,
         status=RequestStatus.PENDING,
-    ).all()
+    )
+    .all()
+    )
+
+    pending_memberships = [
+        membership
+        for membership in pending_memberships
+        if membership.camp.creatorId != user.id
+    ]
     created_camps = user.created_camps
 
     today = date.today()
@@ -71,4 +80,6 @@ def my_camps():
         pending_memberships=pending_memberships,
         past_memberships=past_memberships,
         past_created_camps=past_created_camps,
+        states=STATES,
+        campout_types=CAMPOUT_TYPES,
     )
