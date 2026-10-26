@@ -531,6 +531,10 @@ in the mobile category, while having laptops/desktops excluded.
     .explore-pagination .pure-button {
         font-size: .875rem;
     }
+
+    .page-banner {
+        padding-bottom: 0rem;
+    }
 }
 
 @media screen and (min-width: 64em) {
@@ -593,6 +597,29 @@ in the mobile category, while having laptops/desktops excluded.
         padding-left: 3rem;
         padding-right: 3rem;
         padding-bottom: 2rem;
+    }
+
+    /* #item-table th,
+    #item-table td {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    } */
+
+    #item-table .gear-qty {
+        width: 6rem;
+    }
+
+    #item-table .gear-action {
+        width: 9rem;
+    }
+
+    #item-table th:first-child,
+    #item-table td:first-child {
+        padding-left: 1.5rem;
+    }
+
+    #item-table td:last-child {
+        padding-right: 1.5rem;
     }
 }
 
