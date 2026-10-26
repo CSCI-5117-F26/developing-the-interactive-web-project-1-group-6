@@ -7,7 +7,7 @@ body {
     line-height: 1.6;
 }
 
-.pure-button  {
+.pure-button {
     border-radius: .25rem;
     padding: .75em 1.2em;
 }
@@ -109,6 +109,14 @@ h3 {
     border-top: 1px dashed;
 }
 
+.homepage-step-image {
+    display: block;
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
 /* Explore Camps */
 .explore-search {
     display: flex;
@@ -116,10 +124,118 @@ h3 {
     gap: .5rem;
 }
 
-.explore-search input {
+.explore-cards > .pure-u-lg-1-3 {
+    display: flex;
+}
+
+.explore-cards .camp-card {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background: #fbf8ef;
+    border: 1px solid #d8d6c8;
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.explore-cards .camp-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 800 / 520;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.camp-card-content {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    overflow-wrap: anywhere;
+}
+
+.camp-card-actions {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .5rem;
+}
+
+.camp-card-content h3,
+.camp-card-content p {
+    margin: 0;
+}
+
+.camp-card-content h3 {
+    font-size: 1.25rem;
+}
+
+.camp-card-content > .pure-button {
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+.pure-form .explore-search input[type="search"] {
     flex: 1;
     min-width: 0;
     margin: 0;
+}
+
+#search {
+    border-radius: .25rem;
+    padding: .75em 1.2em;
+}
+
+.pure-form .explore-search button,
+.pure-form .explore-filter-actions button {
+    margin: 0;
+}
+
+.explore-filters .l-box {
+    padding: 0rem 1rem;
+}
+
+.explore-filters input,
+.explore-filters select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.explore-filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding: 1rem;
+}
+
+.explore-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding: 2rem 0rem;
+}
+
+.explore-pagination .current-page {
+    background: #263531;
+    color: #f4ecdb;
+}
+
+.pagination-desktop {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.pagination-mobile {
+    display: none;
 }
 
 /* Create Camp */
@@ -163,11 +279,17 @@ h3 {
     width: calc(100% - 1rem);
 }
 
-.pure-form .create-steps {
+.create-steps {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: .75rem;
+    list-style: none;
+}
+
+.create-steps li.is-current {
+    color: #04a2b6;
+    font-weight: 600;
 }
 
 .create-steps span {
@@ -401,6 +523,11 @@ https://pure-css.github.io/layouts/tucked-menu-vertical/
 .pure-menu-link {
     color: inherit;
 }
+
+.nav-profile .profile-avatar {
+    display: none;
+}
+
 /* 
 .pure-menu-link:hover,
 .pure-menu-link:focus {
@@ -496,12 +623,33 @@ in the mobile category, while having laptops/desktops excluded.
     .custom-toggle {
         display: block;
     }
+
+    .pagination-desktop {
+        display: none;
+    }
+
+    .pagination-mobile {
+        display: flex;
+        align-items: center;
+        gap: .25rem;
+    }
+
+    .explore-pagination {
+        flex-wrap: nowrap;
+        gap: .25rem;
+        padding: 1rem 2rem;
+    }
+
+    .explore-pagination .pure-button {
+        font-size: .875rem;
+    }
 }
 
 @media screen and (min-width: 64em) {
     .custom-menu-3 {
         display: grid;
         grid-template-columns: 2fr 1fr;
+        align-items: center;
     }
 
     .custom-menu-3 .nav-main {
@@ -510,6 +658,47 @@ in the mobile category, while having laptops/desktops excluded.
 
     .custom-menu-3 .nav-account {
         text-align: right;
+    }
+
+    .custom-wrapper {
+        height: auto;
+        min-height: 2.5em;
+    }
+
+    .nav-profile {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .nav-profile .profile-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #fbf8ef;
+        color: #101e20;
+        border: 2px solid #d8d6c8;
+        font-size: .9rem;
+        font-weight: bold;
+    }
+
+    .nav-profile .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .nav-profile .profile-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
     }
 }
 
@@ -524,4 +713,266 @@ in the mobile category, while having laptops/desktops excluded.
             #182a2a 36%,
             #101e20 74%);
     border-radius: 18px;
+}
+
+/* Profile */
+.profile-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-tabs {
+    display: flex;
+    gap: .5rem;
+}
+
+.profile-form {
+    max-width: 40rem;
+}
+
+.profile-form>div {
+    margin-bottom: 1.25rem;
+}
+
+.profile-form label {
+    margin-bottom: .35rem;
+    color: #5f6f66;
+    font-size: .9rem;
+}
+
+.profile-form .profile-field {
+    width: 100%;
+    margin: 0;
+    padding: .65em .85em;
+    background: #fffdf7;
+    border: 1px solid #d8d6c8;
+    border-radius: .25rem;
+    color: #263531;
+    font: inherit;
+    box-shadow: none;
+}
+
+.profile-form .profile-field:focus {
+    outline: none;
+    border-color: #eab875;
+    box-shadow: 0 0 0 3px rgba(234, 184, 117, .35);
+}
+
+.profile-identity {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+.profile-form textarea.profile-field {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+.profile-name {
+    font-size: 1.25rem;
+}
+
+.page-banner .profile-handle {
+    margin: 0;
+}
+
+.profile-handle {
+    margin: 0;
+    color: #5f6f66;
+}
+
+.profile-summary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+    flex: none;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fbf8ef;
+    border: 2px solid #d8d6c8;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/*Friends*/
+.friends-section {
+    padding-top: 0;
+    margin-bottom: 0;
+}
+
+.friends-block+.friends-block .friends-section {
+    padding-top: 1rem;
+    border-top: 1px solid #d8d6c8;
+}
+
+.friends-search {
+    display: flex;
+    gap: .75rem;
+}
+
+.friends-search input {
+    flex: 1;
+    min-width: 0;
+}
+
+.friends-search input,
+#friend_filter {
+    margin: 0;
+    background: #fffdf7;
+    border-color: #d8d6c8;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.friends-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.friends-table th {
+    padding: .5rem .5rem;
+    border-bottom: 1px solid #d8d6c8;
+    color: #5f6f66;
+    font-size: .75rem;
+    font-weight: normal;
+    letter-spacing: .05em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.friends-table td {
+    padding: .75rem .5rem;
+    border-bottom: 1px solid #d8d6c8;
+    vertical-align: middle;
+}
+
+.friends-table .col-actions {
+    text-align: right;
+}
+
+.table-actions {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.table-actions form {
+    display: inline-block;
+    margin: 0;
+}
+
+.table-actions .pure-button+form,
+.table-actions form+form {
+    margin-left: .5rem;
+}
+
+.empty-row {
+    color: #5f6f66;
+}
+
+
+
+/* Friends: heading row with the filter on the right */
+.section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+}
+
+
+.section-heading #friend_filter {
+    width: 16rem;
+    max-width: 100%;
+}
+
+.flash-message {
+    margin: 1rem 0 0;
+    padding: .65rem .85rem;
+    background: #fbf8ef;
+    border: 1px solid #d8d6c8;
+    border-left: 4px solid #eab875;
+    border-radius: .25rem;
+}
+
+.person {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+.person-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+.profile-avatar-sm {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 1rem;
+}
+
+/* Divider line between friends sections */
+.friends-block+.friends-block .friends-section {
+    border-top: 1px solid #d8d6c8;
+}
+
+/* Shared helper (used by labels in the friends and profile forms) */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/*Public profile*/
+.profile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.profile-actions form {
+    margin: 0;
+}
+
+.profile-about-section {
+    padding-top: 1rem;
+    border-top: 1px solid #d8d6c8;
+}
+
+.profile-about-section h3 {
+    margin: 0 0 .5rem;
+}
+
+.profile-about {
+    max-width: 40rem;
+    margin: 0;
+    white-space: pre-line;
 }

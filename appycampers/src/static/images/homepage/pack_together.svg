@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" fill="none" role="img" aria-labelledby="title">
+<title id="title">Pack together: a backpack and shared checklist</title>
+<defs>
+ <linearGradient id="paper" x1="72" y1="40" x2="230" y2="174" gradientUnits="userSpaceOnUse"><stop stop-color="#FBF8EF"/><stop offset="1" stop-color="#E6DEC7"/></linearGradient>
+ <linearGradient id="green" x1="115" y1="55" x2="205" y2="175" gradientUnits="userSpaceOnUse"><stop stop-color="#638372"/><stop offset="1" stop-color="#304F45"/></linearGradient>
+ <linearGradient id="amber" x1="150" y1="62" x2="180" y2="151" gradientUnits="userSpaceOnUse"><stop stop-color="#F3CF8D"/><stop offset="1" stop-color="#D58D4E"/></linearGradient>
+</defs>
+
+<path d="M48 101C45 55 91 26 146 35C209 14 265 47 274 103C282 155 234 183 173 175C104 194 48 158 48 101Z" fill="#ECE3D0"/>
+<ellipse cx="163" cy="176" rx="100" ry="7" fill="#263531" opacity=".07"/>
+<path d="M111 56V47C111 35 139 35 139 47V56" stroke="#37564A" stroke-width="7"/>
+<path d="M89 94H83C75 94 71 101 71 112V151C71 161 78 165 87 165H93M161 94H168C175 94 179 101 179 112V153" stroke="#476458" stroke-width="8" stroke-linecap="round"/>
+<rect x="85" y="53" width="81" height="121" rx="24" fill="url(#green)"/>
+<path d="M86 79C86 63 97 53 111 53H140C155 53 166 64 166 79V96C146 107 105 107 85 96Z" fill="#76917C"/>
+<path d="M98 113H153V148C153 156 147 161 139 161H112C104 161 98 156 98 148Z" fill="#92A58A"/>
+<path d="M101 119H150" stroke="#D6DDC8" stroke-width="2" stroke-linecap="round"/>
+<rect x="119" y="84" width="13" height="22" rx="4" fill="#EAB875"/>
+<rect x="174" y="62" width="75" height="109" rx="10" fill="url(#paper)" stroke="#947E5B" stroke-width="3"/>
+<rect x="195" y="56" width="33" height="13" rx="5" fill="#C8AE7D"/>
+<g stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+<path d="M186 88L191 93L200 83M186 112L191 117L200 107" stroke="#446D59"/>
+<path d="M210 89H236M210 113H236M210 137H230" stroke="#9C9F8C"/>
+<rect x="186" y="132" width="11" height="11" rx="2" stroke="#B3AB95"/>
+</g>
+
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" fill="none" role="img" aria-labelledby="title">
+<title id="title">Find your place: a folded trail map and destination pin</title>
+<defs>
+ <linearGradient id="paper" x1="72" y1="40" x2="230" y2="174" gradientUnits="userSpaceOnUse"><stop stop-color="#FBF8EF"/><stop offset="1" stop-color="#E6DEC7"/></linearGradient>
+ <linearGradient id="green" x1="115" y1="55" x2="205" y2="175" gradientUnits="userSpaceOnUse"><stop stop-color="#638372"/><stop offset="1" stop-color="#304F45"/></linearGradient>
+ <linearGradient id="amber" x1="150" y1="62" x2="180" y2="151" gradientUnits="userSpaceOnUse"><stop stop-color="#F3CF8D"/><stop offset="1" stop-color="#D58D4E"/></linearGradient>
+</defs>
+
+<path d="M53 117C36 68 75 32 127 36C175 12 254 41 269 88C296 148 245 182 187 176C113 194 64 166 53 117Z" fill="#E6EBDD"/>
+<ellipse cx="161" cy="174" rx="99" ry="7" fill="#263531" opacity=".07"/>
+<path d="M63 71L124 52L187 70L247 52V153L187 173L124 155L63 173Z" fill="url(#paper)" stroke="#597569" stroke-width="3" stroke-linejoin="round"/>
+<path d="M124 53V155L187 173V71Z" fill="#AFC2A8" opacity=".35"/>
+<path d="M124 54V154M187 72V171" stroke="#849A82" stroke-width="2" opacity=".6"/>
+<path d="M66 139C93 116 106 135 125 118C146 98 162 122 185 104C207 86 226 100 245 85" stroke="#9BBDB5" stroke-width="13"/>
+<path d="M86 151C88 122 112 105 140 112C174 122 171 88 207 89" stroke="#A46D43" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 7"/>
+<circle cx="86" cy="151" r="5" fill="#FBF8EF" stroke="#A46D43" stroke-width="3"/>
+<path d="M208 105C208 105 232 79 232 64C232 51 221 41 208 41C195 41 184 51 184 64C184 79 208 105 208 105Z" fill="url(#amber)" stroke="#875B3D" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="208" cy="64" r="8" fill="#FBF8EF"/>
+
+</svg>

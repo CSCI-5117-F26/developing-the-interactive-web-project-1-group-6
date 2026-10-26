@@ -15,3 +15,12 @@ uv run flask --app server run --debug
 ## For NavBar
 * https://pure-css.github.io/layouts/tucked-menu-vertical/#
 * https://pure-css.github.io/menus/
+
+## Database
+
+### Setup Explore Camps Search index
+```sql
+CREATE INDEX camp_search ON camps USING GIN (
+    to_tsvector('english', name || ' ' || COALESCE("campoutDescription", ''))
+);
+```

@@ -12,66 +12,76 @@
 <div class="container pure-g">
   <div class="pure-u-1 pure-u-lg-2-3 l-box">
     <div class="camp-card" id="create_camp_wizard">
-
+      <ol class="create-steps" id="step-indicator">
+        <li data-indicator="1">Camp details</li>
+        <li data-indicator="2">Gear requirements</li>
+        <li data-indicator="3">Invite others</li>
+      </ol>
+      <!-- Camp Details -->
       <div data-step="1" class="wizard-page">
-        <form class="pure-form pure-form-stacked">
+        <form class="pure-form pure-form-stacked" id="details-form" onsubmit="return false;">
           <fieldset>
-            <legend class="create-steps">
-              <span>1 Camp Details</span>
-              <span>→</span>
-              <span>2 Gear Requirements</span>
-              <span>→</span>
-              <span>3 Invite Others</span>
-            </legend>
-
             <div class="pure-g">
               <div class="pure-u-1 pure-u-md-1-1">
                 <label for="camp-name">Campout Name</label>
-                <input id="camp-name" class="pure-u-23-24" type="text" />
+                <input id="camp-name" class="pure-u-23-24" type="text" required />
               </div>
 
               <div class="pure-u-1 pure-u-md-1-2">
                 <label for="city">City</label>
-                <input id="city" class="pure-u-23-24" type="text" />
+                <input id="city" class="pure-u-23-24" type="text" required />
               </div>
 
               <div class="pure-u-1 pure-u-md-1-2">
                 <label for="state">State</label>
-                <select id="state" class="pure-u-23-24">
-                  <option>MN</option>
+                <select id="state" class="pure-u-23-24" required>
+                  {% for value, label in states.items() %}
+                  <option value="{{ value }}">{{ label }}</option>
+                  {% endfor %}
                 </select>
               </div>
 
               <div class="pure-u-1 pure-u-md-1-1">
                 <label for="location">Location</label>
-                <input id="location" class="pure-u-23-24" type="text" />
+                <input id="location" class="pure-u-23-24" type="text" required />
               </div>
 
-              <div class="pure-u-1 pure-u-md-1-1">
+              <div class="pure-u-1 pure-u-md-1-2">
                 <label for="camp-number">Campsite Number</label>
                 <input id="camp-number" class="pure-u-23-24" type="text" />
               </div>
 
               <div class="pure-u-1 pure-u-md-1-2">
+                <label for="camp-type">Camp Type</label>
+                <select id="camp-type" class="pure-u-23-24" required>
+                  <option selected value=""></option>
+                  {% for value, label in campout_types.items() %}
+                  <option value="{{ value }}">{{ label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="pure-u-1 pure-u-md-1-2">
                 <label for="start-date">Start Date</label>
-                <input id="start-date" class="pure-u-23-24" type="date" />
+                <input id="start-date" class="pure-u-23-24" type="date" required />
               </div>
 
               <div class="pure-u-1 pure-u-md-1-2">
                 <label for="end-date">End Date</label>
-                <input id="end-date" class="pure-u-23-24" type="date" />
+                <input id="end-date" class="pure-u-23-24" type="date" required />
               </div>
 
               <div class="pure-u-1 pure-u-md-1-2">
                 <label for="expected-campers">Expected Campers</label>
-                <input id="expected-campers" class="pure-u-23-24" type="number" />
+                <input id="expected-campers" class="pure-u-23-24" type="number" required />
               </div>
 
               <div class="pure-u-1 pure-u-md-1-2">
                 <label for="visibility">Visibility</label>
                 <select id="visibility" class="pure-u-23-24">
-                  <option>Public</option>
-                  <option>Private</option>
+                  <option value="public">Public</option>
+                  <option value="private">Private</option>
+                  <option value="friends_only">Friends only</option>
                 </select>
               </div>
 
@@ -83,7 +93,7 @@
           </fieldset>
         </form>
       </div>
-
+      <!-- Gear Requirements-->
       <div data-step="2" class="wizard-page" hidden>
         <div class="gear-table-wrap">
           <table class="pure-table pure-table-horizontal" id="item-table">
@@ -106,21 +116,27 @@
         </div>
       </div>
 
+      <!-- Invite -->
       <div data-step="3" class="wizard-page" hidden>
         <form class="pure-form create-actions">
-          <input type="search" placeholder="Search people">
+          <input type="search" id="friend-search" placeholder="Search people">
           <button class="pure-button" type="button">Search</button>
         </form>
 
-        <form class="pure-form pure-form-stacked">
-          <fieldset>
-            <label class="pure-checkbox"><input type="checkbox"> John Johnson</label>
-            <label class="pure-checkbox"><input type="checkbox"> Jack Jackson</label>
-            <label class="pure-checkbox"><input type="checkbox"> Joe</label>
-            <label class="pure-checkbox"><input type="checkbox"> Dude</label>
-          </fieldset>
-        </form>
+        <ul class="friend-list" id="friend-list">
+          {% for friend in friends %}
+          <li class="friend-row" data-name="{{ friend.name|lower }}">
+            <label>
+              <span class="avatar">{{ friend.name[0] }}</span>
+              <span class="friend-name">{{ friend.name }}</span>
+              <input type="checkbox" name="invitees" value="{{ friend.id }}">
+            </label>
+          </li>
+          {% endfor %}
+        </ul>
       </div>
+
+      <div id="form-errors" hidden></div>
 
       <div class="create-nav">
         <button type="button" class="pure-button" id="prev-button" hidden>Prev</button>
