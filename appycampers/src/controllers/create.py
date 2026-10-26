@@ -7,6 +7,7 @@ from sqlalchemy import or_
 from sqlalchemy.exc import SQLAlchemyError
 
 from utils.auth import get_current_user
+from utils.constants import STATES, CAMPOUT_TYPES
 from extensions import db
 from models import Camp, CampMember, Friendship, GearRequirement, User
 from models.camp import VisibilityType
@@ -178,7 +179,7 @@ def create_camp():
     friends = []
     for u in get_friends(user.id):
       friends.append({"id": u.id, "name": u.fullname or u.username})
-    return render_template("create_camp.html", friends=friends)
+    return render_template("create_camp.html", friends=friends, states=STATES, campout_types=CAMPOUT_TYPES)
 
 
 @create_controller.post("/camps/create")
