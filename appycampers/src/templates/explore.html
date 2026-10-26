@@ -15,8 +15,8 @@
 <section class="container l-box">
     <form method="GET" action="{{ url_for('explore.explore') }}" class="pure-form">
         <div class="explore-search l-box">
-            <input type="search" id="search" name="search" maxlength="200"
-                placeholder="Name or description" value="{{ filters.search }}">
+            <input type="search" id="search" name="search" maxlength="200" placeholder="Name or description"
+                value="{{ filters.search }}">
             <button class="pure-button button-outline" type="button" id="filter-button">Filters</button>
             <button class="pure-button pure-button-primary" type="submit">Search</button>
         </div>
@@ -79,11 +79,15 @@
         {% for camp in camps %}
         <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3 l-box">
             <article class="camp-card">
-                {% if camp.campImage %}
-                <img class="camp-image" src="{{ camp.campImage }}" alt="{{ camp.name }}">
+                {% if camp.campoutType %}
+                {% set image_path = 'images/types/' ~ camp.campoutType ~ '.svg' %}
+                {% elif camp.state in states %}
+                {% set state_filename = states[camp.state] | lower | replace(' ', '_') %}
+                {% set image_path = 'images/states/' ~ state_filename ~ '.svg' %}
                 {% else %}
-                <div class="camp-image">Camp image here</div>
+                {% set image_path = 'images/states/default.svg' %}
                 {% endif %}
+                <img class="camp-image" src="{{ url_for('static', filename=image_path) }}" alt="">
                 <h3>{{ camp.name }}</h3>
                 <p>{{ camp.city }}, {{ camp.state }}</p>
                 <p>
