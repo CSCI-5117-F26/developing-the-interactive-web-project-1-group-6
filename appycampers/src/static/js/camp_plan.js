@@ -85,4 +85,16 @@
             box.addEventListener('change', () => box.form.querySelector('input[name="participants"]').setCustomValidity(''));
         });
     }
+
+    // format timestamps
+    page.querySelectorAll('.camp-messages time[datetime]').forEach((el) => {
+        const when = new Date(el.getAttribute('datetime'));
+        if (!isNaN(when)) {
+            el.textContent = when.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+        }
+    });
+
+    // the messages
+    const messages = document.getElementById('camp-messages');
+    if (messages && location.hash === '#discussion') messages.lastElementChild?.scrollIntoView({ block: 'nearest' });
 })();

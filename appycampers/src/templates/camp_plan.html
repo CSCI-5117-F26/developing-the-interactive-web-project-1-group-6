@@ -25,6 +25,9 @@
 </section>
 
 <div class="container">
+    {% if error %}
+    <p class="plan-error l-box">{{ error }}</p>
+    {% endif %}
     <nav class="plan-nav l-box">
         <a class="pure-button pure-button-primary active" href="{{ url_for('camp_plan', camp_id=camp_id) }}">Member planning view</a>
         {% if is_campmaster %}
@@ -277,6 +280,36 @@
                     </fieldset>
                 </form>
             </section>
+            <!-- Discussion -->
+            <section class="camp-card" id="discussion">
+                <h2>Around the campfire</h2>
+                <ul id="camp-messages" class="camp-messages">
+                    {% for msg in messages %}
+                    <li>
+                        <div class="message-meta">
+                            <strong>{{ msg.user.username }}</strong>
+                            {% if msg.createdAt %}
+                            <time datetime="{{ msg.createdAt.isoformat() }}">{{ msg.createdAt | campdate }}</time>
+                            {% endif %}
+                        </div>
+                        <p>{{ msg.message }}</p>
+                    </li>
+                    {% else %}
+                    <li class="muted">No messages yet. Say hi!</li>
+                    {% endfor %}
+                </ul>
+                <form id="discussion-form" action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
+                    <input type="hidden" name="action" value="message">
+                    <fieldset>
+                        <label for="camp-message">Your message</label>
+                        <textarea id="camp-message" class="pure-input-1" name="message" rows="3"
+                            maxlength="2000" placeholder="Write a message" required>{{ form.get('message', '') }}</textarea>
+                        <div class="plan-actions">
+                            <button type="submit" class="pure-button pure-button-primary">Send</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </section>
         </div>
 
         <!-- Sidebar -->
@@ -321,6 +354,17 @@
                         {% endfor %}
                     </ul>
                 </section>
+                <div class="plan-sidebar-section">
+                    {% if camp.creatorId == user.id %}
+                    <p>You created this campout, so you'll need to transfer ownership before you can leave.</p>
+                    {% else %}
+                    <form action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" data-confirm="Leave this campout? Your gear claims and items will be removed, and you'll need to request to join again to come back.">
+                    <input type="hidden" name="action" value="leave">
+                        <button type="submit" class="pure-button button-outline" id="leave-camp-button">Leave campout</button>
+                    </form>
+                    <p>If you leave, you will need to request to join again to return to this campout.</p>
+                    {% endif %}
+                </div>
             </div>
         </aside>
     </div>
