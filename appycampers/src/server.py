@@ -2,9 +2,18 @@ import os
 import models
 from flask import Flask, render_template, session
 from extensions import db, oauth
+from controllers.camp_plan import show_plan
+from controllers.camp_manage import show_controls
 from controllers import (auth_controller, explore_controller, health_controller, home_controller, my_camps_controller, create_controller, profile_controller,)
 
 app = Flask(__name__)
+
+# Formats a date
+@app.template_filter("campdate")
+def format_camp_date(value):
+    if not value:
+        return ""
+    return f"{value.strftime('%b')} {value.day}, {value.year}"
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 app.secret_key = os.environ.get("SECRET_KEY")
@@ -32,13 +41,13 @@ app.register_blueprint(profile_controller)
 # Show a camp's details, participants, and shared gear plan
 @app.get("/camps/<camp_id>")
 def camp_plan(camp_id):
-    return render_template("camp_plan.html", camp_id=camp_id)
+    return show_plan(camp_id)
 
 
 # Shows the campmaster controls for managing a camp
-@app.get("/camps/<camp_id>/manage")
+@app.route("/camps/<camp_id>/manage", methods=["GET", "POST"])
 def camp_manage(camp_id):
-    return render_template("camp_manage.html", camp_id=camp_id)
+    return show_controls(camp_id)
 
 @app.context_processor
 def inject_user():

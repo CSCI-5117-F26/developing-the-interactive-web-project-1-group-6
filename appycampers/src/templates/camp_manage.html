@@ -1,4 +1,180 @@
 {% extends "base.html" %}
-{% block title %} Camp Controls {% endblock %}
+{% block title %}{{ camp.name }} · Camp Controls{% endblock %}
 {% block content %}
+<section class="page-banner">
+    <div class="container l-box">
+        <h1>Camp controls</h1>
+        <p>{{ camp.name }} · {{ camp.startDate | campdate }} – {{ camp.endDate | campdate }} · {{ members|length }} / {{ camp.expectedCampers }} campers</p>
+    </div>
+</section>
+<div class="container">
+    {% if error %}
+    <p class="plan-error l-box" role="alert">{{ error }}</p>
+    {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="plan-error {{ category }} l-box">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <nav class="plan-nav l-box">
+        <a class="pure-button button-outline" href="{{ url_for('camp_plan', camp_id=camp_id) }}">← Member planning view</a>
+        <a class="pure-button pure-button-primary active" href="{{ url_for('camp_manage', camp_id=camp_id) }}">Camp controls</a>
+    </nav>
+    <div class="pure-g">
+        <div class="pure-u-1 pure-u-lg-2-3 l-box">
+            <section class="camp-card">
+                <h2>Camp members</h2>
+                <div class="gear-table-wrap">
+                    <table class="pure-table pure-table-horizontal">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in members %}
+                            <tr>
+                                <td>{{ member.user.username }}{% if member.userId == user.id %} (you){% endif %}</td>
+                                <td>
+                                    {% if member.userId == camp.creatorId %}Campmaster, Owner
+                                    {% elif member.role.value in ['admin', 'camp_master'] %}Campmaster
+                                    {% else %}Member{% endif %}
+                                </td>
+                                <td>
+                                    {% if member.userId != camp.creatorId %}
+                                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="row-actions">
+                                        <input type="hidden" name="member_id" value="{{ member.id }}">
+                                        {% if member.role.value in ['admin', 'camp_master'] %}
+                                        <button class="pure-button button-outline" name="action" value="demote">Demote</button>
+                                        {% else %}
+                                        <button class="pure-button button-outline" name="action" value="promote">Promote</button>
+                                        {% endif %}
+                                        <button class="pure-button button-outline" name="action" value="remove_member">Remove</button>
+                                    </form>
+                                    {% else %}—{% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <p>Removing a camper clears their gear claims and extra items. Past expenses are kept.</p>
+            </section>
+            
+            <section class="camp-card">
+                <h2>Join requests</h2>
+                {% for member in pending_requests %}
+                <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="request-row">
+                    <input type="hidden" name="member_id" value="{{ member.id }}">
+                    <span>{{ member.user.username }}</span>
+                    <div class="row-actions">
+                        <button class="pure-button button-outline" name="action" value="reject">Decline</button>
+                        <button class="pure-button pure-button-primary" name="action" value="approve">Approve</button>
+                    </div>
+                </form>
+                {% else %}
+                <p>No pending join requests.</p>
+                {% endfor %}
+            </section>
+        </div>
+        
+        <aside class="pure-u-1 pure-u-lg-1-3 l-box">
+            <section class="camp-card">
+                <h2>Campout details</h2>
+                <dl class="camp-details">
+                    <dt>Location</dt><dd>{{ camp.city }}, {{ camp.state }}</dd>
+                    <dt>Expected campers</dt><dd>{{ camp.expectedCampers }}</dd>
+                    <dt>Description</dt><dd>{{ camp.campoutDescription or 'No description provided.' }}</dd>
+                </dl>
+                
+                <details{% if form.get("action") == "edit_details" %} open{% endif %}>
+                    <summary>Edit campout details</summary>
+                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                        <input type="hidden" name="action" value="edit_details">
+                        <fieldset>
+                            <legend>Campout details</legend>
+                            <label for="name">Camp name</label>
+                            <input id="name" name="name" type="text" class="pure-input-1" maxlength="255" value="{{ form.get('name', camp.name) }}" required>
+                            <label for="startDate">Start date</label>
+                            <input id="startDate" name="start_date" type="date" class="pure-input-1" value="{{ form.get('start_date', camp.startDate.isoformat()) }}" required>
+                            <label for="endDate">End date</label>
+                            <input id="endDate" name="end_date" type="date" class="pure-input-1" value="{{ form.get('end_date', camp.endDate.isoformat()) }}" required>
+                            <label for="address">Location / address</label>
+                            <input id="address" name="address" type="text" class="pure-input-1" maxlength="255" value="{{ form.get('address', camp.address) }}" required>
+                            <label for="city">City</label>
+                            <input id="city" name="city" type="text" class="pure-input-1" maxlength="100" value="{{ form.get('city', camp.city) }}" required>
+                            <label for="state">State</label>
+                            <input id="state" name="state" type="text" class="pure-input-1" maxlength="100" value="{{ form.get('state', camp.state) }}" required>
+                            <label for="campSiteNumber">Campsite number</label>
+                            <input id="campSiteNumber" name="campsite_number" type="text" class="pure-input-1" maxlength="50" value="{{ form.get('campsite_number', camp.campSiteNumber or '') }}">
+                            <label for="expectedCampers">Expected campers</label>
+                            <input id="expectedCampers" name="expected_campers" type="number" class="pure-input-1" min="1" max="10000" step="1" value="{{ form.get('expected_campers', camp.expectedCampers) }}" required>
+                            <label for="campoutDescription">Description</label>
+                            <textarea id="campoutDescription" name="description" class="pure-input-1" rows="4">{{ form.get('description', camp.campoutDescription or '') }}</textarea>
+                            <button class="pure-button pure-button-primary">Save details</button>
+                        </fieldset>
+                    </form>
+                </details>
+                
+                <details{% if form.get("action") in ["add_requirement", "edit_requirement", "delete_requirement"] %} open{% endif %}>
+                    <summary>Edit gear requirements</summary>
+                    {% for item in requirements %}
+                    {% set editing = form.get("action") == "edit_requirement" and form.get("requirement_id") == item.id %}
+                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                        <input type="hidden" name="requirement_id" value="{{ item.id }}">
+                        <fieldset>
+                            <legend>{{ item.itemName }}</legend>
+                            <label for="item-{{ item.id }}">Item name</label>
+                            <input id="item-{{ item.id }}" name="item_name" class="pure-input-1" maxlength="255" value="{{ form.get('item_name', item.itemName) if editing else item.itemName }}" required>
+                            <label for="quantity-{{ item.id }}">Quantity needed</label>
+                            <input id="quantity-{{ item.id }}" name="quantity" type="number" class="pure-input-1" min="1" max="10000" step="1" value="{{ form.get('quantity', item.quantity) if editing else item.quantity }}" required>
+                            <div class="row-actions">
+                                <button class="pure-button pure-button-primary" name="action" value="edit_requirement">Save</button>
+                                <button class="pure-button button-outline" name="action" value="delete_requirement" formnovalidate>Delete</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    {% else %}
+                    <p>No gear requirements yet.</p>
+                    {% endfor %}
+                    <p>Deleting a requirement also removes its claims.</p>
+                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                        <input type="hidden" name="action" value="add_requirement">
+                        <fieldset>
+                            <legend>Add a requirement</legend>
+                            <label for="new-item">Item name</label>
+                            <input id="new-item" value="{{ form.get('item_name', '') if form.get('action') == 'add_requirement' else '' }}" name="item_name" class="pure-input-1" maxlength="255" required>
+                            <label for="new-quantity">Quantity needed</label>
+                            <input id="new-quantity" name="quantity" type="number" class="pure-input-1" min="1" max="10000" step="1" value="{{ form.get('quantity', 1) if form.get('action') == 'add_requirement' else 1 }}" required>
+                            <button class="pure-button pure-button-primary">Add requirement</button>
+                        </fieldset>
+                    </form>
+                </details>
+                
+                <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                        <input type="hidden" name="action" value="edit_settings">
+                    <fieldset>
+                        <legend>Camp settings</legend>
+                        <label for="Visibility">Visibility</label>
+                        <select id="Visibility" name="visibility" class="pure-input-1">
+                            {% for option in visibility_options %}
+                            <option value="{{ option.value }}"{% if form.get('visibility', camp.Visibility.value) == option.value %} selected{% endif %}>{{ option.value|replace('_', ' ')|title }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="allowJoinRequets">Join requests</label>
+                        <select id="allowJoinRequets" name="allow_join_requests" class="pure-input-1">
+                            <option value="true"{% if form.get("allow_join_requests", "true" if camp.allowJoinRequets else "false") == "true" %} selected{% endif %}>Enabled</option>
+                            <option value="false"{% if form.get("allow_join_requests", "true" if camp.allowJoinRequets else "false") == "false" %} selected{% endif %}>Disabled</option>
+                        </select>
+                        <button class="pure-button pure-button-primary">Save settings</button>
+                    </fieldset>
+                </form>
+            </section>
+        </aside>
+    </div>
+</div>
 {% endblock %}

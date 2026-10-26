@@ -7,3 +7,4 @@ from .campExpense import CampExpense
 from .gearRequirements import GearRequirement
 from .gearClaim import GearClaim
 from .expenseSplit import ExpenseSplit
+from .campItem import CampItem
