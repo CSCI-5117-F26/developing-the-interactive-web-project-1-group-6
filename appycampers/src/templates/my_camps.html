@@ -37,14 +37,14 @@
             <p>Completed campout</p>
             {% endif %}
             <div class="camp-card-actions">
-                <a class="pure-button" href="{{ url_for('camp_plan', camp_id=camp.id) }}">
-                    {{ 'View past camp' if past else 'View camp' }}
-                </a>
                 {% if can_manage and not past and not pending %}
                 <a class="pure-button pure-button-primary" href="{{ url_for('camp_manage', camp_id=camp.id) }}">
                     Manage camp
                 </a>
                 {% endif %}
+                <a class="pure-button" href="{{ url_for('camp_plan', camp_id=camp.id) }}">
+                    {{ 'View past camp' if past else 'View camp' }}
+                </a>
             </div>
         </div>
     </article>
