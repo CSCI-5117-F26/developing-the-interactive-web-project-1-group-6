@@ -82,8 +82,34 @@
             </section>
         </div>
         
-        <!-- Sidebar -->
         <aside class="pure-u-1 pure-u-lg-1-3 l-box">
+            <section class="camp-card">
+                <h2>Campout details</h2>
+                <dl class="camp-details">
+                    <dt>Location</dt><dd>{{ camp.city }}, {{ camp.state }}</dd>
+                    <dt>Expected campers</dt><dd>{{ camp.expectedCampers }}</dd>
+                    <dt>Description</dt><dd>{{ camp.campoutDescription or 'No description provided.' }}</dd>
+                </dl>
+                
+                <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                        <input type="hidden" name="action" value="edit_settings">
+                    <fieldset>
+                        <legend>Camp settings</legend>
+                        <label for="Visibility">Visibility</label>
+                        <select id="Visibility" name="visibility" class="pure-input-1">
+                            {% for option in visibility_options %}
+                            <option value="{{ option.value }}"{% if form.get('visibility', camp.Visibility.value) == option.value %} selected{% endif %}>{{ option.value|replace('_', ' ')|title }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="allowJoinRequets">Join requests</label>
+                        <select id="allowJoinRequets" name="allow_join_requests" class="pure-input-1">
+                            <option value="true"{% if form.get("allow_join_requests", "true" if camp.allowJoinRequets else "false") == "true" %} selected{% endif %}>Enabled</option>
+                            <option value="false"{% if form.get("allow_join_requests", "true" if camp.allowJoinRequets else "false") == "false" %} selected{% endif %}>Disabled</option>
+                        </select>
+                        <button class="pure-button pure-button-primary">Save settings</button>
+                    </fieldset>
+                </form>
+            </section>
         </aside>
     </div>
 </div>

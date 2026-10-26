@@ -9,7 +9,13 @@ from utils.auth import get_current_user
 
 def save_action(camp, members):
     action = request.form.get("action")
-    if action in ("approve", "reject", "promote", "demote", "remove_member"):
+    if action == "edit_settings":
+        camp.Visibility = VisibilityType(request.form.get("visibility", ""))
+        join_requests = request.form.get("allow_join_requests")
+        if join_requests not in ("true", "false"):
+            raise ValueError("Choose whether to allow join requests.")
+        camp.allowJoinRequets = join_requests == "true"
+    elif action in ("approve", "reject", "promote", "demote", "remove_member"):
         member = CampMember.query.filter_by(
             id=request.form.get("member_id"),
             campId=camp.id,
@@ -48,7 +54,6 @@ def save_action(camp, members):
                     GearClaim.claimedByUserId == member.userId,
                 ).delete()
                 CampItem.query.filter_by(campId=camp.id, userId=member.userId).delete()
-                # Past expenses still include the camper after removal.
                 db.session.delete(member)
     else:
         abort(400)
@@ -61,7 +66,6 @@ def show_controls(camp_id):
         return redirect(url_for("auth.login"))
         
     camp = Camp.query.filter_by(id=camp_id).first_or_404()
-
     
     membership = CampMember.query.filter_by(
         campId=camp.id,
