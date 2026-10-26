@@ -32,6 +32,15 @@
     updateStep(currentStep + 1);
   });
 
+  const stepButtons = document.querySelectorAll('[data-step-button]');
+  for (const button of stepButtons) {
+    button.addEventListener('click', function () {
+      const step = Number(button.dataset.stepButton);
+      if (currentStep === 1 && step > 1 && !detailsForm.reportValidity()) return;
+      updateStep(step);
+    });
+  }
+
   // Form Object for JSON
   const fields = {
     name: 'camp-name',
