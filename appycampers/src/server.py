@@ -35,34 +35,19 @@ app.register_blueprint(explore_controller)
 app.register_blueprint(health_controller)
 app.register_blueprint(home_controller)
 app.register_blueprint(my_camps_controller)
-
-# camp details when creating a new camp
-@app.get("/camps/create")
-def create_camp():
-    return render_template("create_camp.html")
-
-# gear requirements when creating a new camp
-@app.get("/camps/create/gear")
-def create_camp_gear():
-    return render_template("create_camp_gear.html")
-
-# friends when creating a new camp
-@app.get("/camps/create/invite")
-def create_camp_invite():
-    return render_template("create_camp_invite.html")
-
 app.register_blueprint(create_controller)
 app.register_blueprint(profile_controller)
 
-@app.route("/camps/<camp_id>", methods=["GET", "POST"])
+# Show a camp's details, participants, and shared gear plan
+@app.get("/camps/<camp_id>")
 def camp_plan(camp_id):
     return show_plan(camp_id)
+
 
 # Shows the campmaster controls for managing a camp
 @app.route("/camps/<camp_id>/manage", methods=["GET", "POST"])
 def camp_manage(camp_id):
     return show_controls(camp_id)
-    return render_template("camp_manage.html", camp_id=camp_id)
 
 @app.context_processor
 def inject_user():
