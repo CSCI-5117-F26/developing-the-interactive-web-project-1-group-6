@@ -51,5 +51,5 @@ def inject_user():
     if user_id:
         return {"current_user": db.session.get(models.User, user_id)}
     else:
-        return None
+        return {"current_user": None}
 
