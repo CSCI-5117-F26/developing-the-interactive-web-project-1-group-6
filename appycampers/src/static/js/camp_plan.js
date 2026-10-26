@@ -39,4 +39,50 @@
             quantity.value = Number(option.dataset.mine) || 1;
         });
     }
+
+    //  edit for your own extra items
+    page.querySelectorAll('.edit-item-button').forEach((button) => {
+        const row = button.closest('tr');
+        const form = row.querySelector('.edit-item-form');
+        const name = row.querySelector('.item-name');
+        button.addEventListener('click', () => {
+            form.hidden = false;
+            name.hidden = true;
+            button.hidden = true;
+            form.querySelector('input[name="item_name"]').focus();
+        });
+        form.querySelector('.edit-item-cancel').addEventListener('click', () => {
+            form.reset();
+            form.hidden = true;
+            name.hidden = false;
+            button.hidden = false;
+            button.focus();
+        });
+    });
+
+    // Expense breakdown
+    const breakdownButton = document.getElementById('expense-breakdown-button');
+    const breakdown = document.getElementById('expense-breakdown');
+    if (breakdownButton && breakdown) {
+        breakdownButton.addEventListener('click', () => {
+            const open = toggle(breakdownButton, breakdown);
+            breakdownButton.textContent = open ? 'Hide full breakdown' : 'View full breakdown';
+        });
+    }
+
+    // Split of expenses
+    const expenseForm = document.getElementById('expense-form');
+    if (expenseForm) {
+        expenseForm.addEventListener('submit', (event) => {
+            const boxes = expenseForm.querySelectorAll('input[name="participants"]');
+            if (boxes.length && ![...boxes].some((b) => b.checked)) {
+                event.preventDefault();
+                boxes[0].setCustomValidity('Choose at least one camper to split with.');
+                boxes[0].reportValidity();
+            }
+        });
+        expenseForm.querySelectorAll('input[name="participants"]').forEach((box) => {
+            box.addEventListener('change', () => box.form.querySelector('input[name="participants"]').setCustomValidity(''));
+        });
+    }
 })();

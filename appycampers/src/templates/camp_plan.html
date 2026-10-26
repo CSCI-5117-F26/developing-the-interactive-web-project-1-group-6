@@ -13,6 +13,7 @@
     <button type="submit" class="{{ class }}">{{ label }}</button>
 </form>
 {% endmacro %}
+{% macro money(cents) %}${{ cents // 100 }}.{{ '%02d'|format(cents % 100) }}{% endmacro %}
 {% block content %}
 {% set member_ids = members|map(attribute='userId')|list %}
 
@@ -152,6 +153,126 @@
                             maxlength="255" value="{{ form.get('item_name', '') if form.get('action') == 'add_item' else '' }}" required>
                         <div class="plan-actions">
                             <button type="submit" class="pure-button pure-button-primary">Add item</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </section>
+            <!-- Shared expenses -->
+            <section class="camp-card" id="expenses">
+                <h2>Shared expenses</h2>
+                <p>Keep track of shared costs and choose who is splitting each expense.</p>
+                <div class="gear-table-wrap">
+                    <table class="pure-table pure-table-horizontal">
+                        <thead>
+                            <tr>
+                                <th>Expense</th>
+                                <th>Amount</th>
+                                <th>Paid by</th>
+                                <th>Split with</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expenses-table">
+                            {% for expense in expenses %}
+                            {% set split_ids = expense.splits|map(attribute='userId')|list %}
+                            <tr>
+                                <td>{{ expense.title }}</td>
+                                <td>${{ '%.2f'|format(expense.amount) }}</td>
+                                <td>{{ expense.paid_by_user.username }}</td>
+                                <td>
+                                    {% if split_ids|length == member_ids|length and split_ids|reject('in', member_ids)|list|length == 0 %}
+                                    Everyone
+                                    {% else %}
+                                    {{ expense.splits|map(attribute='user.username')|join(', ') }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if expense.paidByUserId == user.id or is_campmaster %}
+                                    {{ action_form('delete_expense', 'Remove', fields={'expense_id': expense.id},
+                                        confirm='Remove the expense "' ~ expense.title ~ '"?') }}
+                                    {% else %}-{% endif %}
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr><td colspan="5">No shared expenses yet.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="expense-summary">
+                    <h3>Calculations</h3>
+                    {% set me = balances.get(user.id) %}
+                    {% if total is none %}
+                    <p>Totals can't be calculated right now.</p>
+                    {% else %}
+                    <p>Total trip cost: <strong>{{ money(total) }}</strong></p>
+                    {% if me %}
+                    <p>Your share: {{ money(me.share) }}</p>
+                    <p>You paid: {{ money(me.paid) }}</p>
+                    {% if me.balance > 0 %}
+                    <p>You owe: <strong>{{ money(me.balance) }}</strong></p>
+                    {% elif me.balance < 0 %}
+                    <p>You're owed: <strong>{{ money(-me.balance) }}</strong></p>
+                    {% else %}
+                    <p><strong>You're all square.</strong></p>
+                    {% endif %}
+                    {% endif %}
+                    {% if balances %}
+                    <button type="button" class="pure-button button-outline" id="expense-breakdown-button">View full breakdown</button>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div id="expense-breakdown" class="gear-table-wrap" hidden>
+                    <h3>Cost by camper</h3>
+                    <table class="pure-table pure-table-horizontal">
+                        <thead>
+                            <tr>
+                                <th>Camper</th>
+                                <th>Share</th>
+                                <th>Paid</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for person in balances.values() %}
+                            <tr>
+                                <td>{{ person.name }}</td>
+                                <td>{{ money(person.share) }}</td>
+                                <td>{{ money(person.paid) }}</td>
+                                <td>
+                                    {% if person.balance > 0 %}owes {{ money(person.balance) }}
+                                    {% elif person.balance < 0 %}is owed {{ money(-person.balance) }}
+                                    {% else %}settled{% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <form id="expense-form" action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
+                    <input type="hidden" name="action" value="add_expense">
+                    <fieldset>
+                        <legend>Add shared expense</legend>
+                        <label for="expense-title">Expense</label>
+                        <input id="expense-title" class="pure-input-1" name="title" type="text"
+                            maxlength="255" value="{{ form.get('title', '') }}" required>
+                        <label for="expense-amount">Amount ($)</label>
+                        <input id="expense-amount" class="pure-input-1" name="amount" type="number"
+                            min="0.01" max="99999999.99" step="0.01" value="{{ form.get('amount', '') }}" required>
+                        <p>Paid by: <strong>{{ user.username }} (you)</strong></p>
+                        <fieldset class="split-with">
+                            <legend>Split with</legend>
+                            <p>Select the campers sharing this cost, including yourself if applicable.</p>
+                            {% for member in members %}
+                            <label for="split-{{ member.userId }}" class="pure-checkbox">
+                                <input id="split-{{ member.userId }}" type="checkbox" name="participants"
+                                    value="{{ member.userId }}"{% if form.get('action') != 'add_expense' or member.userId in form.getlist("participants") %} checked{% endif %}>
+                                {{ member.user.username }}{% if member.userId == user.id %} (you){% endif %}
+                            </label>
+                            {% endfor %}
+                        </fieldset>
+                        <div class="plan-actions">
+                            <button type="submit" class="pure-button pure-button-primary">Add expense</button>
                         </div>
                     </fieldset>
                 </form>
