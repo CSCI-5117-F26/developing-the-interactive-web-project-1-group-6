@@ -120,6 +120,41 @@
                     </form>
                 </details>
                 
+                <details{% if form.get("action") in ["add_requirement", "edit_requirement", "delete_requirement"] %} open{% endif %}>
+                    <summary>Edit gear requirements</summary>
+                    {% for item in requirements %}
+                    {% set editing = form.get("action") == "edit_requirement" and form.get("requirement_id") == item.id %}
+                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                        <input type="hidden" name="requirement_id" value="{{ item.id }}">
+                        <fieldset>
+                            <legend>{{ item.itemName }}</legend>
+                            <label for="item-{{ item.id }}">Item name</label>
+                            <input id="item-{{ item.id }}" name="item_name" class="pure-input-1" maxlength="255" value="{{ form.get('item_name', item.itemName) if editing else item.itemName }}" required>
+                            <label for="quantity-{{ item.id }}">Quantity needed</label>
+                            <input id="quantity-{{ item.id }}" name="quantity" type="number" class="pure-input-1" min="1" max="10000" step="1" value="{{ form.get('quantity', item.quantity) if editing else item.quantity }}" required>
+                            <div class="row-actions">
+                                <button class="pure-button pure-button-primary" name="action" value="edit_requirement">Save</button>
+                                <button class="pure-button button-outline" name="action" value="delete_requirement" formnovalidate>Delete</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    {% else %}
+                    <p>No gear requirements yet.</p>
+                    {% endfor %}
+                    <p>Deleting a requirement also removes its claims.</p>
+                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                        <input type="hidden" name="action" value="add_requirement">
+                        <fieldset>
+                            <legend>Add a requirement</legend>
+                            <label for="new-item">Item name</label>
+                            <input id="new-item" value="{{ form.get('item_name', '') if form.get('action') == 'add_requirement' else '' }}" name="item_name" class="pure-input-1" maxlength="255" required>
+                            <label for="new-quantity">Quantity needed</label>
+                            <input id="new-quantity" name="quantity" type="number" class="pure-input-1" min="1" max="10000" step="1" value="{{ form.get('quantity', 1) if form.get('action') == 'add_requirement' else 1 }}" required>
+                            <button class="pure-button pure-button-primary">Add requirement</button>
+                        </fieldset>
+                    </form>
+                </details>
+                
                 <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
                         <input type="hidden" name="action" value="edit_settings">
                     <fieldset>

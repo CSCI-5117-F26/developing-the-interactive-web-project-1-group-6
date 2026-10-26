@@ -36,6 +36,28 @@ def save_action(camp, members):
         if join_requests not in ("true", "false"):
             raise ValueError("Choose whether to allow join requests.")
         camp.allowJoinRequets = join_requests == "true"
+    elif action in ("add_requirement", "edit_requirement", "delete_requirement"):
+        if action == "add_requirement":
+            requirement = GearRequirement(campId=camp.id)
+        else:
+            requirement = GearRequirement.query.filter_by(
+                id=request.form.get("requirement_id"),
+                campId=camp.id,
+            ).first_or_404()
+            
+        if action == "delete_requirement":
+            db.session.delete(requirement)
+        else:
+            quantity = int(request.form.get("quantity", ""))
+            claimed = sum(claim.quantityCovered for claim in requirement.claims)
+            if quantity < 1 or quantity > 10000:
+                raise ValueError("Quantity must be a whole number between 1 and 10000.")
+            if quantity < claimed:
+                raise ValueError("Quantity cannot be less than campers have already claimed.")
+            
+            requirement.itemName = text_field("item_name", 255)
+            requirement.quantity = quantity
+            db.session.add(requirement)
     elif action in ("approve", "reject", "promote", "demote", "remove_member"):
         member = CampMember.query.filter_by(
             id=request.form.get("member_id"),
@@ -114,7 +136,8 @@ def show_controls(camp_id):
     pending_requests = CampMember.query.filter_by(
         campId=camp.id,
         status=RequestStatus.PENDING,
-    ).all()     
+    ).all()
+            
     return render_template(
         "camp_manage.html",
         camp_id=camp.id,
