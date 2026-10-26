@@ -1,6 +1,6 @@
 import os
 import models
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from extensions import db, oauth
 from controllers import (auth_controller, explore_controller, health_controller, home_controller, my_camps_controller, create_controller, profile_controller,)
 
@@ -39,4 +39,17 @@ def camp_plan(camp_id):
 @app.get("/camps/<camp_id>/manage")
 def camp_manage(camp_id):
     return render_template("camp_manage.html", camp_id=camp_id)
+
+@app.context_processor
+def inject_user():
+    """
+    Context processor for injecting user data into navigation bar.
+    Adapted from flask docs: https://flask.palletsprojects.com/en/stable/templating/
+    """
+    user_id = session.get("user_id")
+    
+    if user_id:
+        return {"current_user": db.session.get(models.User, user_id)}
+    else:
+        return None
 
