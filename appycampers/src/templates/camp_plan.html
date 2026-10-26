@@ -57,7 +57,11 @@
                                     {{ claim.claimed_by_user.username }}{% if item.quantity > 1 %} ({{ claim.quantityCovered }}){% endif %}{% if not loop.last %}, {% endif %}
                                     {% else %}<span class="muted">Needs someone</span>{% endfor %}
                                 </td>
-                                <td>-</td>
+                                <td>
+                                    {% if item.id in my_claims %}
+                                    {{ action_form('cancel_claim', 'Cancel my claim', fields={'requirement_id': item.id}) }}
+                                    {% else %}-{% endif %}
+                                </td>
                             </tr>
                             {% else %}
                             <tr><td colspan="4">No gear requirements yet.</td></tr>
@@ -65,6 +69,34 @@
                         </tbody>
                     </table>
                 </div>
+                {% if requirements %}
+                <button type="button" class="pure-button pure-button-primary" id="claim-button">Claim an item</button>
+                <form id="claim-form" action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked"{% if form.get("action") != "claim" %} hidden{% endif %}>
+                    <input type="hidden" name="action" value="claim">
+                    <fieldset>
+                        <legend>Claim an item</legend>
+                        <p>Choose an item you already claimed to change how many you're bringing.</p>
+                        <label for="claim-item">Item</label>
+                        <select id="claim-item" name="requirement_id" required>
+                            <option value="">Choose an item</option>
+                            {% for item in requirements %}
+                            {% set mine = my_claims.get(item.id, 0) %}
+                            {% set available = item.quantity - (covered[item.id] - mine) %}
+                            <option value="{{ item.id }}" data-max="{{ available }}" data-mine="{{ mine }}"{% if form.get("requirement_id") == item.id %} selected{% endif %}
+                                {% if available < 1 %}disabled{% endif %}>
+                                {{ item.itemName }} ({{ available }} available{% if mine %}, you have {{ mine }}{% endif %})
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <label for="claim-quantity">Quantity</label>
+                        <input id="claim-quantity" name="quantity" type="number" min="1" step="1" value="{{ form.get('quantity', 1) }}" required>
+                        <div class="plan-actions">
+                            <button type="submit" class="pure-button pure-button-primary">Save</button>
+                            <button type="button" class="pure-button" id="cancel-claim-button">Cancel</button>
+                        </div>
+                    </fieldset>
+                </form>
+                {% endif %}
             </section>
         </div>
 
