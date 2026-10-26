@@ -8,8 +8,52 @@ from controllers.camp_plan import text_field
 from utils.auth import get_current_user
 
 def save_action(camp, members):
-    # Action handlers
-    abort(400)
+    action = request.form.get("action")
+    if action in ("approve", "reject", "promote", "demote", "remove_member"):
+        member = CampMember.query.filter_by(
+            id=request.form.get("member_id"),
+            campId=camp.id,
+        ).first_or_404()
+        if member.userId == camp.creatorId:
+            raise ValueError("The camp owner cannot be removed or have their role changed.")
+        
+        if action in ("approve", "reject"):
+            if member.status != RequestStatus.PENDING:
+                raise ValueError("This request has already been handled.")
+            if action == "approve":
+                if len(members) >= camp.expectedCampers:
+                    raise ValueError("This campout is full.")
+                existing = CampMember.query.filter_by(
+                    campId=camp.id,
+                    userId=member.userId,
+                    status=RequestStatus.APPROVED,
+                ).first()
+                if existing:
+                    raise ValueError("This camper is already a member.")
+                member.status = RequestStatus.APPROVED
+                member.role = MemberRole.CAMP_MEMBER
+            else:
+                member.status = RequestStatus.REJECTED
+        else:
+            if member.status != RequestStatus.APPROVED:
+                raise ValueError("Only approved members can be managed.")
+            if action == "promote":
+                member.role = MemberRole.CAMP_MASTER
+            elif action == "demote":
+                member.role = MemberRole.CAMP_MEMBER
+            else:
+                requirement_ids = [item.id for item in camp.gear_requirements]
+                GearClaim.query.filter(
+                    GearClaim.gearRequirementId.in_(requirement_ids),
+                    GearClaim.claimedByUserId == member.userId,
+                ).delete()
+                CampItem.query.filter_by(campId=camp.id, userId=member.userId).delete()
+                # Past expenses still include the camper after removal.
+                db.session.delete(member)
+    else:
+        abort(400)
+    db.session.commit()
+    return redirect(url_for("camp_manage", camp_id=camp.id))
 
 def show_controls(camp_id):
     user = get_current_user()
@@ -17,8 +61,8 @@ def show_controls(camp_id):
         return redirect(url_for("auth.login"))
         
     camp = Camp.query.filter_by(id=camp_id).first_or_404()
+
     
-    # Verify user role
     membership = CampMember.query.filter_by(
         campId=camp.id,
         userId=user.id,
@@ -40,8 +84,12 @@ def show_controls(camp_id):
         except ValueError as exc:
             db.session.rollback()
             error = str(exc)
-            status = 400        
-    pending_requests = []
+            status = 400
+            
+    pending_requests = CampMember.query.filter_by(
+        campId=camp.id,
+        status=RequestStatus.PENDING,
+    ).all()
             
     return render_template(
         "camp_manage.html",

@@ -23,8 +23,63 @@
         <a class="pure-button pure-button-primary active" href="{{ url_for('camp_manage', camp_id=camp_id) }}">Camp controls</a>
     </nav>
     <div class="pure-g">
-        <!-- Main Column -->
         <div class="pure-u-1 pure-u-lg-2-3 l-box">
+            <section class="camp-card">
+                <h2>Camp members</h2>
+                <div class="gear-table-wrap">
+                    <table class="pure-table pure-table-horizontal">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in members %}
+                            <tr>
+                                <td>{{ member.user.username }}{% if member.userId == user.id %} (you){% endif %}</td>
+                                <td>
+                                    {% if member.userId == camp.creatorId %}Campmaster, Owner
+                                    {% elif member.role.value in ['admin', 'camp_master'] %}Campmaster
+                                    {% else %}Member{% endif %}
+                                </td>
+                                <td>
+                                    {% if member.userId != camp.creatorId %}
+                                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="row-actions">
+                                        <input type="hidden" name="member_id" value="{{ member.id }}">
+                                        {% if member.role.value in ['admin', 'camp_master'] %}
+                                        <button class="pure-button button-outline" name="action" value="demote">Demote</button>
+                                        {% else %}
+                                        <button class="pure-button button-outline" name="action" value="promote">Promote</button>
+                                        {% endif %}
+                                        <button class="pure-button button-outline" name="action" value="remove_member">Remove</button>
+                                    </form>
+                                    {% else %}—{% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <p>Removing a camper clears their gear claims and extra items. Past expenses are kept.</p>
+            </section>
+            
+            <section class="camp-card">
+                <h2>Join requests</h2>
+                {% for member in pending_requests %}
+                <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="request-row">
+                    <input type="hidden" name="member_id" value="{{ member.id }}">
+                    <span>{{ member.user.username }}</span>
+                    <div class="row-actions">
+                        <button class="pure-button button-outline" name="action" value="reject">Decline</button>
+                        <button class="pure-button pure-button-primary" name="action" value="approve">Approve</button>
+                    </div>
+                </form>
+                {% else %}
+                <p>No pending join requests.</p>
+                {% endfor %}
+            </section>
         </div>
         
         <!-- Sidebar -->
