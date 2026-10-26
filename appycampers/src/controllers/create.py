@@ -7,6 +7,7 @@ from sqlalchemy import or_
 from sqlalchemy.exc import SQLAlchemyError
 
 from utils.auth import get_current_user
+from utils.constants import STATES, CAMPOUT_TYPES
 from extensions import db
 from models import Camp, CampMember, Friendship, GearRequirement, User
 from models.camp import VisibilityType
@@ -36,11 +37,12 @@ class CampCreate(BaseModel):
     state: Annotated[str, StringConstraints(min_length=1, max_length=100)]
     city: Annotated[str, StringConstraints(min_length=1, max_length=100)]
     addres: Annotated[str, StringConstraints(min_length=1, max_length=255)] = Field(validation_alias="location")
-    campSiteNumber: Annotated[str, StringConstraints(strip_whitespace=True, max_length=50)] = Field(default=None, validation_alias="site")
+    campoutType: Annotated[str, StringConstraints(min_length=1, max_length=100)] | None = Field(default=None, validation_alias="camp-type")
+    campSiteNumber: Annotated[str, StringConstraints(strip_whitespace=True, max_length=50)] | None = Field(default=None, validation_alias="camp-number")
     startDate: date = Field(validation_alias="start")
     endDate: date = Field(validation_alias="end")
-    expectedCampers: int = Field(ge=1, validation_alias="campers")
-    campoutDescription: Annotated[str, StringConstraints(strip_whitespace=True, max_length=5000)] = Field(default=None, validation_alias="description")
+    expectedCampers: int = Field(min=1, ge=1, validation_alias="campers")
+    campoutDescription: Annotated[str, StringConstraints(strip_whitespace=True, max_length=5000)] | None = Field(default=None, validation_alias="description")
     Visibility: VisibilityType = Field(validation_alias="visibility")
 
     # Gear Requirement Data (Items, Part 2 of wizard)
@@ -85,7 +87,7 @@ class CampCreate(BaseModel):
         return rows
 
     def member_rows(self, user_id, invitees):
-        rows = [MemberIn(userId=user_id, role=MemberRole.CAMP_MASTER, status=RequestStatus.APPROVED)] # Add camp master to members
+        rows = [MemberIn(userId=user_id, role=MemberRole.CAMP_MASTER, status=RequestStatus.PENDING)] # Add camp master to members
         for friend_id in invitees:
             rows.append(MemberIn(userId=friend_id)) # Add everyone invited
         return [r.model_dump() for r in rows]
@@ -177,7 +179,7 @@ def create_camp():
     friends = []
     for u in get_friends(user.id):
       friends.append({"id": u.id, "name": u.fullname or u.username})
-    return render_template("create_camp.html", friends=friends)
+    return render_template("create_camp.html", friends=friends, states=STATES, campout_types=CAMPOUT_TYPES)
 
 
 @create_controller.post("/camps/create")

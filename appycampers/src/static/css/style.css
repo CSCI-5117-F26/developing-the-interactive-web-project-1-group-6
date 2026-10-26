@@ -215,11 +215,17 @@ h3 {
     width: calc(100% - 1rem);
 }
 
-.pure-form .create-steps {
+.create-steps {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: .75rem;
+    list-style: none;
+}
+
+.create-steps li.is-current {
+    color: #04a2b6;
+    font-weight: 600;
 }
 
 .create-steps span {
