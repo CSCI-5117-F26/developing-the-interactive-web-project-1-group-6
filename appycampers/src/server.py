@@ -46,5 +46,10 @@ def inject_user():
     Context processor for injecting user data into navigation bar.
     Adapted from flask docs: https://flask.palletsprojects.com/en/stable/templating/
     """
-    return dict(user=g.user)
+    user_id = session.get("user_id")
+    
+    if user_id:
+        return {"current_user": db.session.get(models.User, user_id)}
+    else:
+        return None
 
