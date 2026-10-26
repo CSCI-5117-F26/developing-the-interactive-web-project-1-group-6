@@ -98,6 +98,64 @@
                 </form>
                 {% endif %}
             </section>
+            <!-- Member-added items -->
+            <section class="camp-card" id="extra-items">
+                <h2>Member-added items</h2>
+                <p>Share the extras you are bringing. These do not count toward camp requirements.</p>
+                <div class="gear-table-wrap">
+                    <table class="pure-table pure-table-horizontal">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Bringing it</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="extra-items-table">
+                            {% for item in extra_items %}
+                            <tr>
+                                <td>
+                                    <span class="item-name"{% if form.get("action") == "edit_item" and form.get("item_id") == item.id %} hidden{% endif %}>{{ item.itemName }}</span>
+                                    {% if item.userId == user.id %}
+                                    <form action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form edit-item-form"{% if form.get("action") != "edit_item" or form.get("item_id") != item.id %} hidden{% endif %}>
+                    <input type="hidden" name="action" value="edit_item">
+                    <input type="hidden" name="item_id" value="{{ item.id }}">
+                                        <input type="text" name="item_name" maxlength="255" placeholder="New name"
+                                            value="{{ form.get('item_name', item.itemName) if form.get('item_id') == item.id else item.itemName }}" required>
+                                        <button type="submit" class="pure-button pure-button-primary">Save</button>
+                                        <button type="button" class="pure-button edit-item-cancel">Cancel</button>
+                                    </form>
+                                    {% endif %}
+                                </td>
+                                <td>{{ item.user.username }}</td>
+                                <td>
+                                    {% if item.userId == user.id %}
+                                    <div class="row-actions">
+                                        <button type="button" class="pure-button button-outline edit-item-button">Edit</button>
+                                        {{ action_form('delete_item', 'Remove', fields={'item_id': item.id}) }}
+                                    </div>
+                                    {% else %}-{% endif %}
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr><td colspan="3">No extra items yet.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <form id="extra-item-form" action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
+                    <input type="hidden" name="action" value="add_item">
+                    <fieldset>
+                        <legend>Add an item</legend>
+                        <label for="extra-item-name">Item name</label>
+                        <input id="extra-item-name" class="pure-input-1" name="item_name" type="text"
+                            maxlength="255" value="{{ form.get('item_name', '') if form.get('action') == 'add_item' else '' }}" required>
+                        <div class="plan-actions">
+                            <button type="submit" class="pure-button pure-button-primary">Add item</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </section>
         </div>
 
         <!-- Sidebar -->
