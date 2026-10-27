@@ -21,7 +21,10 @@ CSCI 5117, Fall 2026, [assignment description](https://canvas.umn.edu/courses/57
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* ...
+* View camps, with admin/member manage access and non member view access.
+* Explore page with vector search across different fields.
+* Profiles and friend lists, friends can be invited when creating or editing camps.
+* Multi page wizard for creating camps.
 
 ## Testing Notes
 
@@ -105,7 +108,8 @@ In this space please either provide images (around 4) showing your prototypes, O
 Please do not document required libraries. or libraries that are mentioned in the product requirements**
 
 * Library or service name: description of use
-* ...
+* Pydantic: Data verification for create form
+* SQLAlchemy: ORM for DB
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
