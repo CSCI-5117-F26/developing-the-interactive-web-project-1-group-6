@@ -212,7 +212,23 @@ def create_camp():
     }
 
     if source is not None:
-        initial_setup["details"]["name"] = source.name
+        state_input = (source.state or "").strip()
+        state_code = ""
+        for code, name in STATES.items():
+            if (state_input.upper() == code or state_input.lower() == name.lower()):
+                state_code = code
+                break
+
+        initial_setup["details"] = {
+            "name": source.name,
+            "state": state_code,
+            "city": source.city,
+            "location": source.addres,
+            "type": source.campoutType or "",
+            "campers": source.expectedCampers,
+            "description": source.campoutDescription or "",
+            "visibility": "public",
+        }
 
     return render_template(
         "create_camp.html", 
