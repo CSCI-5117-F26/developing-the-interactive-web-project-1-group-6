@@ -24,14 +24,17 @@ def explore():
     location = request.args.get("location", "").strip()
     location = location[:200]
 
+    errors = {}
     # retrieve filters and validate incoming values
     visibility = request.args.get("visibility", "public")
     if visibility not in ("public", "friends"):
-        abort(400)
+        errors["visibility"] = "Visibility is not public or friends only. Public camps searched"
+        visibility = "public"
 
     timing = request.args.get("timing", "upcoming")
     if timing not in ("upcoming", "ongoing", "past", "all"):
-        abort(400)
+        errors["timing"] = "Timing value is invalid. Upcoming camps searched"
+        timing = "upcoming"
 
     start_date = request.args.get("start_date", "")
     end_date = request.args.get("end_date", "")
@@ -46,11 +49,15 @@ def explore():
         if end_date:
             to_date = date.fromisoformat(end_date)
     except ValueError:
-        abort(400)
+        errors["date"] = "Invalid Date"
+        from_date = ""
+        to_date = ""
 
     if from_date and to_date:
         if from_date > to_date:
-            abort(400)
+            errors["date"] = "Dates are out of order"
+            from_date = ""
+            to_date = ""
 
     # implement the standard filters
     ## visibility
@@ -159,6 +166,7 @@ def explore():
 
     return render_template(
         "explore.html",
+        errors=errors,
         camps=camps,
         filters=filters,
         has_filters=filters != default_filters,
