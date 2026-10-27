@@ -31,7 +31,7 @@
                 · {{ camp.expectedCampers }} campers
             </p>
             {% if camp.campoutDescription %}
-            <p>{{ camp.campoutDescription }}</p>
+            <p>{{ camp.campoutDescription | truncate(140) }}</p>
             {% endif %}
             {% if past %}
             <p>Completed campout</p>
