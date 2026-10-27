@@ -271,6 +271,10 @@ h3 {
     margin-bottom: 1rem;
 }
 
+.gear-table-wrap > table {
+    width: 100%;
+}
+
 #create_camp_wizard .pure-table {
     width: 100%;
 }
