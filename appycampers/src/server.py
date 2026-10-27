@@ -39,7 +39,7 @@ app.register_blueprint(create_controller)
 app.register_blueprint(profile_controller)
 
 # Show a camp's details, participants, and shared gear plan
-@app.get("/camps/<camp_id>")
+@app.route("/camps/<camp_id>", methods=["GET", "POST"])
 def camp_plan(camp_id):
     return show_plan(camp_id)
 
@@ -61,4 +61,3 @@ def inject_user():
         return {"current_user": db.session.get(models.User, user_id)}
     else:
         return {"current_user": None}
-
