@@ -185,6 +185,13 @@ h3 {
     margin: 0;
 }
 
+.explore-error {
+    background: #f8e1dc;
+    border: 1px solid #c9806f;
+    border-radius: .5rem;
+    color: #6b2417;
+}
+
 #search {
     border-radius: .25rem;
     padding: .75em 1.2em;
@@ -332,7 +339,7 @@ h3 {
     padding-bottom: 2rem;
 }
 
-:is(.site-camp_plan, .site-camp_manage) .pure-g > .l-box {
+:is(.site-camp_plan, .site-camp_manage) .pure-g>.l-box {
     min-width: 0;
 }
 
@@ -371,7 +378,7 @@ h3 {
     margin-top: 0;
 }
 
-:is(.site-camp_plan, .site-camp_manage) .camp-card + .camp-card {
+:is(.site-camp_plan, .site-camp_manage) .camp-card+.camp-card {
     margin-top: 1rem;
 }
 
@@ -503,7 +510,7 @@ h3 {
         font-size: 2.25rem;
     }
 
-    :is(.site-camp_plan, .site-camp_manage) .pure-g > .l-box {
+    :is(.site-camp_plan, .site-camp_manage) .pure-g>.l-box {
         padding-left: 0;
         padding-right: 0;
     }
