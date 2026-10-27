@@ -1,17 +1,13 @@
 import os
 import models
-from flask import Flask, render_template, session
+from flask import Flask, session
 from extensions import db, oauth
 from controllers import (auth_controller, explore_controller, health_controller, home_controller, my_camps_controller, create_controller, profile_controller,  camp_manage_controller, camp_plan_controller,)
+from utils import format_camp_date
 
 app = Flask(__name__)
 
-# Formats a date
-@app.template_filter("campdate")
-def format_camp_date(value):
-    if not value:
-        return ""
-    return f"{value.strftime('%b')} {value.day}, {value.year}"
+app.add_template_filter(format_camp_date, "campdate")
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 app.secret_key = os.environ.get("SECRET_KEY")
