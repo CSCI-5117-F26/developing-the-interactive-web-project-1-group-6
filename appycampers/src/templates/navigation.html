@@ -16,8 +16,8 @@
         {% if current_user %}
         <a class="pure-menu-link nav-profile" href="{{ url_for('profile.profile') }}">
             <span class="profile-avatar">
-                {% if current_user.avatar %}
-                <img src="{{ current_user.avatar }}">
+                {% if current_user.profile_avatar %}
+                <img src="{{ current_user.profile_avatar }}">
                 {% else %}
                 {{ (current_user.fullname or current_user.username or 'U')[0]|upper }}
                 {% endif %}

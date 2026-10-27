@@ -60,3 +60,8 @@ CAMPOUT_TYPES = {
     "wildlife": "Wildlife",
     "relaxing": "Relaxing",
 }
+
+TEMPORARY_AVATAR_OVERRIDES = {
+    "james@rocket.camp": "https://res.cloudinary.com/dfhj4i9hd/image/upload/v1793073064/james_fqlz7s.webp",
+    "jessie@rocket.camp": "https://res.cloudinary.com/dfhj4i9hd/image/upload/v1793073066/jessie_abiml4.webp",
+}

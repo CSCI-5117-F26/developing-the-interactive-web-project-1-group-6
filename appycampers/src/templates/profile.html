@@ -22,8 +22,8 @@
     <h2>Profile Details</h2>
     <div class="profile-summary">
         <div class="profile-avatar">
-            {% if user.avatar %}
-            <img src="{{ user.avatar }}">
+            {% if user.profile_avatar %}
+            <img src="{{ user.profile_avatar }}">
             {% else %}
             {{ (user.fullname or user.username or 'U')[0]|upper }}
             {% endif %}
