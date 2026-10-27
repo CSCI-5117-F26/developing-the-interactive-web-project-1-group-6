@@ -106,7 +106,7 @@ h3 {
 }
 
 .homepage-section+.homepage-section {
-    border-top: 1px dashed;
+    border-top: 1px solid #d8d6c8;
 }
 
 .homepage-step-image {
@@ -115,6 +115,19 @@ h3 {
     max-width: 240px;
     height: auto;
     margin-bottom: 1rem;
+}
+
+.homepage-section-label {
+    margin: 0 0 1rem;
+    color: #263531;
+    font-size: .75rem;
+    font-weight: bold;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+#homepage-intro .homepage-section-label {
+    color: #b7c5b8;
 }
 
 /* Explore Camps */
@@ -254,8 +267,24 @@ h3 {
     width: 100%;
 }
 
-#create_camp_wizard .pure-table thead {
+#create_camp_wizard .pure-table thead,
+.site-camp_plan .pure-table thead {
     background: #101e20;
+    color: #f4ecdb;
+}
+
+.pure-table {
+    border: none;
+}
+
+.pure-table th,
+.pure-table td {
+    padding: .8rem 1rem;
+    border-color: #d8d6c8;
+}
+
+.pure-table thead {
+    background: #263531;
     color: #f4ecdb;
 }
 
@@ -265,6 +294,8 @@ h3 {
     flex-wrap: wrap;
     align-items: center;
     gap: .75rem;
+    justify-content: flex-end;
+    padding-right: 1rem;
 }
 
 .create-nav {
@@ -332,7 +363,7 @@ h3 {
     padding-bottom: 2rem;
 }
 
-:is(.site-camp_plan, .site-camp_manage) .pure-g > .l-box {
+:is(.site-camp_plan, .site-camp_manage) .pure-g>.l-box {
     min-width: 0;
 }
 
@@ -371,7 +402,7 @@ h3 {
     margin-top: 0;
 }
 
-:is(.site-camp_plan, .site-camp_manage) .camp-card + .camp-card {
+:is(.site-camp_plan, .site-camp_manage) .camp-card+.camp-card {
     margin-top: 1rem;
 }
 
@@ -519,7 +550,7 @@ h3 {
         font-size: 2.25rem;
     }
 
-    :is(.site-camp_plan, .site-camp_manage) .pure-g > .l-box {
+    :is(.site-camp_plan, .site-camp_manage) .pure-g>.l-box {
         padding-left: 0;
         padding-right: 0;
     }
