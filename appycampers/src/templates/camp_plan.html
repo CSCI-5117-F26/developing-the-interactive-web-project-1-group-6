@@ -298,7 +298,17 @@
                     {% for msg in messages %}
                     <li>
                         <div class="message-meta">
-                            <strong>{{ msg.user.username }}</strong>
+                            <a class="message-author" href="{{ url_for('profile.user_profile', user_id=msg.user.id) }}"
+                                aria-label="View {{ msg.user.fullname or msg.user.username }}'s profile">
+                                <span class="camper-initial">
+                                    {% if msg.user.avatar %}
+                                    <img src="{{ msg.user.avatar }}" alt="">
+                                    {% else %}
+                                    {{ (msg.user.fullname or msg.user.username or 'U')[0]|upper }}
+                                    {% endif %}
+                                </span>
+                                <strong>{{ msg.user.username }}</strong>
+                            </a>
                             {% if msg.createdAt %}
                             <time datetime="{{ msg.createdAt.isoformat() }}">{{ msg.createdAt | campdate }}</time>
                             {% endif %}
@@ -358,7 +368,15 @@
                     <ul class="plan-campers">
                         {% for member in members %}
                         <li>
-                            <span class="camper-initial">{{ member.user.username[:1]|upper }}</span>
+                            <a class="camper-initial" href="{{ url_for('profile.user_profile', user_id=member.user.id) }}"
+                                aria-label="View {{ member.user.fullname or member.user.username }}'s profile"
+                                title="View {{ member.user.fullname or member.user.username }}'s profile">
+                                {% if member.user.avatar %}
+                                <img src="{{ member.user.avatar }}" alt="">
+                                {% else %}
+                                {{ (member.user.fullname or member.user.username or 'U')[0]|upper }}
+                                {% endif %}
+                            </a>
                             {{ member.user.username }}{% if member.userId == user.id %} (you){% endif %}
                             {% if member.userId == camp.creatorId %}<span class="muted">· campmaster</span>{% endif %}
                         </li>
