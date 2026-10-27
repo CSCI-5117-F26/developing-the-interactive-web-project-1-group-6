@@ -32,6 +32,17 @@
         <a class="pure-button pure-button-primary active" href="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}">Member planning view</a>
         {% if is_campmaster %}
         <a class="pure-button button-outline" href="{{ url_for('camp_manage.camp_manage', camp_id=camp_id) }}">Camp controls →</a>
+        {% elif not can_edit %}
+        <form action="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}" method="post" class="inline-form">
+            <input type="hidden" name="action" value="request_join">
+            <button type="submit" class="pure-button button-outline"
+                {% if pending_request or not camp.allowJoinRequets or members|length >= camp.expectedCampers %}disabled{% endif %}>
+                {% if pending_request %}Request pending
+                {% elif not camp.allowJoinRequets %}Join requests closed
+                {% elif members|length >= camp.expectedCampers %}Camp full
+                {% else %}Request to join{% endif %}
+            </button>
+        </form>
         {% endif %}
     </nav>
 
