@@ -14,6 +14,18 @@
 
 <section class="container l-box">
     <form method="GET" action="{{ url_for('explore.explore') }}" class="pure-form">
+        {% if errors %}
+        <div class="l-box">
+            <div class="explore-error">
+                Error:
+                {% for field, message in errors.items() %}
+                <ul>
+                    <li><span>{{ message }}</span></li>
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
         <div class="explore-search l-box">
             <input type="search" id="search" name="search" maxlength="200" placeholder="Name or description"
                 value="{{ filters.search }}">

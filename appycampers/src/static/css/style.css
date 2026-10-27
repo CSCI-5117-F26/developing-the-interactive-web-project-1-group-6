@@ -198,6 +198,14 @@ h3 {
     margin: 0;
 }
 
+.explore-error {
+    background: #f8e1dc;
+    border: 1px solid #c9806f;
+    border-radius: .5rem;
+    color: #6b2417;
+    padding: 1rem;
+}
+
 #search {
     border-radius: .25rem;
     padding: .75em 1.2em;
