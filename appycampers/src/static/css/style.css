@@ -260,6 +260,21 @@ h3 {
     color: #f4ecdb;
 }
 
+.pure-table {
+    border: none;
+}
+
+.pure-table th,
+.pure-table td {
+    padding: .8rem 1rem;
+    border-color: #d8d6c8;
+}
+
+.pure-table thead {
+    background: #263531;
+    color: #f4ecdb;
+}
+
 .create-actions,
 .create-nav {
     display: flex;
