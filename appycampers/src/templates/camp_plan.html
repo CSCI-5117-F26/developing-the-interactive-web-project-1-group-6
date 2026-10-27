@@ -32,9 +32,10 @@
     {% endif %}
     <nav class="plan-nav l-box">
         <a class="pure-button pure-button-primary active"
-            href="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}"> Planning</a>
+            href="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}">Member planning view</a>
         {% if is_campmaster %}
-        <a class="pure-button button-outline" href="{{ url_for('camp_manage.camp_manage', camp_id=camp_id) }}">Controls →</a>
+        <a class="pure-button button-outline" href="{{ url_for('camp_manage.camp_manage', camp_id=camp_id) }}">Camp
+            controls →</a>
         {% elif not can_edit %}
         <form action="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}" method="post" class="inline-form">
             <input type="hidden" name="action" value="request_join">
@@ -47,9 +48,6 @@
             </button>
         </form>
         {% endif %}
-        <a class="pure-button pure-button-primary" id="copy-campout" href="{{ url_for('create.create_camp', copy_from=camp.id) }}">
-            Copy campout
-        </a>
     </nav>
 
     <div class="pure-g">
@@ -426,6 +424,14 @@
                     </ul>
                 </section>
                 <div class="plan-sidebar-section">
+                    <h2>Actions</h2>
+                    <a class="pure-button pure-button-primary" id="copy-campout"
+                        href="{{ url_for('create.create_camp', copy_from=camp.id) }}">
+                        Copy this campout
+                    </a>
+                </div>
+                <div class="plan-sidebar-section">
+                    <h2>Leave</h2>
                     {% if camp.creatorId == user.id %}
                     <p>You created this campout, so you'll need to transfer ownership before you can leave.</p>
                     {% else %}

@@ -554,7 +554,10 @@ h3 {
 }
 
 .site-camp_plan #copy-campout {
-    margin-left: auto;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 @media screen and (max-width: 35.999em) {
