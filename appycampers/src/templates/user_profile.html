@@ -41,8 +41,8 @@
 
     <div class="profile-summary">
         <div class="profile-avatar">
-            {% if profile_user.avatar %}
-            <img src="{{ profile_user.avatar }}">
+            {% if profile_user.profile_avatar %}
+            <img src="{{ profile_user.profile_avatar }}">
             {% else %}
             {{ display_name[0]|upper }}
             {% endif %}

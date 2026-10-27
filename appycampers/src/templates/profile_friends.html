@@ -5,8 +5,8 @@
 {% macro person(person_user, show_handle=False) %}
 <div class="person">
     <span class="profile-avatar profile-avatar-sm">
-        {% if person_user.avatar %}
-        <img src="{{ person_user.avatar }}">
+        {% if person_user.profile_avatar %}
+        <img src="{{ person_user.profile_avatar }}">
         {% else %}
         {{ (person_user.fullname or person_user.username or 'U')[0]|upper }}
         {% endif %}
