@@ -1,5 +1,5 @@
 from decimal import Decimal, InvalidOperation
-from flask import current_app, abort, redirect, render_template, request, url_for
+from flask import Blueprint, current_app, abort, redirect, render_template, request, url_for
 from sqlalchemy.exc import SQLAlchemyError
 from extensions import db
 from models import Camp, CampMember, CampItem, GearRequirement, GearClaim, CampExpense, ExpenseSplit, CampDiscussion
@@ -8,6 +8,14 @@ from utils.auth import get_current_user
 from sqlalchemy import and_, or_
 from models import Friendship
 from models.camp import VisibilityType
+
+camp_plan_controller = Blueprint("camp_plan", __name__)
+
+
+@camp_plan_controller.route("/camps/<camp_id>", methods=["GET", "POST"])
+def camp_plan(camp_id):
+    return show_plan(camp_id)
+
 
 def expense_totals(expenses, members):
     # Calculate in cents
@@ -111,7 +119,7 @@ def save_action(camp, user, membership, members):
     section = {"claim": "requirements", "cancel_claim": "requirements",
                "add_item": "extra-items", "edit_item": "extra-items", "delete_item": "extra-items",
                "add_expense": "expenses", "delete_expense": "expenses", "message": "discussion"}[action]
-    return redirect(url_for("camp_plan", camp_id = camp.id, _anchor = section))
+    return redirect(url_for("camp_plan.camp_plan", camp_id = camp.id, _anchor = section))
 
 def show_plan(camp_id):
     try:
@@ -218,4 +226,3 @@ def render_plan(camp_id):
         error = error,
         form = request.form if status == 400 else {},
     ), status
-
