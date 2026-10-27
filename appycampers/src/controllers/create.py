@@ -180,6 +180,32 @@ def create_camp():
     friends = []
     for u in get_friends(user.id):
       friends.append(u)
+
+    source = None
+    source_id = request.args.get("copy_from")
+
+    if source_id:
+        source = Camp.query.filter_by(id=source_id).first()
+
+    if source is not None:
+        can_copy = False
+
+        if source.Visibility == VisibilityType.PUBLIC:
+            can_copy = True
+        else:
+            membership = CampMember.query.filter_by(campId=source.id, userId=user.id, status=RequestStatus.APPROVED,).first()
+            is_member = (membership is not None or source.creatorId == user.id)
+
+            if source.Visibility == VisibilityType.FRIENDS_ONLY:
+                friend_ids = [friend.id for friend in friends]
+                can_copy = is_member or source.creatorId in friend_ids
+
+            elif source.Visibility == VisibilityType.PRIVATE:
+                can_copy = is_member
+
+        if not can_copy:
+            source = None
+
     return render_template("create_camp.html", friends=friends, states=STATES, campout_types=CAMPOUT_TYPES)
 
 
