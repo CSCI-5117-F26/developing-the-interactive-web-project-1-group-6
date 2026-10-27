@@ -76,7 +76,7 @@
   const gearTable = document.getElementById('gear-table');
   const nameInput = document.getElementById('add-name');
   const qtyInput = document.getElementById('add-quantity');
-  let items = [];
+  let items = initialSetup.items;
   let editingItem = null;
 
   function makeActionButton(label, onClick) {

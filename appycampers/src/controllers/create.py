@@ -230,6 +230,9 @@ def create_camp():
             "visibility": "public",
         }
 
+        for item in source.gear_requirements:
+            initial_setup["items"].append({"name": item.itemName,"qty": item.quantity,})
+
     return render_template(
         "create_camp.html", 
         friends=friends, 
