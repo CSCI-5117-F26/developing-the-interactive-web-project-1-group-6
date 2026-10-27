@@ -5,6 +5,9 @@ from extensions import db
 from models import Camp, CampMember, CampItem, GearRequirement, GearClaim, CampExpense, ExpenseSplit, CampDiscussion
 from models.campMember import MemberRole, RequestStatus
 from utils.auth import get_current_user
+from sqlalchemy import and_, or_
+from models import Friendship
+from models.camp import VisibilityType
 
 def expense_totals(expenses, members):
     # Calculate in cents
@@ -133,7 +136,26 @@ def render_plan(camp_id):
                 membership = member
                 break
         if membership is None:
-            abort(403)
+            if request.method == "POST":
+                abort(403)
+            if camp.Visibility == VisibilityType.FRIENDS_ONLY:
+                friendship = Friendship.query.filter(
+                    Friendship.status == "accepted",
+                    or_(
+                        and_(
+                            Friendship.senderId == user.id,
+                            Friendship.receiverId == camp.creatorId,
+                        ),
+                        and_(
+                            Friendship.senderId == camp.creatorId,
+                            Friendship.receiverId == user.id,
+                        ),
+                    ),
+                ).first()
+                if friendship is None:
+                    abort(403)
+            elif camp.Visibility != VisibilityType.PUBLIC:
+                abort(403)
         if request.method == "POST":
             return save_action(camp, user, membership, members)
     except ValueError as exc:
@@ -183,7 +205,11 @@ def render_plan(camp_id):
         covered_total = covered_total,
         required_total = required_total,
         my_claims = my_claims,
-        is_campmaster = membership.role in (MemberRole.ADMIN, MemberRole.CAMP_MASTER),
+        can_edit = membership is not None,
+        is_campmaster = (
+            membership is not None
+            and membership.role in (MemberRole.ADMIN, MemberRole.CAMP_MASTER)
+        ),
         extra_items = extra_items,
         messages = messages,
         expenses = expenses,

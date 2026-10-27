@@ -26,8 +26,8 @@
             <h3>{{ camp.name }}</h3>
             <p>{{ camp.city }}, {{ camp.state }}</p>
             <p>
-                {{ camp.startDate.strftime("%b %-d, %Y") }}
-                - {{ camp.endDate.strftime("%b %-d, %Y") }}
+                {{ camp.startDate | campdate }}
+                - {{ camp.endDate | campdate }}
                 · {{ camp.expectedCampers }} campers
             </p>
             {% if camp.campoutDescription %}
