@@ -19,8 +19,8 @@
       {% endif %}
     {% endwith %}
     <nav class="plan-nav l-box">
-        <a class="pure-button button-outline" href="{{ url_for('camp_plan', camp_id=camp_id) }}">← Member planning view</a>
-        <a class="pure-button pure-button-primary active" href="{{ url_for('camp_manage', camp_id=camp_id) }}">Camp controls</a>
+        <a class="pure-button button-outline" href="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}">← Member planning view</a>
+        <a class="pure-button pure-button-primary active" href="{{ url_for('camp_manage.camp_manage', camp_id=camp_id) }}">Camp controls</a>
     </nav>
     <div class="pure-g">
         <div class="pure-u-1 pure-u-lg-2-3 l-box">
@@ -46,7 +46,7 @@
                                 </td>
                                 <td>
                                     {% if member.userId != camp.creatorId %}
-                                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="row-actions">
+                                    <form action="{{ url_for('camp_manage.camp_manage', camp_id=camp.id) }}" method="POST" class="row-actions">
                                         <input type="hidden" name="member_id" value="{{ member.id }}">
                                         {% if member.role.value in ['admin', 'camp_master'] %}
                                         <button class="pure-button button-outline" name="action" value="demote">Demote</button>
@@ -68,7 +68,7 @@
             <section class="camp-card">
                 <h2>Join requests</h2>
                 {% for member in pending_requests %}
-                <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="request-row">
+                <form action="{{ url_for('camp_manage.camp_manage', camp_id=camp.id) }}" method="POST" class="request-row">
                     <input type="hidden" name="member_id" value="{{ member.id }}">
                     <span>{{ member.user.username }}</span>
                     <div class="row-actions">
@@ -93,7 +93,7 @@
                 
                 <details{% if form.get("action") == "edit_details" %} open{% endif %}>
                     <summary>Edit campout details</summary>
-                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                    <form action="{{ url_for('camp_manage.camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
                         <input type="hidden" name="action" value="edit_details">
                         <fieldset>
                             <legend>Campout details</legend>
@@ -124,7 +124,7 @@
                     <summary>Edit gear requirements</summary>
                     {% for item in requirements %}
                     {% set editing = form.get("action") == "edit_requirement" and form.get("requirement_id") == item.id %}
-                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                    <form action="{{ url_for('camp_manage.camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
                         <input type="hidden" name="requirement_id" value="{{ item.id }}">
                         <fieldset>
                             <legend>{{ item.itemName }}</legend>
@@ -142,7 +142,7 @@
                     <p>No gear requirements yet.</p>
                     {% endfor %}
                     <p>Deleting a requirement also removes its claims.</p>
-                    <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                    <form action="{{ url_for('camp_manage.camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
                         <input type="hidden" name="action" value="add_requirement">
                         <fieldset>
                             <legend>Add a requirement</legend>
@@ -155,7 +155,7 @@
                     </form>
                 </details>
                 
-                <form action="{{ url_for('camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
+                <form action="{{ url_for('camp_manage.camp_manage', camp_id=camp.id) }}" method="POST" class="pure-form pure-form-stacked">
                         <input type="hidden" name="action" value="edit_settings">
                     <fieldset>
                         <legend>Camp settings</legend>

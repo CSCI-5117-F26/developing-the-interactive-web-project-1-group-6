@@ -5,4 +5,5 @@ from .home import home_controller
 from .my_camps import my_camps_controller
 from .create import create_controller
 from .profile import profile_controller
-
+from .camp_plan import camp_plan_controller
+from .camp_manage import camp_manage_controller
