@@ -254,7 +254,8 @@ h3 {
     width: 100%;
 }
 
-#create_camp_wizard .pure-table thead {
+#create_camp_wizard .pure-table thead,
+.site-camp_plan .pure-table thead {
     background: #101e20;
     color: #f4ecdb;
 }
