@@ -42,8 +42,6 @@ james@rocket.camp
 Pass:
 BlahBlahBlah123
 
-* ...
-
 
 ## Screenshots of Site
 
