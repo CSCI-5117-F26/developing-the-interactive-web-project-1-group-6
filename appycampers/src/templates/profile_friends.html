@@ -70,6 +70,9 @@
                     <td>{{ person(req.sender) }}</td>
                     <td class="profile-handle">@{{ req.sender.username }}</td>
                     <td class="table-actions">
+                        <form method="get" action="{{ url_for('profile.user_profile', user_id=req.sender.id)}}">
+                            <button type="submit" class="pure-button button-outline">View</button>
+                        </form>
                         <form method="post" action="{{ url_for('profile.decline_request', friendship_id=req.id) }}">
                             <button type="submit" class="pure-button button-outline">Decline</button>
                         </form>
