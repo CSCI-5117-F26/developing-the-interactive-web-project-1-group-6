@@ -35,11 +35,17 @@ CSCI 5117, Fall 2026, [assignment description](https://canvas.umn.edu/courses/57
 
 ## Screenshots of Site
 
+### Home Page
 ![Home Page](/screenshots/home.png?raw=true)
+### Browse Campouts Page
 ![Browse Campouts Page](/screenshots/explore.png?raw=true)
+### Create Campout Page
 ![Create Campout Page](/screenshots/create.png?raw=true)
+### Camp Controls Page
 ![Camp Controls Page](/screenshots/controls.png?raw=true)
+### My Profile page
 ![My Profile Page](/screenshots/profile.png?raw=true)
+### Collaborative Gear Planning Page
 ![Collaborative Gear Planning Page](/screenshots/sharedplan.png?raw=true)
 
 
