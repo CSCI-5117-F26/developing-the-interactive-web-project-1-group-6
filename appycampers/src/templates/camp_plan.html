@@ -32,6 +32,17 @@
         <a class="pure-button pure-button-primary active" href="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}">Member planning view</a>
         {% if is_campmaster %}
         <a class="pure-button button-outline" href="{{ url_for('camp_manage.camp_manage', camp_id=camp_id) }}">Camp controls →</a>
+        {% elif not can_edit %}
+        <form action="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}" method="post" class="inline-form">
+            <input type="hidden" name="action" value="request_join">
+            <button type="submit" class="pure-button button-outline"
+                {% if pending_request or not camp.allowJoinRequets or members|length >= camp.expectedCampers %}disabled{% endif %}>
+                {% if pending_request %}Request pending
+                {% elif not camp.allowJoinRequets %}Join requests closed
+                {% elif members|length >= camp.expectedCampers %}Camp full
+                {% else %}Request to join{% endif %}
+            </button>
+        </form>
         {% endif %}
     </nav>
 
@@ -287,7 +298,17 @@
                     {% for msg in messages %}
                     <li>
                         <div class="message-meta">
-                            <strong>{{ msg.user.username }}</strong>
+                            <a class="message-author" href="{{ url_for('profile.user_profile', user_id=msg.user.id) }}"
+                                aria-label="View {{ msg.user.fullname or msg.user.username }}'s profile">
+                                <span class="camper-initial">
+                                    {% if msg.user.avatar %}
+                                    <img src="{{ msg.user.avatar }}" alt="">
+                                    {% else %}
+                                    {{ (msg.user.fullname or msg.user.username or 'U')[0]|upper }}
+                                    {% endif %}
+                                </span>
+                                <strong>{{ msg.user.username }}</strong>
+                            </a>
                             {% if msg.createdAt %}
                             <time datetime="{{ msg.createdAt.isoformat() }}">{{ msg.createdAt | campdate }}</time>
                             {% endif %}
@@ -347,7 +368,15 @@
                     <ul class="plan-campers">
                         {% for member in members %}
                         <li>
-                            <span class="camper-initial">{{ member.user.username[:1]|upper }}</span>
+                            <a class="camper-initial" href="{{ url_for('profile.user_profile', user_id=member.user.id) }}"
+                                aria-label="View {{ member.user.fullname or member.user.username }}'s profile"
+                                title="View {{ member.user.fullname or member.user.username }}'s profile">
+                                {% if member.user.avatar %}
+                                <img src="{{ member.user.avatar }}" alt="">
+                                {% else %}
+                                {{ (member.user.fullname or member.user.username or 'U')[0]|upper }}
+                                {% endif %}
+                            </a>
                             {{ member.user.username }}{% if member.userId == user.id %} (you){% endif %}
                             {% if member.userId == camp.creatorId %}<span class="muted">· campmaster</span>{% endif %}
                         </li>
