@@ -35,15 +35,12 @@ CSCI 5117, Fall 2026, [assignment description](https://canvas.umn.edu/courses/57
 
 ## Screenshots of Site
 
-**[Add a screenshot of each key page (around 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
-along with a very brief caption:**
-
-![](/screenshots/controls.png?raw=true)
-![](/screenshots/create.png?raw=true)
-![](/screenshots/explore.png?raw=true)
-![](/screenshots/home.png?raw=true)
-![](/screenshots/profile.png?raw=true)
-![](/screenshots/sharedplan.png?raw=true)
+![Home Page](/screenshots/home.png?raw=true)
+![Browse Campouts Page](/screenshots/explore.png?raw=true)
+![Create Campout Page](/screenshots/create.png?raw=true)
+![Camp Controls Page](/screenshots/controls.png?raw=true)
+![My Profile Page](/screenshots/profile.png?raw=true)
+![Collaborative Gear Planning Page](/screenshots/sharedplan.png?raw=true)
 
 
 ## Mock-up 
