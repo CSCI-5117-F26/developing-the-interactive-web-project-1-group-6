@@ -294,6 +294,8 @@ h3 {
     flex-wrap: wrap;
     align-items: center;
     gap: .75rem;
+    justify-content: flex-end;
+    padding-right: 1rem;
 }
 
 .create-nav {
