@@ -144,7 +144,7 @@ def render_plan(camp_id):
                 membership = member
                 break
         if membership is None:
-            if request.method == "POST" and request.form.get("action") != "request_join":
+            if request.method == "POST":
                 abort(403)
             if camp.Visibility == VisibilityType.FRIENDS_ONLY:
                 friendship = Friendship.query.filter(
@@ -164,19 +164,6 @@ def render_plan(camp_id):
                     abort(403)
             elif camp.Visibility != VisibilityType.PUBLIC:
                 abort(403)
-            if request.method == "POST":
-                if not camp.allowJoinRequets:
-                    raise ValueError("This campout is not accepting join requests.")
-                if len(members) >= camp.expectedCampers:
-                    raise ValueError("This campout is full.")
-                join_request = CampMember.query.filter_by(campId = camp.id, userId = user.id).first()
-                if join_request is None:
-                    join_request = CampMember(campId = camp.id, userId = user.id)
-                    db.session.add(join_request)
-                join_request.status = RequestStatus.PENDING
-                join_request.role = MemberRole.CAMP_MEMBER
-                db.session.commit()
-                return redirect(url_for("camp_plan.camp_plan", camp_id = camp.id))
         if request.method == "POST":
             return save_action(camp, user, membership, members)
     except ValueError as exc:
@@ -214,18 +201,12 @@ def render_plan(camp_id):
         .order_by(CampDiscussion.createdAt, CampDiscussion.id)
         .all()
     )
-    pending_request = CampMember.query.filter_by(
-        campId = camp.id,
-        userId = user.id,
-        status = RequestStatus.PENDING,
-    ).first()
     return render_template(
         "camp_plan.html",
         camp_id = camp.id,
         camp = camp,
         user = user,
         members = members,
-        pending_request = pending_request,
         requirements = requirements,
         requirements_met = requirements_met,
         covered = covered,

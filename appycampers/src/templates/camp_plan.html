@@ -332,17 +332,7 @@
                     {% for msg in messages %}
                     <li>
                         <div class="message-meta">
-                            <a class="message-author" href="{{ url_for('profile.user_profile', user_id=msg.user.id) }}"
-                                aria-label="View {{ msg.user.fullname or msg.user.username }}'s profile">
-                                <span class="camper-initial">
-                                    {% if msg.user.avatar %}
-                                    <img src="{{ msg.user.avatar }}" alt="">
-                                    {% else %}
-                                    {{ (msg.user.fullname or msg.user.username or 'U')[0]|upper }}
-                                    {% endif %}
-                                </span>
-                                <strong>{{ msg.user.username }}</strong>
-                            </a>
+                            <strong>{{ msg.user.username }}</strong>
                             {% if msg.createdAt %}
                             <time datetime="{{ msg.createdAt.isoformat() }}">{{ msg.createdAt | campdate }}</time>
                             {% endif %}
