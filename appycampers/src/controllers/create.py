@@ -206,7 +206,21 @@ def create_camp():
         if not can_copy:
             source = None
 
-    return render_template("create_camp.html", friends=friends, states=STATES, campout_types=CAMPOUT_TYPES)
+    initial_setup = {
+        "details": {},
+        "items": [],
+    }
+
+    if source is not None:
+        initial_setup["details"]["name"] = source.name
+
+    return render_template(
+        "create_camp.html", 
+        friends=friends, 
+        states=STATES, 
+        campout_types=CAMPOUT_TYPES,
+        initial_setup=initial_setup
+    )
 
 
 @create_controller.post("/camps/create")

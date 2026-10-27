@@ -56,6 +56,14 @@
     description: 'camp-description',
   };
 
+  const initialSetup = JSON.parse(document.getElementById('initial-camp-setup').textContent);
+
+  for (const [key, id] of Object.entries(fields)) {
+    if (key in initialSetup.details) {
+      document.getElementById(id).value = initialSetup.details[key];
+    }
+  }
+
   function readDetails() {
     const out = {};
     for (const [key, id] of Object.entries(fields)) {

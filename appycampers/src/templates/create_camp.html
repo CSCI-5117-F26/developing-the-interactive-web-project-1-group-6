@@ -18,7 +18,7 @@
   </span>
 </div>
 {% endmacro %}
-
+<script id="initial-camp-setup" type="application/json">{{ initial_setup | tojson }}</script>
 <script src="{{ url_for('static', filename='js/create_camp.js') }}" defer></script>
 <section class="page-banner">
   <div class="container l-box">
