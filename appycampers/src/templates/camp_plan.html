@@ -10,7 +10,7 @@
     {% for name, value in fields.items() %}
     <input type="hidden" name="{{ name }}" value="{{ value }}">
     {% endfor %}
-    <button type="submit" class="{{ class }}">{{ label }}</button>
+    <button type="submit" class="{{ class }}"{% if not can_edit %} disabled{% endif %}>{{ label }}</button>
 </form>
 {% endmacro %}
 {% macro money(cents) %}${{ cents // 100 }}.{{ '%02d'|format(cents % 100) }}{% endmacro %}
@@ -74,7 +74,7 @@
                     </table>
                 </div>
                 {% if requirements %}
-                <button type="button" class="pure-button pure-button-primary" id="claim-button">Claim an item</button>
+                <button type="button" class="pure-button pure-button-primary" id="claim-button"{% if not can_edit %} disabled{% endif %}>Claim an item</button>
                 <form id="claim-form" action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked"{% if form.get("action") != "claim" %} hidden{% endif %}>
                     <input type="hidden" name="action" value="claim">
                     <fieldset>
@@ -95,8 +95,8 @@
                         <label for="claim-quantity">Quantity</label>
                         <input id="claim-quantity" name="quantity" type="number" min="1" step="1" value="{{ form.get('quantity', 1) }}" required>
                         <div class="plan-actions">
-                            <button type="submit" class="pure-button pure-button-primary">Save</button>
-                            <button type="button" class="pure-button" id="cancel-claim-button">Cancel</button>
+                            <button type="submit" class="pure-button pure-button-primary"{% if not can_edit %} disabled{% endif %}>Save</button>
+                            <button type="button" class="pure-button" id="cancel-claim-button"{% if not can_edit %} disabled{% endif %}>Cancel</button>
                         </div>
                     </fieldset>
                 </form>
@@ -126,8 +126,8 @@
                     <input type="hidden" name="item_id" value="{{ item.id }}">
                                         <input type="text" name="item_name" maxlength="255" placeholder="New name"
                                             value="{{ form.get('item_name', item.itemName) if form.get('item_id') == item.id else item.itemName }}" required>
-                                        <button type="submit" class="pure-button pure-button-primary">Save</button>
-                                        <button type="button" class="pure-button edit-item-cancel">Cancel</button>
+                                        <button type="submit" class="pure-button pure-button-primary"{% if not can_edit %} disabled{% endif %}>Save</button>
+                                        <button type="button" class="pure-button edit-item-cancel"{% if not can_edit %} disabled{% endif %}>Cancel</button>
                                     </form>
                                     {% endif %}
                                 </td>
@@ -135,7 +135,7 @@
                                 <td>
                                     {% if item.userId == user.id %}
                                     <div class="row-actions">
-                                        <button type="button" class="pure-button button-outline edit-item-button">Edit</button>
+                                        <button type="button" class="pure-button button-outline edit-item-button"{% if not can_edit %} disabled{% endif %}>Edit</button>
                                         {{ action_form('delete_item', 'Remove', fields={'item_id': item.id}) }}
                                     </div>
                                     {% else %}-{% endif %}
@@ -155,7 +155,7 @@
                         <input id="extra-item-name" class="pure-input-1" name="item_name" type="text"
                             maxlength="255" value="{{ form.get('item_name', '') if form.get('action') == 'add_item' else '' }}" required>
                         <div class="plan-actions">
-                            <button type="submit" class="pure-button pure-button-primary">Add item</button>
+                            <button type="submit" class="pure-button pure-button-primary"{% if not can_edit %} disabled{% endif %}>Add item</button>
                         </div>
                     </fieldset>
                 </form>
@@ -275,7 +275,7 @@
                             {% endfor %}
                         </fieldset>
                         <div class="plan-actions">
-                            <button type="submit" class="pure-button pure-button-primary">Add expense</button>
+                            <button type="submit" class="pure-button pure-button-primary"{% if not can_edit %} disabled{% endif %}>Add expense</button>
                         </div>
                     </fieldset>
                 </form>
@@ -305,7 +305,7 @@
                         <textarea id="camp-message" class="pure-input-1" name="message" rows="3"
                             maxlength="2000" placeholder="Write a message" required>{{ form.get('message', '') }}</textarea>
                         <div class="plan-actions">
-                            <button type="submit" class="pure-button pure-button-primary">Send</button>
+                            <button type="submit" class="pure-button pure-button-primary"{% if not can_edit %} disabled{% endif %}>Send</button>
                         </div>
                     </fieldset>
                 </form>
@@ -360,7 +360,7 @@
                     {% else %}
                     <form action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" data-confirm="Leave this campout? Your gear claims and items will be removed, and you'll need to request to join again to come back.">
                     <input type="hidden" name="action" value="leave">
-                        <button type="submit" class="pure-button button-outline" id="leave-camp-button">Leave campout</button>
+                        <button type="submit" class="pure-button button-outline" id="leave-camp-button"{% if not can_edit %} disabled{% endif %}>Leave campout</button>
                     </form>
                     <p>If you leave, you will need to request to join again to return to this campout.</p>
                     {% endif %}
