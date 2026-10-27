@@ -5,7 +5,7 @@
 <script src="{{ url_for('static', filename='js/camp_plan.js') }}" defer></script>
 {% endblock %}
 {% macro action_form(action, label, class='pure-button button-outline', fields={}, confirm=None) %}
-<form action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="inline-form"{% if confirm %} data-confirm="{{ confirm }}"{% endif %}>
+<form action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="inline-form"{% if confirm %} data-confirm="{{ confirm }}"{% endif %}>
     <input type="hidden" name="action" value="{{ action }}">
     {% for name, value in fields.items() %}
     <input type="hidden" name="{{ name }}" value="{{ value }}">
@@ -29,9 +29,9 @@
     <p class="plan-error l-box">{{ error }}</p>
     {% endif %}
     <nav class="plan-nav l-box">
-        <a class="pure-button pure-button-primary active" href="{{ url_for('camp_plan', camp_id=camp_id) }}">Member planning view</a>
+        <a class="pure-button pure-button-primary active" href="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}">Member planning view</a>
         {% if is_campmaster %}
-        <a class="pure-button button-outline" href="{{ url_for('camp_manage', camp_id=camp_id) }}">Camp controls →</a>
+        <a class="pure-button button-outline" href="{{ url_for('camp_manage.camp_manage', camp_id=camp_id) }}">Camp controls →</a>
         {% endif %}
     </nav>
 
@@ -75,7 +75,7 @@
                 </div>
                 {% if requirements %}
                 <button type="button" class="pure-button pure-button-primary" id="claim-button"{% if not can_edit %} disabled{% endif %}>Claim an item</button>
-                <form id="claim-form" action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked"{% if form.get("action") != "claim" %} hidden{% endif %}>
+                <form id="claim-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked"{% if form.get("action") != "claim" %} hidden{% endif %}>
                     <input type="hidden" name="action" value="claim">
                     <fieldset>
                         <legend>Claim an item</legend>
@@ -121,7 +121,7 @@
                                 <td>
                                     <span class="item-name"{% if form.get("action") == "edit_item" and form.get("item_id") == item.id %} hidden{% endif %}>{{ item.itemName }}</span>
                                     {% if item.userId == user.id %}
-                                    <form action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form edit-item-form"{% if form.get("action") != "edit_item" or form.get("item_id") != item.id %} hidden{% endif %}>
+                                    <form action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="pure-form edit-item-form"{% if form.get("action") != "edit_item" or form.get("item_id") != item.id %} hidden{% endif %}>
                     <input type="hidden" name="action" value="edit_item">
                     <input type="hidden" name="item_id" value="{{ item.id }}">
                                         <input type="text" name="item_name" maxlength="255" placeholder="New name"
@@ -147,7 +147,7 @@
                         </tbody>
                     </table>
                 </div>
-                <form id="extra-item-form" action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
+                <form id="extra-item-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
                     <input type="hidden" name="action" value="add_item">
                     <fieldset>
                         <legend>Add an item</legend>
@@ -252,7 +252,7 @@
                         </tbody>
                     </table>
                 </div>
-                <form id="expense-form" action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
+                <form id="expense-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
                     <input type="hidden" name="action" value="add_expense">
                     <fieldset>
                         <legend>Add shared expense</legend>
@@ -298,7 +298,7 @@
                     <li class="muted">No messages yet. Say hi!</li>
                     {% endfor %}
                 </ul>
-                <form id="discussion-form" action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
+                <form id="discussion-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
                     <input type="hidden" name="action" value="message">
                     <fieldset>
                         <label for="camp-message">Your message</label>
@@ -358,7 +358,7 @@
                     {% if camp.creatorId == user.id %}
                     <p>You created this campout, so you'll need to transfer ownership before you can leave.</p>
                     {% else %}
-                    <form action="{{ url_for('camp_plan', camp_id=camp.id) }}" method="post" data-confirm="Leave this campout? Your gear claims and items will be removed, and you'll need to request to join again to come back.">
+                    <form action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" data-confirm="Leave this campout? Your gear claims and items will be removed, and you'll need to request to join again to come back.">
                     <input type="hidden" name="action" value="leave">
                         <button type="submit" class="pure-button button-outline" id="leave-camp-button"{% if not can_edit %} disabled{% endif %}>Leave campout</button>
                     </form>

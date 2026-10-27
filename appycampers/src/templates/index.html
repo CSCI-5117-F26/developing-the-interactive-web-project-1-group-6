@@ -82,7 +82,7 @@
                         </p>
                         <p>{{ camp.campoutDescription or "No description provided." }}</p>
                         <div class="camp-card-actions">
-                            <a class="pure-button" href="{{ url_for('camp_plan', camp_id=camp.id) }}">
+                            <a class="pure-button" href="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}">
                                 View camp
                             </a>
                         </div>
@@ -147,7 +147,7 @@
                         <li>Lily</li>
                     </ul>
                     {% if camps %}
-                    <a class="pure-button" href="{{ url_for('camp_plan', camp_id=camps[0].id) }}">
+                    <a class="pure-button" href="{{ url_for('camp_plan.camp_plan', camp_id=camps[0].id) }}">
                         View an Example
                     </a>
                     {% endif %}

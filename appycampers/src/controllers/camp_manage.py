@@ -1,11 +1,19 @@
 from datetime import date
-from flask import abort, redirect, render_template, request, url_for
+from flask import Blueprint, abort, redirect, render_template, request, url_for
 from extensions import db
 from models import Camp, CampMember, CampItem, GearRequirement, GearClaim
 from models.camp import VisibilityType
 from models.campMember import MemberRole, RequestStatus
 from controllers.camp_plan import text_field
 from utils.auth import get_current_user
+
+camp_manage_controller = Blueprint("camp_manage", __name__)
+
+
+@camp_manage_controller.route("/camps/<camp_id>/manage", methods=["GET", "POST"])
+def camp_manage(camp_id):
+    return show_controls(camp_id)
+
 
 def save_action(camp, members):
     action = request.form.get("action")
@@ -101,7 +109,7 @@ def save_action(camp, members):
     else:
         abort(400)
     db.session.commit()
-    return redirect(url_for("camp_manage", camp_id=camp.id))
+    return redirect(url_for("camp_manage.camp_manage", camp_id=camp.id))
 
 def show_controls(camp_id):
     user = get_current_user()

@@ -2,9 +2,7 @@ import os
 import models
 from flask import Flask, render_template, session
 from extensions import db, oauth
-from controllers.camp_plan import show_plan
-from controllers.camp_manage import show_controls
-from controllers import (auth_controller, explore_controller, health_controller, home_controller, my_camps_controller, create_controller, profile_controller,)
+from controllers import (auth_controller, explore_controller, health_controller, home_controller, my_camps_controller, create_controller, profile_controller,  camp_manage_controller, camp_plan_controller,)
 
 app = Flask(__name__)
 
@@ -37,17 +35,8 @@ app.register_blueprint(home_controller)
 app.register_blueprint(my_camps_controller)
 app.register_blueprint(create_controller)
 app.register_blueprint(profile_controller)
-
-# Show a camp's details, participants, and shared gear plan
-@app.route("/camps/<camp_id>", methods=["GET", "POST"])
-def camp_plan(camp_id):
-    return show_plan(camp_id)
-
-
-# Shows the campmaster controls for managing a camp
-@app.route("/camps/<camp_id>/manage", methods=["GET", "POST"])
-def camp_manage(camp_id):
-    return show_controls(camp_id)
+app.register_blueprint(camp_plan_controller)
+app.register_blueprint(camp_manage_controller)
 
 @app.context_processor
 def inject_user():
