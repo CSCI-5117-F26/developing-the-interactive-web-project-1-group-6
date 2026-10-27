@@ -39,8 +39,8 @@
             <p>Make a list and let people claim the items they can bring</p>
         </div>
         <div id="head-out" class="pure-u-1 pure-u-md-1-3 l-box">
-            <img class="homepage-step-image"
-                src="{{ url_for('static', filename='images/homepage/head_out.svg') }}" alt="">
+            <img class="homepage-step-image" src="{{ url_for('static', filename='images/homepage/head_out.svg') }}"
+                alt="">
             <h3>3. Head out</h3>
             <p>Spend less time sorting logistics and more time around the fire.</p>
         </div>
@@ -98,61 +98,131 @@
     </div>
 </section>
 
-<section id="homepage-plan" class="homepage-section">
+<section id="homepage-plan" class="homepage-section site-camp_plan">
     <div class="container">
         <div class="l-box">
-            <h1>A shared camp plan</h1>
-            <p>See what the group needs, what others can bring, and plan out your trip together.</p>
+            <h2>A shared camp plan</h2>
+            <p>See what the group needs, what others can bring, and plan your trip together.</p>
         </div>
-        <div class="pure-g">
-            <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-2-3">
-                <div class="pure-g">
-                    <div class="pure-u-1 l-box">
-                        <article class="camp-card">
-                            <h3>Camp Requirements</h3>
-                            <ul>
-                                <li>Tents</li>
-                                <li>Water Filter</li>
-                            </ul>
-                        </article>
-                    </div>
 
-                    <div class="pure-u-1 pure-u-lg-1-2 l-box">
-                        <article class="camp-card">
-                            <h3>Member-added Items</h3>
-                            <ul>
-                                <li>Bug-Repellent - Sarah</li>
-                                <li>Cards - Michael</li>
-                            </ul>
-                        </article>
-                    </div>
-                    <div class="pure-u-1 pure-u-lg-1-2 l-box">
-                        <article class="camp-card">
-                            <h3>Camp Discussion</h3>
-                            <ul>
-                                <li>Lily: Do we need bug repellent?</li>
-                                <li>Micael: Probably. I can bring a tent!</li>
-                            </ul>
-                        </article>
-                    </div>
-                </div>
-            </div>
-            <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3 l-box">
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-lg-2-3 l-box">
                 <article class="camp-card">
-                    <h3>Camp Progress</h3>
-                    <div class="camp-image">Camp image here</div>
-                    <h4>Campers</h4>
-                    <ul>
-                        <li>Michael</li>
-                        <li>Lily</li>
+                    <h2>Camp requirements</h2>
+                    <label for="gear-progress">Required units covered: 3 / 4</label>
+                    <progress id="gear-progress" value="3" max="4">3 / 4</progress>
+
+                    <div class="gear-table-wrap">
+                        <table class="pure-table pure-table-horizontal">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Covered</th>
+                                    <th>Bringing it</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Four-person tent</td>
+                                    <td>2 / 2</td>
+                                    <td>Michael (1), Sarah (1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Camp stove</td>
+                                    <td>1 / 1</td>
+                                    <td>Lily</td>
+                                </tr>
+                                <tr>
+                                    <td>Water filter</td>
+                                    <td>0 / 1</td>
+                                    <td>Needs someone</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="camp-card">
+                    <h2>Member-added items</h2>
+                    <p>Share the extras you are bringing.</p>
+
+                    <div class="gear-table-wrap">
+                        <table class="pure-table pure-table-horizontal">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Bringing it</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Bug repellent</td>
+                                    <td>Sarah</td>
+                                </tr>
+                                <tr>
+                                    <td>Playing cards</td>
+                                    <td>Michael</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="camp-card">
+                    <h2>Around the campfire</h2>
+                    <ul class="camp-messages">
+                        <li>
+                            <div class="message-meta">
+                                <strong>Lily</strong>
+                            </div>
+                            <p>Does anyone have a water filter they can bring?</p>
+                        </li>
+                        <li>
+                            <div class="message-meta">
+                                <strong>Michael</strong>
+                            </div>
+                            <p>I'll check! I already have the tent packed.</p>
+                        </li>
                     </ul>
-                    {% if camps %}
-                    <a class="pure-button" href="{{ url_for('camp_plan.camp_plan', camp_id=camps[0].id) }}">
-                        View an Example
-                    </a>
-                    {% endif %}
                 </article>
             </div>
+
+            <aside class="pure-u-1 pure-u-lg-1-3 l-box">
+                <div class="camp-card">
+                    <section>
+                        <h2>Camp progress</h2>
+                        <label for="camp-progress">Required units covered: 3 / 4</label>
+                        <progress id="camp-progress" value="3" max="4">3 / 4</progress>
+                        <p>
+                            <strong>The camp is taking shape</strong><br>
+                            2 of 3 requirements met
+                        </p>
+                    </section>
+
+                    <section class="plan-sidebar-section">
+                        <h2>Camp details</h2>
+                        <dl class="camp-details">
+                            <dt>Location</dt>
+                            <dd>Gooseberry Falls State Park</dd>
+                            <dt>City</dt>
+                            <dd>Two Harbors</dd>
+                            <dt>State</dt>
+                            <dd>Minnesota</dd>
+                            <dt>Description</dt>
+                            <dd>A weekend of hiking, waterfalls, and evenings around the fire.</dd>
+                        </dl>
+                    </section>
+
+                    <section class="plan-sidebar-section">
+                        <h2>Campers</h2>
+                        <ul class="plan-campers">
+                            <li><span class="camper-initial">M</span>Michael · campmaster</li>
+                            <li><span class="camper-initial">L</span>Lily</li>
+                            <li><span class="camper-initial">S</span>Sarah</li>
+                        </ul>
+                    </section>
+                </div>
+            </aside>
         </div>
     </div>
 </section>
