@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% set display_name = profile_user.fullname or profile_user.username %}
+{% set first_name = display_name.split(' ')[0] %}
+{% block title %} {{ profile_user.fullname or profile_user.username }} {% endblock %}
+{% block content %}
+<section class="page-banner">
+    <div class="container l-box">
+        <h1>{{ first_name }}'s Profile</h1>
+        <p class="profile-handle">@{{ profile_user.username }}</p>
+    </div>
+</section>
+
+<div class="container l-box">
+    <div class="section-heading">
+        <h2>Profile Details</h2>
+
+        <div class="profile-actions">
+            {% if relationship == "none" %}
+            <form method="post" action="{{ url_for('profile.send_request') }}">
+                <input type="hidden" name="username" value="{{ profile_user.username }}">
+                <button type="submit" class="pure-button button-outline">Send Friend Request</button>
+            </form>
+            {% elif relationship == "sent" %}
+            <form method="post" action="{{ url_for('profile.cancel_request', friendship_id=friendship.id) }}">
+                <button type="submit" class="pure-button button-outline">Cancel Friend Request</button>
+            </form>
+            {% elif relationship == "received" %}
+            <form method="post" action="{{ url_for('profile.decline_request', friendship_id=friendship.id) }}">
+                <button type="submit" class="pure-button button-outline">Decline Friend Request</button>
+            </form>
+            <form method="post" action="{{ url_for('profile.accept_request', friendship_id=friendship.id) }}">
+                <button type="submit" class="pure-button pure-button-primary">Accept Friend Request</button>
+            </form>
+            {% elif relationship == "friends" %}
+            <form method="post" action="{{ url_for('profile.remove_friend', friend_id=profile_user.id) }}">
+                <button type="submit" class="pure-button button-outline">Remove Friend</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="profile-summary">
+        <div class="profile-avatar">
+            {% if profile_user.profile_avatar %}
+            <img src="{{ profile_user.profile_avatar }}">
+            {% else %}
+            {{ display_name[0]|upper }}
+            {% endif %}
+        </div>
+        <div class="profile-identity">
+            <strong class="profile-name">{{ display_name }}</strong>
+            <span class="profile-handle">@{{ profile_user.username }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="container l-box">
+    <section class="profile-about-section">
+        <h3>About {{ first_name }}</h3>
+        {% if profile_user.about_me %}
+        <p class="profile-about">{{ profile_user.about_me }}</p>
+        {% else %}
+        <p class="profile-handle">{{ first_name }} hasn't written an About me yet.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

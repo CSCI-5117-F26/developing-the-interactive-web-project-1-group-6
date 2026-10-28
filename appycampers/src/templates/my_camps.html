@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block title %} My Camps {% endblock %}
+{% macro camp_card(camp, role='', can_manage=false, past=false, pending=false) %}
+<div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3 l-box">
+    <article class="camp-card">
+        {% set camp_type = (camp.campoutType or '') | trim | lower %}
+        {% set state_input = (camp.state or '') | trim %}
+        {% set state_name = states.get(state_input | upper, state_input | title) %}
+
+        {% if camp_type in campout_types %}
+        {% set image_path = 'images/camp_types/' ~ camp_type ~ '.svg' %}
+        {% elif state_name in states.values() %}
+        {% set state_filename = state_name | lower | replace(' ', '_') %}
+        {% set image_path = 'images/states/' ~ state_filename ~ '.svg' %}
+        {% else %}
+        {% set image_path = 'images/camp_types/default.svg' %}
+        {% endif %}
+
+        <img class="camp-image" src="{{ url_for('static', filename=image_path) }}" alt="{{ camp.name }}">
+        <div class="camp-card-content">
+            {% if pending %}
+            <p>Request pending</p>
+            {% elif role %}
+            <p>{{ role }}</p>
+            {% endif %}
+            <h3>{{ camp.name }}</h3>
+            <p>{{ camp.city }}, {{ camp.state }}</p>
+            <p>
+                {{ camp.startDate | campdate }}
+                - {{ camp.endDate | campdate }}
+                · {{ camp.expectedCampers }} campers
+            </p>
+            {% if camp.campoutDescription %}
+            <p>{{ camp.campoutDescription | truncate(140) }}</p>
+            {% endif %}
+            {% if past %}
+            <p>Completed campout</p>
+            {% endif %}
+            <div class="camp-card-actions">
+                {% if can_manage and not past and not pending %}
+                <a class="pure-button pure-button-primary" href="{{ url_for('camp_manage.camp_manage', camp_id=camp.id) }}">
+                    Manage camp
+                </a>
+                {% endif %}
+                <a class="pure-button" href="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}">
+                    {{ 'View past camp' if past else 'View camp' }}
+                </a>
+            </div>
+        </div>
+    </article>
+</div>
+{% endmacro %}
+
+{% block content %}
+<section class="page-banner">
+    <div class="container l-box">
+        <h1>My Camps</h1>
+        <p>Manage your upcoming camps, pending requests, and past trips.</p>
+    </div>
+</section>
+
+<section id="upcoming-camps" class="container">
+    <div class="l-box">
+        <h2>Upcoming campouts</h2>
+    </div>
+
+    <div class="pure-g explore-cards">
+        {% for membership in upcoming_memberships %}
+        {% set camp = membership.camp %}
+        {% set is_owner = camp.creatorId == user.id %}
+        {% set role = membership.role.value | replace('_', ' ') | title %}
+        {% set can_manage = is_owner or membership.role.value in ['camp_master', 'admin'] %}
+
+        {% if is_owner %}
+        {% set role = 'Camp master, Owner' %}
+        {% endif %}
+
+        {{ camp_card(camp, role=role, can_manage=can_manage) }}
+        {% endfor %}
+
+        {% for camp in upcoming_created_camps %}
+        {{ camp_card(camp, role='Camp master, Owner', can_manage=true) }}
+        {% endfor %}
+
+        {% if not upcoming_memberships and not upcoming_created_camps %}
+        <div class="pure-u-1 l-box">
+            <p>You have no upcoming camps.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section id="pending-join-requests" class="container">
+    <div class="l-box">
+        <h2>Pending requests</h2>
+    </div>
+
+    <div class="pure-g explore-cards">
+        {% for membership in pending_memberships %}
+        {{ camp_card(membership.camp, pending=true) }}
+        {% else %}
+        <div class="pure-u-1 l-box">
+            <p>You have no pending requests.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="past-camps" class="container">
+    <div class="l-box">
+        <h2>Past campouts</h2>
+    </div>
+
+    <div class="pure-g explore-cards">
+        {% for membership in past_memberships %}
+        {% set camp = membership.camp %}
+        {% set role = membership.role.value | replace('_', ' ') | title %}
+
+        {% if camp.creatorId == user.id %}
+        {% set role = 'Camp master, Owner' %}
+        {% endif %}
+
+        {{ camp_card(camp, role=role, past=true) }}
+        {% endfor %}
+
+        {% for camp in past_created_camps %}
+        {{ camp_card(camp, role='Camp master, Owner', past=true) }}
+        {% endfor %}
+
+        {% if not past_memberships and not past_created_camps %}
+        <div class="pure-u-1 l-box">
+            <p>You have no past camps.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

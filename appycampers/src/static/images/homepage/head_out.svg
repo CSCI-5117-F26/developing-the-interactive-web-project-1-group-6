@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" fill="none" role="img" aria-labelledby="title">
+<title id="title">Head out: a winding trail through green hills</title>
+<defs>
+  <linearGradient id="sky" x1="160" y1="30" x2="160" y2="176" gradientUnits="userSpaceOnUse"><stop stop-color="#E2E9DD"/><stop offset="1" stop-color="#F3E6CD"/></linearGradient>
+  <linearGradient id="hills" x1="122" y1="97" x2="189" y2="181" gradientUnits="userSpaceOnUse"><stop stop-color="#91A68A"/><stop offset="1" stop-color="#50735D"/></linearGradient>
+  <linearGradient id="trail" x1="178" y1="99" x2="143" y2="180" gradientUnits="userSpaceOnUse"><stop stop-color="#F3DBAB"/><stop offset="1" stop-color="#D8AB70"/></linearGradient>
+  <linearGradient id="sign" x1="80" y1="80" x2="129" y2="111" gradientUnits="userSpaceOnUse"><stop stop-color="#73917B"/><stop offset="1" stop-color="#3D6050"/></linearGradient>
+  <clipPath id="scene"><path d="M46 103C43 60 89 27 143 32C198 13 267 44 275 101C285 154 230 184 170 177C104 190 49 157 46 103Z"/></clipPath>
+</defs>
+<g clip-path="url(#scene)">
+  <rect x="40" y="20" width="245" height="170" fill="url(#sky)"/>
+  <circle cx="216" cy="63" r="16" fill="#EDC67E"/>
+  <path d="M47 119C82 104 109 110 137 97C165 84 187 85 216 101C242 114 261 101 284 97V191H40Z" fill="#B5C3A6"/>
+  <path d="M40 143C78 108 117 112 146 124C177 134 191 108 224 113C249 115 268 130 285 136V192H40Z" fill="url(#hills)"/>
+  <path d="M189 100C209 108 208 119 187 128C168 136 169 142 184 148C208 157 209 171 183 185H113C162 169 172 166 158 157C131 140 151 130 176 120C195 112 197 107 184 101Z" fill="url(#trail)"/>
+  <path d="M40 159C67 148 89 150 115 161C127 166 136 172 142 186H40Z" fill="#436653"/>
+  <path d="M282 152C258 146 238 153 223 164C214 171 210 181 210 190H285Z" fill="#385C4B"/>
+</g>
+<ellipse cx="104" cy="167" rx="25" ry="4" fill="#263531" opacity=".1"/>
+<path d="M102 76V164" stroke="#8E7352" stroke-width="8" stroke-linecap="round"/>
+<path d="M79 82H122L136 96L122 110H79C76 110 74 108 74 105V87C74 84 76 82 79 82Z" fill="url(#sign)" stroke="#365548" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M89 96H119M113 90L119 96L113 102" stroke="#F6EDD7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="102" cy="88" r="1.5" fill="#B7C6AA"/>
+<circle cx="102" cy="104" r="1.5" fill="#B7C6AA"/>
+<path d="M72 163L69 152M74 162L79 155M246 168L248 157M249 169L254 164" stroke="#8CA481" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
