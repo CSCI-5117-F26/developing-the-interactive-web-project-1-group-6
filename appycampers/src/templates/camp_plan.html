@@ -5,12 +5,13 @@
 <script src="{{ url_for('static', filename='js/camp_plan.js') }}" defer></script>
 {% endblock %}
 {% macro action_form(action, label, class='pure-button button-outline', fields={}, confirm=None) %}
-<form action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="inline-form"{% if confirm %} data-confirm="{{ confirm }}"{% endif %}>
+<form action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="inline-form" {% if confirm %}
+    data-confirm="{{ confirm }}" {% endif %}>
     <input type="hidden" name="action" value="{{ action }}">
     {% for name, value in fields.items() %}
     <input type="hidden" name="{{ name }}" value="{{ value }}">
     {% endfor %}
-    <button type="submit" class="{{ class }}"{% if not can_edit %} disabled{% endif %}>{{ label }}</button>
+    <button type="submit" class="{{ class }}" {% if not can_edit %} disabled{% endif %}>{{ label }}</button>
 </form>
 {% endmacro %}
 {% macro money(cents) %}${{ cents // 100 }}.{{ '%02d'|format(cents % 100) }}{% endmacro %}
@@ -20,7 +21,8 @@
 <section class="page-banner">
     <div class="container l-box">
         <h1>Shared camp plan</h1>
-        <p>{{ camp.name }} · {{ camp.startDate | campdate }} – {{ camp.endDate | campdate }} · {{ members|length }} / {{ camp.expectedCampers }} campers</p>
+        <p>{{ camp.name }} · {{ camp.startDate | campdate }} – {{ camp.endDate | campdate }} · {{ members|length }} / {{
+            camp.expectedCampers }} campers</p>
     </div>
 </section>
 
@@ -29,14 +31,16 @@
     <p class="plan-error l-box">{{ error }}</p>
     {% endif %}
     <nav class="plan-nav l-box">
-        <a class="pure-button pure-button-primary active" href="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}">Member planning view</a>
+        <a class="pure-button pure-button-primary active"
+            href="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}">Member planning view</a>
         {% if is_campmaster %}
-        <a class="pure-button button-outline" href="{{ url_for('camp_manage.camp_manage', camp_id=camp_id) }}">Camp controls →</a>
+        <a class="pure-button button-outline" href="{{ url_for('camp_manage.camp_manage', camp_id=camp_id) }}">Camp
+            controls →</a>
         {% elif not can_edit %}
         <form action="{{ url_for('camp_plan.camp_plan', camp_id=camp_id) }}" method="post" class="inline-form">
             <input type="hidden" name="action" value="request_join">
-            <button type="submit" class="pure-button button-outline"
-                {% if pending_request or not camp.allowJoinRequets or members|length >= camp.expectedCampers %}disabled{% endif %}>
+            <button type="submit" class="pure-button button-outline" {% if pending_request or not camp.allowJoinRequets
+                or members|length>= camp.expectedCampers %}disabled{% endif %}>
                 {% if pending_request %}Request pending
                 {% elif not camp.allowJoinRequets %}Join requests closed
                 {% elif members|length >= camp.expectedCampers %}Camp full
@@ -51,7 +55,8 @@
             <section class="camp-card" id="requirements">
                 <h2>Camp requirements</h2>
                 <label for="gear-progress">Required units covered: {{ covered_total }} / {{ required_total }}</label>
-                <progress id="gear-progress" value="{{ covered_total }}" max="{{ required_total or 1 }}">{{ covered_total }} / {{ required_total }}</progress>
+                <progress id="gear-progress" value="{{ covered_total }}" max="{{ required_total or 1 }}">{{
+                    covered_total }} / {{ required_total }}</progress>
                 <div class="gear-table-wrap">
                     <table class="pure-table pure-table-horizontal">
                         <thead>
@@ -65,28 +70,35 @@
                         <tbody>
                             {% for item in requirements %}
                             <tr>
-                                <td>{{ item.itemName }}{% if item.quantity > 1 %} ({{ item.quantity }} needed){% endif %}</td>
+                                <td>{{ item.itemName }}{% if item.quantity > 1 %} ({{ item.quantity }} needed){% endif
+                                    %}</td>
                                 <td>{{ covered[item.id] }} / {{ item.quantity }}</td>
                                 <td>
                                     {% for claim in item.claims %}
-                                    {{ claim.claimed_by_user.username }}{% if item.quantity > 1 %} ({{ claim.quantityCovered }}){% endif %}{% if not loop.last %}, {% endif %}
+                                    {{ claim.claimed_by_user.username }}{% if item.quantity > 1 %} ({{
+                                    claim.quantityCovered }}){% endif %}{% if not loop.last %}, {% endif %}
                                     {% else %}<span class="muted">Needs someone</span>{% endfor %}
                                 </td>
                                 <td>
                                     {% if item.id in my_claims %}
-                                    {{ action_form('cancel_claim', 'Cancel my claim', fields={'requirement_id': item.id}) }}
+                                    {{ action_form('cancel_claim', 'Cancel my claim', fields={'requirement_id':
+                                    item.id}) }}
                                     {% else %}-{% endif %}
                                 </td>
                             </tr>
                             {% else %}
-                            <tr><td colspan="4">No gear requirements yet.</td></tr>
+                            <tr>
+                                <td colspan="4">No gear requirements yet.</td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 {% if requirements %}
-                <button type="button" class="pure-button pure-button-primary" id="claim-button"{% if not can_edit %} disabled{% endif %}>Claim an item</button>
-                <form id="claim-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked"{% if form.get("action") != "claim" %} hidden{% endif %}>
+                <button type="button" class="pure-button pure-button-primary" id="claim-button" {% if not can_edit %}
+                    disabled{% endif %}>Claim an item</button>
+                <form id="claim-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post"
+                    class="pure-form pure-form-stacked" {% if form.get("action") !="claim" %} hidden{% endif %}>
                     <input type="hidden" name="action" value="claim">
                     <fieldset>
                         <legend>Claim an item</legend>
@@ -97,17 +109,22 @@
                             {% for item in requirements %}
                             {% set mine = my_claims.get(item.id, 0) %}
                             {% set available = item.quantity - (covered[item.id] - mine) %}
-                            <option value="{{ item.id }}" data-max="{{ available }}" data-mine="{{ mine }}"{% if form.get("requirement_id") == item.id %} selected{% endif %}
-                                {% if available < 1 %}disabled{% endif %}>
-                                {{ item.itemName }} ({{ available }} available{% if mine %}, you have {{ mine }}{% endif %})
+                            <option value="{{ item.id }}" data-max="{{ available }}" data-mine="{{ mine }}" {% if
+                                form.get("requirement_id")==item.id %} selected{% endif %} {% if available < 1
+                                %}disabled{% endif %}>
+                                {{ item.itemName }} ({{ available }} available{% if mine %}, you have {{ mine }}{% endif
+                                %})
                             </option>
                             {% endfor %}
                         </select>
                         <label for="claim-quantity">Quantity</label>
-                        <input id="claim-quantity" name="quantity" type="number" min="1" step="1" value="{{ form.get('quantity', 1) }}" required>
+                        <input id="claim-quantity" name="quantity" type="number" min="1" step="1"
+                            value="{{ form.get('quantity', 1) }}" required>
                         <div class="plan-actions">
-                            <button type="submit" class="pure-button pure-button-primary"{% if not can_edit %} disabled{% endif %}>Save</button>
-                            <button type="button" class="pure-button" id="cancel-claim-button"{% if not can_edit %} disabled{% endif %}>Cancel</button>
+                            <button type="submit" class="pure-button pure-button-primary" {% if not can_edit %}
+                                disabled{% endif %}>Save</button>
+                            <button type="button" class="pure-button" id="cancel-claim-button" {% if not can_edit %}
+                                disabled{% endif %}>Cancel</button>
                         </div>
                     </fieldset>
                 </form>
@@ -130,15 +147,21 @@
                             {% for item in extra_items %}
                             <tr>
                                 <td>
-                                    <span class="item-name"{% if form.get("action") == "edit_item" and form.get("item_id") == item.id %} hidden{% endif %}>{{ item.itemName }}</span>
+                                    <span class="item-name" {% if form.get("action")=="edit_item" and
+                                        form.get("item_id")==item.id %} hidden{% endif %}>{{ item.itemName }}</span>
                                     {% if item.userId == user.id %}
-                                    <form action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="pure-form edit-item-form"{% if form.get("action") != "edit_item" or form.get("item_id") != item.id %} hidden{% endif %}>
-                    <input type="hidden" name="action" value="edit_item">
-                    <input type="hidden" name="item_id" value="{{ item.id }}">
+                                    <form action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post"
+                                        class="pure-form edit-item-form" {% if form.get("action") !="edit_item" or
+                                        form.get("item_id") !=item.id %} hidden{% endif %}>
+                                        <input type="hidden" name="action" value="edit_item">
+                                        <input type="hidden" name="item_id" value="{{ item.id }}">
                                         <input type="text" name="item_name" maxlength="255" placeholder="New name"
-                                            value="{{ form.get('item_name', item.itemName) if form.get('item_id') == item.id else item.itemName }}" required>
-                                        <button type="submit" class="pure-button pure-button-primary"{% if not can_edit %} disabled{% endif %}>Save</button>
-                                        <button type="button" class="pure-button edit-item-cancel"{% if not can_edit %} disabled{% endif %}>Cancel</button>
+                                            value="{{ form.get('item_name', item.itemName) if form.get('item_id') == item.id else item.itemName }}"
+                                            required>
+                                        <button type="submit" class="pure-button pure-button-primary" {% if not can_edit
+                                            %} disabled{% endif %}>Save</button>
+                                        <button type="button" class="pure-button edit-item-cancel" {% if not can_edit %}
+                                            disabled{% endif %}>Cancel</button>
                                     </form>
                                     {% endif %}
                                 </td>
@@ -146,27 +169,33 @@
                                 <td>
                                     {% if item.userId == user.id %}
                                     <div class="row-actions">
-                                        <button type="button" class="pure-button button-outline edit-item-button"{% if not can_edit %} disabled{% endif %}>Edit</button>
+                                        <button type="button" class="pure-button button-outline edit-item-button" {% if
+                                            not can_edit %} disabled{% endif %}>Edit</button>
                                         {{ action_form('delete_item', 'Remove', fields={'item_id': item.id}) }}
                                     </div>
                                     {% else %}-{% endif %}
                                 </td>
                             </tr>
                             {% else %}
-                            <tr><td colspan="3">No extra items yet.</td></tr>
+                            <tr>
+                                <td colspan="3">No extra items yet.</td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                <form id="extra-item-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
+                <form id="extra-item-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post"
+                    class="pure-form pure-form-stacked">
                     <input type="hidden" name="action" value="add_item">
                     <fieldset>
                         <legend>Add an item</legend>
                         <label for="extra-item-name">Item name</label>
-                        <input id="extra-item-name" class="pure-input-1" name="item_name" type="text"
-                            maxlength="255" value="{{ form.get('item_name', '') if form.get('action') == 'add_item' else '' }}" required>
+                        <input id="extra-item-name" class="pure-input-1" name="item_name" type="text" maxlength="255"
+                            value="{{ form.get('item_name', '') if form.get('action') == 'add_item' else '' }}"
+                            required>
                         <div class="plan-actions">
-                            <button type="submit" class="pure-button pure-button-primary"{% if not can_edit %} disabled{% endif %}>Add item</button>
+                            <button type="submit" class="pure-button pure-button-primary" {% if not can_edit %}
+                                disabled{% endif %}>Add item</button>
                         </div>
                     </fieldset>
                 </form>
@@ -194,7 +223,8 @@
                                 <td>${{ '%.2f'|format(expense.amount) }}</td>
                                 <td>{{ expense.paid_by_user.username }}</td>
                                 <td>
-                                    {% if split_ids|length == member_ids|length and split_ids|reject('in', member_ids)|list|length == 0 %}
+                                    {% if split_ids|length == member_ids|length and split_ids|reject('in',
+                                    member_ids)|list|length == 0 %}
                                     Everyone
                                     {% else %}
                                     {{ expense.splits|map(attribute='user.username')|join(', ') }}
@@ -203,12 +233,14 @@
                                 <td>
                                     {% if expense.paidByUserId == user.id or is_campmaster %}
                                     {{ action_form('delete_expense', 'Remove', fields={'expense_id': expense.id},
-                                        confirm='Remove the expense "' ~ expense.title ~ '"?') }}
+                                    confirm='Remove the expense "' ~ expense.title ~ '"?') }}
                                     {% else %}-{% endif %}
                                 </td>
                             </tr>
                             {% else %}
-                            <tr><td colspan="5">No shared expenses yet.</td></tr>
+                            <tr>
+                                <td colspan="5">No shared expenses yet.</td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -225,16 +257,16 @@
                     <p>You paid: {{ money(me.paid) }}</p>
                     {% if me.balance > 0 %}
                     <p>You owe: <strong>{{ money(me.balance) }}</strong></p>
-                    {% elif me.balance < 0 %}
-                    <p>You're owed: <strong>{{ money(-me.balance) }}</strong></p>
-                    {% else %}
-                    <p><strong>You're all square.</strong></p>
-                    {% endif %}
-                    {% endif %}
-                    {% if balances %}
-                    <button type="button" class="pure-button button-outline" id="expense-breakdown-button">View full breakdown</button>
-                    {% endif %}
-                    {% endif %}
+                    {% elif me.balance < 0 %} <p>You're owed: <strong>{{ money(-me.balance) }}</strong></p>
+                        {% else %}
+                        <p><strong>You're all square.</strong></p>
+                        {% endif %}
+                        {% endif %}
+                        {% if balances %}
+                        <button type="button" class="pure-button button-outline" id="expense-breakdown-button">View full
+                            breakdown</button>
+                        {% endif %}
+                        {% endif %}
                 </div>
                 <div id="expense-breakdown" class="gear-table-wrap" hidden>
                     <h3>Cost by camper</h3>
@@ -255,24 +287,24 @@
                                 <td>{{ money(person.paid) }}</td>
                                 <td>
                                     {% if person.balance > 0 %}owes {{ money(person.balance) }}
-                                    {% elif person.balance < 0 %}is owed {{ money(-person.balance) }}
-                                    {% else %}settled{% endif %}
-                                </td>
+                                    {% elif person.balance < 0 %}is owed {{ money(-person.balance) }} {% else
+                                        %}settled{% endif %} </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                <form id="expense-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
+                <form id="expense-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post"
+                    class="pure-form pure-form-stacked">
                     <input type="hidden" name="action" value="add_expense">
                     <fieldset>
                         <legend>Add shared expense</legend>
                         <label for="expense-title">Expense</label>
-                        <input id="expense-title" class="pure-input-1" name="title" type="text"
-                            maxlength="255" value="{{ form.get('title', '') }}" required>
+                        <input id="expense-title" class="pure-input-1" name="title" type="text" maxlength="255"
+                            value="{{ form.get('title', '') }}" required>
                         <label for="expense-amount">Amount ($)</label>
-                        <input id="expense-amount" class="pure-input-1" name="amount" type="number"
-                            min="0.01" max="99999999.99" step="0.01" value="{{ form.get('amount', '') }}" required>
+                        <input id="expense-amount" class="pure-input-1" name="amount" type="number" min="0.01"
+                            max="99999999.99" step="0.01" value="{{ form.get('amount', '') }}" required>
                         <p>Paid by: <strong>{{ user.username }} (you)</strong></p>
                         <fieldset class="split-with">
                             <legend>Split with</legend>
@@ -280,13 +312,15 @@
                             {% for member in members %}
                             <label for="split-{{ member.userId }}" class="pure-checkbox">
                                 <input id="split-{{ member.userId }}" type="checkbox" name="participants"
-                                    value="{{ member.userId }}"{% if form.get('action') != 'add_expense' or member.userId in form.getlist("participants") %} checked{% endif %}>
+                                    value="{{ member.userId }}" {% if form.get('action') !='add_expense' or
+                                    member.userId in form.getlist("participants") %} checked{% endif %}>
                                 {{ member.user.username }}{% if member.userId == user.id %} (you){% endif %}
                             </label>
                             {% endfor %}
                         </fieldset>
                         <div class="plan-actions">
-                            <button type="submit" class="pure-button pure-button-primary"{% if not can_edit %} disabled{% endif %}>Add expense</button>
+                            <button type="submit" class="pure-button pure-button-primary" {% if not can_edit %}
+                                disabled{% endif %}>Add expense</button>
                         </div>
                     </fieldset>
                 </form>
@@ -298,7 +332,17 @@
                     {% for msg in messages %}
                     <li>
                         <div class="message-meta">
-                            <strong>{{ msg.user.username }}</strong>
+                            <a class="message-author" href="{{ url_for('profile.user_profile', user_id=msg.user.id) }}"
+                                aria-label="View {{ msg.user.fullname or msg.user.username }}'s profile">
+                                <span class="camper-initial">
+                                    {% if msg.user.avatar %}
+                                    <img src="{{ msg.user.avatar }}" alt="">
+                                    {% else %}
+                                    {{ (msg.user.fullname or msg.user.username or 'U')[0]|upper }}
+                                    {% endif %}
+                                </span>
+                                <strong>{{ msg.user.username }}</strong>
+                            </a>
                             {% if msg.createdAt %}
                             <time datetime="{{ msg.createdAt.isoformat() }}">{{ msg.createdAt | campdate }}</time>
                             {% endif %}
@@ -309,14 +353,16 @@
                     <li class="muted">No messages yet. Say hi!</li>
                     {% endfor %}
                 </ul>
-                <form id="discussion-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" class="pure-form pure-form-stacked">
+                <form id="discussion-form" action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post"
+                    class="pure-form pure-form-stacked">
                     <input type="hidden" name="action" value="message">
                     <fieldset>
                         <label for="camp-message">Your message</label>
-                        <textarea id="camp-message" class="pure-input-1" name="message" rows="3"
-                            maxlength="2000" placeholder="Write a message" required>{{ form.get('message', '') }}</textarea>
+                        <textarea id="camp-message" class="pure-input-1" name="message" rows="3" maxlength="2000"
+                            placeholder="Write a message" required>{{ form.get('message', '') }}</textarea>
                         <div class="plan-actions">
-                            <button type="submit" class="pure-button pure-button-primary"{% if not can_edit %} disabled{% endif %}>Send</button>
+                            <button type="submit" class="pure-button pure-button-primary" {% if not can_edit %}
+                                disabled{% endif %}>Send</button>
                         </div>
                     </fieldset>
                 </form>
@@ -328,10 +374,13 @@
             <div class="camp-card">
                 <section>
                     <h2>Camp progress</h2>
-                    <label for="camp-progress">Required units covered: {{ covered_total }} / {{ required_total }}</label>
-                    <progress id="camp-progress" value="{{ covered_total }}" max="{{ required_total or 1 }}">{{ covered_total }} / {{ required_total }}</progress>
+                    <label for="camp-progress">Required units covered: {{ covered_total }} / {{ required_total
+                        }}</label>
+                    <progress id="camp-progress" value="{{ covered_total }}" max="{{ required_total or 1 }}">{{
+                        covered_total }} / {{ required_total }}</progress>
                     {% if requirements %}
-                    <p><strong>{% if requirements_met == requirements|length %}The camp is ready!{% else %}The camp is taking shape{% endif %}</strong><br>
+                    <p><strong>{% if requirements_met == requirements|length %}The camp is ready!{% else %}The camp is
+                            taking shape{% endif %}</strong><br>
                         {{ requirements_met }} of {{ requirements|length }} requirements met</p>
                     {% endif %}
                 </section>
@@ -358,7 +407,8 @@
                     <ul class="plan-campers">
                         {% for member in members %}
                         <li>
-                            <a class="camper-initial" href="{{ url_for('profile.user_profile', user_id=member.user.id) }}"
+                            <a class="camper-initial"
+                                href="{{ url_for('profile.user_profile', user_id=member.user.id) }}"
                                 aria-label="View {{ member.user.fullname or member.user.username }}'s profile"
                                 title="View {{ member.user.fullname or member.user.username }}'s profile">
                                 {% if member.user.avatar %}
@@ -374,12 +424,22 @@
                     </ul>
                 </section>
                 <div class="plan-sidebar-section">
+                    <h2>Actions</h2>
+                    <a class="pure-button pure-button-primary" id="copy-campout"
+                        href="{{ url_for('create.create_camp', copy_from=camp.id) }}">
+                        Copy this campout
+                    </a>
+                </div>
+                <div class="plan-sidebar-section">
+                    <h2>Leave</h2>
                     {% if camp.creatorId == user.id %}
                     <p>You created this campout, so you'll need to transfer ownership before you can leave.</p>
                     {% else %}
-                    <form action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post" data-confirm="Leave this campout? Your gear claims and items will be removed, and you'll need to request to join again to come back.">
-                    <input type="hidden" name="action" value="leave">
-                        <button type="submit" class="pure-button button-outline" id="leave-camp-button"{% if not can_edit %} disabled{% endif %}>Leave campout</button>
+                    <form action="{{ url_for('camp_plan.camp_plan', camp_id=camp.id) }}" method="post"
+                        data-confirm="Leave this campout? Your gear claims and items will be removed, and you'll need to request to join again to come back.">
+                        <input type="hidden" name="action" value="leave">
+                        <button type="submit" class="pure-button button-outline" id="leave-camp-button" {% if not
+                            can_edit %} disabled{% endif %}>Leave campout</button>
                     </form>
                     <p>If you leave, you will need to request to join again to return to this campout.</p>
                     {% endif %}
