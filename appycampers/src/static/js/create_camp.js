@@ -56,6 +56,14 @@
     description: 'camp-description',
   };
 
+  const initialSetup = JSON.parse(document.getElementById('initial-camp-setup').textContent);
+
+  for (const [key, id] of Object.entries(fields)) {
+    if (key in initialSetup.details) {
+      document.getElementById(id).value = initialSetup.details[key];
+    }
+  }
+
   function readDetails() {
     const out = {};
     for (const [key, id] of Object.entries(fields)) {
@@ -68,7 +76,7 @@
   const gearTable = document.getElementById('gear-table');
   const nameInput = document.getElementById('add-name');
   const qtyInput = document.getElementById('add-quantity');
-  let items = [];
+  let items = initialSetup.items;
   let editingItem = null;
 
   function makeActionButton(label, onClick) {

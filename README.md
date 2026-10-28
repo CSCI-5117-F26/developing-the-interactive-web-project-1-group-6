@@ -28,9 +28,19 @@ CSCI 5117, Fall 2026, [assignment description](https://canvas.umn.edu/courses/57
 
 ## Testing Notes
 
-**Is there anything special we need to know in order to effectively test your app? (optional):**
+### User credentials for testing:
 
-* ...
+Email: 
+jessie@rocket.camp
+
+Pass:
+BlahBlahBlah123
+
+Email: 
+james@rocket.camp
+
+Pass:
+BlahBlahBlah123
 
 
 ## Screenshots of Site
