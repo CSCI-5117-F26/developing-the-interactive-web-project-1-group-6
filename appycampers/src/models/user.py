@@ -2,7 +2,6 @@ import uuid
 
 from extensions import db
 from utils import generate_uuid
-from utils.constants import TEMPORARY_AVATAR_OVERRIDES
 
 class User(db.Model): 
     __tablename__ = "users"
@@ -29,4 +28,4 @@ class User(db.Model):
 
     @property
     def profile_avatar(self):
-        return TEMPORARY_AVATAR_OVERRIDES.get((self.email or "").lower(), self.avatar)
+        return self.avatar
