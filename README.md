@@ -125,7 +125,7 @@ In this space please either provide images (around 4) showing your prototypes, O
 **Document integrations with 3rd Party code or services here.
 Please do not document required libraries. or libraries that are mentioned in the product requirements**
 
-* Library or service name: description of use
+* GSAP (GreenSock Animation Platform): Used to animate the campfire SVG on the homepage.
 * Pydantic: Data verification for create form
 * SQLAlchemy: ORM for DB
 
@@ -133,4 +133,4 @@ Please do not document required libraries. or libraries that are mentioned in th
 relied on external code, expertise, or anything else, please disclose that
 here:**
 
-...
+* ChatGPT: Used to generate the project's SVGs, including the state and camp-type images, homepage illustrations, site logo, and the homepage campfire SVG animation (including the animation's JS and CSS as well).
